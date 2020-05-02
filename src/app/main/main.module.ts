@@ -4,18 +4,20 @@ import { CommonModule } from '@angular/common';
 import {MainComponent} from './main.component';
 import {AlertComponent} from './alert/alert.component';
 import {ComplaintsComponent} from './complaints/complaints.component';
-import {ExaminationComponent} from './examination/examination.component';
 import {HomeComponent} from './home/home.component';
 import {PreviousCoursesComponent} from './previous-courses/previous-courses.component';
-import {StudentServicesComponent} from './student-services/student-services.component';
 import {TeacherAssesmentComponent} from './teacher-assesment/teacher-assesment.component';
 import {TimeTableComponent} from './time-table/time-table.component';
+import {CompleteTranscriptComponent} from './examination/complete-transcript/complete-transcript.component';
+import {SemesterTranscriptComponent} from './examination/semester-transcript/semester-transcript.component';
+import {DateSheetComponent} from './examination/date-sheet/date-sheet.component';
+import {FeeStructureComponent} from './student-services/fee-structure/fee-structure.component';
+import {StudentInformationComponent} from './student-services/student-information/student-information.component';
 import {MainRoutingModule} from './main-routing.module';
 import {AutoCloseDirective} from './auto.close.directive';
 import {AppComponentEventEmitterService} from './event-emmiter.service';
-import {BrowserModule} from '@angular/platform-browser';
-import {AppRoutingModule} from '../app-routing.module';
 import {ChartsModule} from 'ng2-charts';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -23,18 +25,22 @@ import {ChartsModule} from 'ng2-charts';
     MainComponent,
     AlertComponent,
     ComplaintsComponent,
-    ExaminationComponent,
     HomeComponent,
     PreviousCoursesComponent,
-    StudentServicesComponent,
     TeacherAssesmentComponent,
     TimeTableComponent,
+    FeeStructureComponent,
+    StudentInformationComponent,
+    CompleteTranscriptComponent,
+    SemesterTranscriptComponent,
+    DateSheetComponent,
     AutoCloseDirective
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule
   ],
   providers: [AppComponentEventEmitterService]
 })

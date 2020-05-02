@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {CourseComponent} from './course.component';
-import {AnnouncementComponent} from './announcement/announcement.component';
+import {AnnoucementComponent} from './annoucement/annoucement.component';
 import {AskQuestionComponent} from './ask-question/ask-question.component';
 import {CourseMaterialComponent} from './course-material/course-material.component';
 import {CourseOutlineComponent} from './course-outline/course-outline.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
     path: '', component: CourseComponent, children: [
 
       {
-        path: 'announcement', component: AnnouncementComponent
+        path: 'annoucement', component: AnnoucementComponent
       },
       {
         path: 'askQuestion', component: AskQuestionComponent
@@ -35,7 +35,7 @@ const routes: Routes = [
         path: 'submitAssignment', component: SubmitAssignmentComponent
       },
       {
-        path: '', redirectTo: 'announcement', pathMatch: 'full'
+        path: '', redirectTo: 'annoucement', pathMatch: 'full'
       }
     ]
   }
