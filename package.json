@@ -16,6 +16,7 @@
     "@angular/compiler": "~9.0.1",
     "@angular/core": "~9.0.1",
     "@angular/forms": "~9.0.1",
+    "@angular/http": "latest",
     "@angular/platform-browser": "~9.0.1",
     "@angular/platform-browser-dynamic": "~9.0.1",
     "@angular/router": "~9.0.1",
@@ -25,13 +26,12 @@
     "@ngrx/store-devtools": "^8.6.0",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.4.0",
     "ng2-charts": "^2.3.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
-    "@angular/http": "latest"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.4",
