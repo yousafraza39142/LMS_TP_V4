@@ -10,11 +10,13 @@ import {StoreModule} from '@ngrx/store';
 import {ReactiveFormsModule} from '@angular/forms';
 import { JwtInterceptor, ErrorInterceptor } from './auth/_helpers';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FileuploadComponent } from './fileupload/fileupload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
+    FileuploadComponent
   ],
     imports: [
         BrowserModule,

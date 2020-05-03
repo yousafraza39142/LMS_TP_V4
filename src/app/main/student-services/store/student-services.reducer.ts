@@ -9,9 +9,16 @@ export interface State {
 }
 
 const initialState: State = {
-  studentInformation: new StudentInformationModel('0263-bscs-2016', 'saqlain', 'ghulam',
-    '33202-5654879465', 465421324, 'lahore', 3.9, 'BSCS', '7th',
-    60, 48, '8/12/2020', 'active', '654654213sads'),
+  studentInformation: new StudentInformationModel( 'sdfsf', 'dfsdf', 'gffdf', 'ddfgdfg', 445, 'dgdf',
+    4, 'fdg', 'gdf', 45, 45,
+    'gfdd', 'gfdd', 'gfdd',
+    'gfdd', 4, 4, 5, 6,
+    'dfgfd', 'dfgfd', 'dfgfd', 4, 45,
+    'dfgfd', 'dfgfd', 'dfgfd', 4, 4, 'dfgfd')
+    // new StudentInformationModel('0263-bscs-2016', 'saqlain', 'ghulam',
+    // '33202-5654879465', 465421324, 'lahore', 3.9, 'BSCS', '7th',
+    // 60, 48, '8/12/2020', 'active', '654654213sads')
+  ,
   semestersFee: new SemestersFeeModal(2, [
     new SemesterFeeModal(4654654, 10, 10000, 5000, 50, 152, 25800,
       '2/25/15', '2/15/12'),

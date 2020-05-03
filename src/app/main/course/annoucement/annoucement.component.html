@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">Announcements</div>
+  <div class="card-body p-1 d-flex">
+    <div class="sidebar hide-sidebar bg-light">
+      <div class="list-group">
+        <div
+          class="pb-1 d-flex justify-content-between"
+          *ngFor="let announcement of this.announcements;">
+          <div class="p-1 bg-danger"></div>
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <b class="mb-1">{{announcement.announcementTitle}}</b>
+              <small>just now</small>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a id="toggler" class="ml-1">
+      <img class="border p-1" src="../../../assets/hamburger.png" alt="none">
+    </a>
+    <div id="details" class="">
+      <p class="text-info">8-2-2020 to 7-3-2020</p>
+      <p>All Ongoing Students are informed that Registration and Payment of Dues for Spring 2020 is scheduled as (Feb
+        24th to March 06th). Last date for Fee payment will be (Friday) 06th March, 2020. Classes for Spring 2020 will
+        be commenced from (Monday) 09th March, 2020.</p>
+    </div>
+  </div>
+</div>
+

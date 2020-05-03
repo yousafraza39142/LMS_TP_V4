@@ -1,0 +1,31 @@
+.fix-size {
+  width: 7rem;
+  height: 7rem;
+}
+
+
+th {
+  background-color: #e9ecef;
+}
+
+table.table-bordered {
+  font-size: .8rem;
+}
+
+table.table-bordered > tbody > tr > td > div {
+  background-color: #dadada;
+  border-left: 5px solid black;
+  border-radius: 5px 5px 5px 5px
+}
+
+table.table-bordered > tbody > tr{
+  padding: 5px;
+  max-width: 80px;
+  min-width: 80px;
+}
+
+@media (max-width: 768px) {
+  table.table-bordered {
+    font-size: .7rem;
+  }
+}

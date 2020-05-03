@@ -1,0 +1,273 @@
+<div id="main-container" class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+  <div class="app-header header-shadow">
+    <div class="app-header__logo">
+      <div class="logo-src"></div>
+      <div class="header__pane ml-auto">
+        <div>
+          <button id="navBarHamBtn-lg"
+                  type="button"
+                  class="hamburger close-sidebar-btn hamburger--elastic"
+                  (click)="OnnavBarHamBtn_lgClicked()"
+                  data-class="closed-sidebar">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-header__mobile-menu">
+      <div>
+        <button id="navBarHamBtn" type="button" class="hamburger hamburger--elastic mobile-toggle-nav"
+                (click)="OnnavBarHamBtnClicked()">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="app-header__menu">
+            <span>
+                <button id="app-header-mobile-menu"
+                        type="button"
+                        class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav"
+                        (click)="OnAppHeaderMobileMenu()">
+                    <span class="btn-icon-wrapper">
+                        <i class="fa fa-ellipsis-v fa-w-6"></i>
+                    </span>
+                </button>
+            </span>
+    </div>
+    <div id="content_mobile" class="app-header__content">
+      <div class="app-header-left">
+
+      </div>
+      <div class="app-header-right">
+        <div class="header-btn-lg pr-0">
+          <div class="widget-content p-0">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left">
+                <div id="profile-btn" class="btn-group">
+                  <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                     class="p-0 btn">
+                    <img width="42" class="rounded-circle" src="../assets/images/avatars/1.jpg" alt="">
+                    <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                  </a>
+                  <div tabindex="-1" role="menu" aria-hidden="true"
+                       class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu-header">
+                      <div class="dropdown-menu-header-inner bg-info">
+                        <div class="menu-header-image opacity-2"
+                             style="background-image: url('src/assets/images/dropdown-header/city3.jpg');"></div>
+                        <div class="menu-header-content text-left">
+                          <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                              <div class="widget-content-left mr-3">
+                                <img width="42" class="rounded-circle"
+                                     src="../assets/images/avatars/1.jpg"
+                                     alt="">
+                              </div>
+                              <div class="widget-content-left">
+                                <div class="widget-heading">Alina Mcloughlin
+                                </div>
+                                <div class="widget-subheading opacity-8">CGPA: 4.0
+                                </div>
+                              </div>
+                              <div class="widget-content-right mr-2">
+                                <button class="btn-pill btn-shadow btn-shine btn btn-focus" (click)="onLogout()">
+                                  Logout
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="scroll-area-xs" style="height: 150px;">
+                      <div class="scrollbar-container ps">
+                        <ul class="nav flex-column">
+                          <li class="nav-item-header nav-item">Activity</li>
+                          <li class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link">Performance
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link" (click)="onShowResetForm()">Recover Password
+                            </a>
+                          </li>
+                          <li class="nav-item-header nav-item">My Account
+                          </li>
+                          <li class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link">Settings
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link">Logs
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="widget-content-left  ml-3 header-user-info">
+                <div class="widget-heading">
+                  Surprise M.F
+                </div>
+                <div class="widget-subheading">
+                  XX-BSCS-17
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-main">
+    <div class="app-sidebar sidebar-shadow">
+      <div class="app-header__logo">
+        <div class="logo-src"></div>
+        <div class="header__pane ml-auto">
+          <div>
+            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                    data-class="closed-sidebar">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="app-header__mobile-menu">
+        <div>
+          <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+          </button>
+        </div>
+      </div>
+      <div class="app-header__menu">
+                    <span>
+                        <button type="button"
+                                class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+      </div>
+      <div class="scrollbar-sidebar">
+        <div class="app-sidebar__inner">
+          <ul class="vertical-nav-menu">
+            <li class="app-sidebar__heading">Menu</li>
+            <li>
+              <a (click)="onHomeClicked()"><i class="metismenu-icon fa fa-home active"></i>Home</a>
+            </li>
+            <li>
+              <a (click)="OnTimeTableClicked()">
+                <i class="metismenu-icon fa fa-calendar"></i>
+                Time Table
+                <i class="metismenu-state-icon"></i>
+              </a>
+            </li>
+            <li class="app-sidebar__heading">Student</li>
+            <li tabindex="0" autoCloseItem id="menu-list-1" class="menu-list"
+                (click)="OnShowMenuListItem('menu-list-1')">
+              <a>
+                <i class="metismenu-icon fa fa-user-graduate"></i>
+                Student Service
+                <i class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
+              </a>
+              <ul class="mm-collapse">
+                <li>
+                  <a (click)="OnStudentInformationClicked()">
+                    <i class="metismenu-icon">
+                    </i>Student Information
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnFeeStructureClicked()">
+                    <i class="metismenu-icon">
+                    </i>Fee Structure
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li tabindex="0" autoCloseItem id="menu-list-2" class="menu-list"
+                (click)="OnShowMenuListItem('menu-list-2')">
+              <a>
+                <i class="metismenu-icon fa fa-paperclip"></i>
+                Examination
+                <i class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
+              </a>
+              <ul class="mm-collapse">
+                <li>
+                  <a (click)="OnSemesterTranscriptClicked()">
+                    <i class="metismenu-icon">
+                    </i>Semester Transcript
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnCompleteTranscriptClicked()">
+                    <i class="metismenu-icon">
+                    </i>Compelete Transcript
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnDateSheetClicked()">
+                    <i class="metismenu-icon">
+                    </i>Date Sheet
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="app-sidebar__heading">Courses</li>
+            <li tabindex="0" autoCloseItem id="menu-list-3" class="menu-list">
+              <a>
+                <i class="metismenu-icon fa fa-book-open"></i>Semester Courses<i
+                class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
+              </a>
+              <ul class="mm-collapse">
+                <li
+                  *ngFor="let course of this.semesterCourses;"
+                  (click)="OnCourseClicked()"
+                ><a><i class="metismenu-icon"></i>{{course.courseTitle}}</a></li>
+              </ul>
+            </li>
+            <li (click)="OnPreviousCoursesClicked()">
+              <a>
+                <i class="metismenu-icon fa fa-book-reader "></i>
+                Previous Courses
+              </a>
+            </li>
+            <li class="app-sidebar__heading">Help</li>
+            <li>
+              <a (click)="OnTeacherAssesmentClicked()">
+                <i class="metismenu-icon fa fa-hands-helping">
+                </i>Teacher Assessment
+              </a>
+            </li>
+            <li>
+              <a (click)="OnCompliantClicked()">
+                <i class="metismenu-icon fa fa-envelope">
+                </i>Complaint
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="app-main__outer">
+      <div class="app-main__inner">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <app-alert *ngIf="showResetForm" (close)="onCloseResetForm()"></app-alert>
+</div>
+

@@ -1,0 +1,27 @@
+<div class="card shadow">
+  <div class="card-header">Course Material</div>
+  <div class="card-body">
+    <div class="table table-responsive">
+      <div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>File Name</th>
+            <th class="text-center">Download</th>
+          </tr>
+          </thead>
+          <tbody class="custom-hover">
+          <tr
+            *ngFor="let courseMaterial of this.courseMaterial;">
+            <td>{{courseMaterial.fileName}}</td>
+            <td class="text-center">
+              <button class="download"><i class="fa fa-download"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
