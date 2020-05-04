@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "lmsv3"
+    }
+  },
+  "defaultProject": "lmsv3",
+  "cli": {
+    "analytics": "b796ec6b-a268-46b9-a098-ef7bfdfd5cb0"
+  }
 }

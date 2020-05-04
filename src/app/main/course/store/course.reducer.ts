@@ -22,6 +22,7 @@ export interface State {
   askQuestion: AskQuestionModal;
   announcements: AnnouncementModal[];
 }
+
 const initialState: State = {
   semesterCourses: [],
   //   new CourseModal('object oriented'),
@@ -145,6 +146,7 @@ const initialState: State = {
       '8-2-2020 to 7-3-2020')
   ]
 };
+
 export function courseReducer(
   state = initialState,
   action: courseActions.CourseActions

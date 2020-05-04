@@ -13,7 +13,7 @@ declare var $: any;
 })
 export class AnnoucementComponent implements OnInit {
 
-  public announcements: AnnouncementModal[];
+  announcements: AnnouncementModal[];
   constructor(private clickEvent: AppComponentEventEmitterService,
               private store: Store<fromApp.AppState>) {
   }

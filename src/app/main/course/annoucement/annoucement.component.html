@@ -20,10 +20,10 @@
       <img class="border p-1" src="../../../assets/hamburger.png" alt="none">
     </a>
     <div id="details" class="">
-      <p class="text-info">8-2-2020 to 7-3-2020</p>
-      <p>All Ongoing Students are informed that Registration and Payment of Dues for Spring 2020 is scheduled as (Feb
-        24th to March 06th). Last date for Fee payment will be (Friday) 06th March, 2020. Classes for Spring 2020 will
-        be commenced from (Monday) 09th March, 2020.</p>
+      <div *ngFor="let an of announcements">
+        <p class="text-info">{{an.announcementDate}}</p>
+        <p>{{an.announcementDescription}}</p>
+      </div>
     </div>
   </div>
 </div>

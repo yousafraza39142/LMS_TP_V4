@@ -76,7 +76,8 @@ export class MainComponent implements OnInit {
     this.router.navigate(['timeTable'], {relativeTo: this.route});
   }
 
-  OnCourseClicked() {
+  OnCourseClicked(element: HTMLLIElement) {
+    console.log(this.semesterCourses[element.value]);
     this.router.navigate(['course'], {relativeTo: this.route});
   }
 
@@ -134,7 +135,6 @@ export class MainComponent implements OnInit {
       buttonContent.classList.add('header-mobile-open');
     }
   }
-
   ngOnInit(): void {
     // here are the values of the student for the header
     this.studentName = JSON.parse(localStorage.getItem('currentUser')).NM;
@@ -153,7 +153,10 @@ export class MainComponent implements OnInit {
     // here we are assigning the courses to the store so that we can use it from other components
     this.store.select('fromCourse').subscribe(
       state => {
+        console.log('working');
         state.semesterCourses = this.semesterCourses;
+        // this.semesterCourses = state.semesterCourses;
+        // console.log(state.semesterCourses);
       }
     );
     // from the role based authentiction
@@ -184,4 +187,5 @@ export class MainComponent implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/auth']);
   }
+
 }

@@ -232,10 +232,12 @@
                 class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
               </a>
               <ul class="mm-collapse">
-                <li
-                  *ngFor="let course of this.semesterCourses;"
-                  (click)="OnCourseClicked()"
-                ><a><i class="metismenu-icon"></i>{{course.courseTitle}}</a></li>
+                <li #element *ngFor="let course of this.semesterCourses;let i = index; " value="{{i}}" (click)="OnCourseClicked(element)">
+                    <a>
+                    <i class="metismenu-icon"></i>
+                    {{course.courseTitle}}
+                  </a>
+                </li>
               </ul>
             </li>
             <li (click)="OnPreviousCoursesClicked()">
