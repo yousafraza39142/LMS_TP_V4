@@ -6,6 +6,8 @@ import {CourseModal} from './course/course.modal';
 import {AppComponentEventEmitterService} from './event-emmiter.service';
 import { User } from '../auth/_models/user';
 import { AuthenticationService } from '../auth/_services/authentication.service';
+import {HttpClient} from '@angular/common/http';
+import {StudentInformationModel} from './student-services/student-information/student-information.model';
 
 declare var $: any;
 
@@ -15,6 +17,9 @@ declare var $: any;
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  public studentName: string;
+  public rollNumber: string;
+  public cgpa: string;
   // from the role based authentication
   loading = false;
   currentUser: User;
@@ -22,7 +27,7 @@ export class MainComponent implements OnInit {
 
 
   IsUserLoggedIn = false;
-  public semesterCourses: CourseModal[];
+  public semesterCourses: CourseModal[] = [];
   showResetForm = false;
 
 
@@ -30,7 +35,8 @@ export class MainComponent implements OnInit {
               private store: Store<fromApp.AppState>,
               private route: ActivatedRoute,
               private clickEvent: AppComponentEventEmitterService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private http: HttpClient) {
     this.currentUser = this.authenticationService.currentUserValue;
   }
 
@@ -130,14 +136,28 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // from the role based authentiction
-    this.loading = true;
-
+    // here are the values of the student for the header
+    this.studentName = JSON.parse(localStorage.getItem('currentUser')).NM;
+    this.rollNumber = JSON.parse(localStorage.getItem('currentUser')).ROLNO;
+    this.cgpa = JSON.parse(localStorage.getItem('currentUser')).CGPA;
+    // here we are requesting the api for the courses response
+    // tslint:disable-next-line:max-line-length
+    const abc = this.http.get('http://localhost:12345/api/EnrollCourses/ListOfEnrollCourses?YEAR=2016&C_CODE=1&D_ID=1&MAJ_ID=1&RN=1')
+      .subscribe(
+        s => {
+          for (const index in s) {
+            this.semesterCourses[index] = new CourseModal(s[index].SUB_NM, s[index].SUB_CODE);
+        }
+        }
+      );
+    // here we are assigning the courses to the store so that we can use it from other components
     this.store.select('fromCourse').subscribe(
       state => {
-        this.semesterCourses = state.semesterCourses;
+        state.semesterCourses = this.semesterCourses;
       }
     );
+    // from the role based authentiction
+    this.loading = true;
 
     $('.menu-list ul').on('click', () => {
       if (window.innerWidth < 992) {

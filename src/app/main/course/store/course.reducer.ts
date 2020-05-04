@@ -23,13 +23,13 @@ export interface State {
   announcements: AnnouncementModal[];
 }
 const initialState: State = {
-  semesterCourses: [
-    new CourseModal('object oriented'),
-    new CourseModal('programming fundamental'),
-    new CourseModal('numerical computing'),
-    new CourseModal('artifical intelligance'),
-    new CourseModal('natural processing language')
-  ],
+  semesterCourses: [],
+  //   new CourseModal('object oriented'),
+  //   new CourseModal('programming fundamental'),
+  //   new CourseModal('numerical computing'),
+  //   new CourseModal('artifical intelligance'),
+  //   new CourseModal('natural processing language')
+  // ],
   courseOutline: new CourseOutlineModal(
     '    This course will introduce the basics of discrete structures and\n' +
     '    theoretical computer science, its scope and applications. Topics\n' +

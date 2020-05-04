@@ -66,7 +66,6 @@ export class HomeComponent implements OnInit {
   lineChartType = 'line';
 
   ngOnInit(): void {
-
     this.store.select('fromHome').subscribe(
       state => {
         this.semesterAttendance = state.semesterAttendance;

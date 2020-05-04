@@ -11,12 +11,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { JwtInterceptor, ErrorInterceptor } from './auth/_helpers';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FileuploadComponent } from './fileupload/fileupload.component';
+import { DownloadFileComponent } from './download-file/download-file.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    FileuploadComponent
+    FileuploadComponent,
+    DownloadFileComponent
   ],
     imports: [
         BrowserModule,

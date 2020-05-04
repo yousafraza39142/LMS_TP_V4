@@ -1,0 +1,325 @@
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  margin: 0
+}
+.app-theme-white.app-container {
+  background: #f1f4f6
+}
+.app-theme-gray.app-container {
+  background: #fff
+}
+
+
+
+.body-tabs-shadow .body-tabs-animated {
+  padding: .75rem 0
+}
+
+.body-tabs-shadow .body-tabs-animated .nav-link span {
+  position: relative;
+  z-index: 5
+}
+
+.body-tabs-shadow .body-tabs-animated .nav-link::before {
+  height: 70%;
+  top: 15%;
+  z-index: 4;
+  bottom: auto;
+  box-shadow: 0 16px 26px -10px rgba(63, 106, 216, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(63, 106, 216, 0.2);
+  border-radius: 100%;
+  opacity: .5
+}
+
+.body-tabs-shadow .body-tabs-animated .nav-link.active, .body-tabs-shadow .body-tabs-animated .nav-link:hover {
+  color: #fff
+}
+
+.body-tabs-shadow .body-tabs-animated .nav-link.active::before, .body-tabs-shadow .body-tabs-animated .nav-link:hover::before {
+  border-radius: .25rem;
+  opacity: 1
+}
+
+
+.h-100 {
+  height: 100% !important
+}
+
+.h-100 {
+  height: 100vh !important
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0
+}
+
+.no-gutters > .col, .no-gutters > [class*="col-"] {
+  padding-right: 0;
+  padding-left: 0
+}
+
+.slider-light .slick-dots {
+  position: absolute;
+  bottom: 10px
+}
+
+.slider-light .slick-dots li button {
+  background: rgba(255, 255, 255, 0.25)
+}
+
+.slider-light .slick-prev, .slider-light .slick-next {
+  background: transparent;
+  color: #fff;
+  box-shadow: 0 0 0 0 transparent
+}
+
+.slider-light .slick-prev:hover, .slider-light .slick-next:hover {
+  background: rgba(255, 255, 255, 0.15)
+}
+
+.slider-light .slick-next {
+  right: 15px
+}
+
+.slider-light .slick-prev {
+  left: 15px
+}
+
+.slider-light .slider-content {
+  color: #fff
+}
+
+.range-slider-light .noUi-handle {
+  border: 2px solid #eee;
+  border-radius: 100%;
+  background: #fff;
+  cursor: default;
+  transition: box-shadow 200ms
+}
+
+.range-slider-light .noUi-connect {
+  background: #eee
+}
+
+.range-slider-light .noUi-active {
+  border-color: #c8c8c8;
+  box-shadow: 0 0.46875rem 2.1875rem rgba(238, 238, 238, 0.8), 0 0.125rem 0.5875rem rgba(238, 238, 238, 0.9)
+}
+.d-none {
+  display: none !important
+}
+
+@media (min-width: 768px) {
+  .d-md-none {
+    display: none !important
+  }
+}
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.slick-slider-sm .slick-slider {
+  max-width: 450px
+}
+
+.slick-slider-sm .slick-slider .slick-prev {
+  left: -20px
+}
+
+.slick-slider-sm .slick-slider .slick-next {
+  right: -20px
+}
+
+.slick-slider-md .slick-slider {
+  max-width: 650px;
+  margin: 0 auto
+}
+
+.slick-slider-hover .slick-arrow {
+  opacity: 0;
+  background: #3f6ad8;
+  color: #fff !important
+}
+
+.slick-slider-hover .slick-prev {
+  left: -30px
+}
+
+.slick-slider-hover .slick-next {
+  right: -30px
+}
+
+.slick-slider-hover:hover .slick-arrow {
+  opacity: 1
+}
+
+.slick-slider .slick-track, .slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0)
+}
+
+.slick-slider .slide-img-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  opacity: .4;
+  z-index: 10
+}
+
+.slick-slider .slider-content {
+  position: relative;
+  z-index: 15;
+  text-align: center;
+  margin: 0 6rem
+}
+
+.slick-slider .slider-content h3 {
+  font-size: 1.75rem;
+  font-weight: normal;
+  margin-bottom: 1.5rem
+}
+
+.slick-slider .slider-content p {
+  font-size: 1rem;
+  opacity: .7
+}
+
+.slick-slider-sm .slick-slider {
+  max-width: 650px !important
+}
+@media (min-width: 992px) {
+  .slick-slider-sm .slick-slider {
+    max-width: 850px !important
+  }
+}
+@media (max-width: 991.98px) {
+  .slick-slider-sm .slick-slider {
+    max-width: 650px !important
+  }
+}
+@media (max-width: 1199.98px) {
+  .slick-slider-sm .slick-slider .slick-prev {
+    left: 15px
+  }
+
+  .slick-slider-sm .slick-slider .slick-next {
+    right: 15px
+  }
+}
+.position-relative {
+  position: relative !important
+}
+.d-flex {
+  display: flex !important
+}
+.justify-content-center {
+  justify-content: center !important
+}
+.align-items-center {
+  align-items: center !important
+}
+.bg-sunny-morning {
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%) !important
+}
+.bg-plum-plate {
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important
+}
+.bg-premium-dark {
+  background-image: linear-gradient(to right, #434343 0%, black 100%) !important
+}
+.mr-auto, .mx-auto {
+  margin-right: auto !important
+}
+.app-login-box .app-logo {
+  margin-bottom: 3rem
+}
+
+.app-login-box h4 {
+  margin-bottom: 1.5rem;
+  font-weight: normal
+}
+
+.app-login-box h4 div {
+  opacity: .6
+}
+
+.app-login-box h4 span {
+  font-size: 1.1rem
+}
+.dropdown-divider {
+  height: 0;
+  margin: .5rem 0;
+  overflow: hidden;
+  border-top: 1px solid #e9ecef
+}.divider {
+   margin-top: 1rem;
+   margin-bottom: 1rem;
+   height: 1px;
+   overflow: hidden;
+   background: #e9ecef
+ }
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px
+}
+
+.form-row > .col, .form-row > [class*="col-"] {
+  padding-right: 5px;
+  padding-left: 5px
+}
+@media (min-width: 576px) {
+  .form-inline .form-group {
+    display: flex;
+    flex: 0 0 auto;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 0
+  }
+}
+
+.select2-container--bootstrap4 .select2-selection--single.input-sm, .input-group-sm .select2-container--bootstrap4 .select2-selection--single, .form-group-sm .select2-container--bootstrap4 .select2-selection--single {
+  border-radius: .2rem;
+  font-size: .875rem;
+  height: calc(1.8125rem + 2px);
+  line-height: 1;
+  padding: .5rem 1rem .5rem .25rem
+}
+.input-group > .select2-hidden-accessible:first-child + .select2-container--bootstrap4 > .selection > .select2-selection, .input-group > .select2-hidden-accessible:first-child + .select2-container--bootstrap4 > .selection > .select2-selection.form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0
+}
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: .2em
+}
+
+@media (max-width: 992px) {
+  .hide-wall{
+    display: none;
+  }
+}
