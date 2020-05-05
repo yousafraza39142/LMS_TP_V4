@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {PresentationData} from '../store/presentation.component.reducer';
+import {PresentationData, PresentationTable} from '../store/presentation.component.reducer';
 import {CourseModal} from '../../../../shared/course.modal';
 import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {PresentationModal} from '../../../../shared/PresentationModal';
+import {studentMidtermTable} from '../../mid-term/store/mid-term.component.reducer';
 
 @Component({
   selector: 'app-students-presentation',
@@ -13,6 +14,8 @@ import {PresentationModal} from '../../../../shared/PresentationModal';
   styleUrls: ['./students-presentation.component.css']
 })
 export class StudentsPresentationComponent implements OnInit {
+  totalMarks: number;
+  presentationTable: PresentationTable[];
   presentations: PresentationModal[];
   courses: CourseModal[];
   sections: SectionModal[];
@@ -22,6 +25,8 @@ export class StudentsPresentationComponent implements OnInit {
   ngOnInit(): void {
     this.store.select('fromPresentation').subscribe(
       state => {
+        this.totalMarks = state.data.totalMarks;
+        this.presentationTable = state.data.students_presentation;
         this.presentations = state.data.presentations;
       }
     );

@@ -43,50 +43,22 @@
           <tr>
             <th>Roll No</th>
             <th>Name</th>
-            <th class="text-center">Group</th>
             <th class="text-center">Download</th>
-            <th class="text-center">Marks Obtained/10</th>
+            <th class="text-center">Marks Obtained/{{totalMarks}}</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td scope="row">0000-BSCS-17</td>
-            <td>Yousaf</td>
-            <td class="text-center">Group 1</td>
+          <tr *ngFor="let r of presentationTable">
+            <td>{{r.rollNo}}</td>
+            <td>{{r.name}}</td>
             <td class="text-center">
-              <button class="download"><i class="fa fa-download"></i></button>
+              <button class="download" [disabled]='!r.downloadPath'><i class="fa fa-download"></i></button>
             </td>
-            <td class="text-center">6</td>
+            <td class="text-center">
+              <input type="number" value="{{r.marks_obtained}}">
+            </td>
+          </tr>
 
-          </tr>
-          <tr>
-            <td scope="row">0000-BSCS-17</td>
-            <td>Adnan Jamil</td>
-            <td class="text-center">Group 2</td>
-            <td class="text-center">
-              <button class="download"><i class="fa fa-download"></i></button>
-            </td>
-            <td class="text-center">7</td>
-          </tr>
-          <tr>
-            <td scope="row">0000-BSCS-17</td>
-            <td>Hamza Suleman</td>
-            <td class="text-center">Group 3</td>
-            <td class="text-center">
-              <button class="download"><i class="fa fa-download"></i></button>
-            </td>
-            <td class="text-center">8</td>
-          </tr>
-          <tr>
-            <td scope="row">0000-BSCS-17</td>
-            <td>Umair Ahmad</td>
-            <td class="text-center">Group 4</td>
-            <td class="text-center">
-              <button class="download"><i class="fa fa-download"></i></button>
-            </td>
-            <td class="text-center">8</td>
-
-          </tr>
           </tbody>
         </table>
       </div>

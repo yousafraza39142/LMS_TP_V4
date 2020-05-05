@@ -14,6 +14,8 @@ const routes: Routes = [
       { path: 'lab', loadChildren: () => import(`./mark-assessment/lab/lab.module`).then(m => m.LabModule) },
       { path: 'midTerm', loadChildren: () => import(`./mark-assessment/mid-term/mid-term.module`).then(m => m.MidTermModule) },
       { path: 'project', loadChildren: () => import(`./mark-assessment/project/project.module`).then(m => m.ProjectModule) },
+      // tslint:disable-next-line:max-line-length
+      { path: 'presentation', loadChildren: () => import(`./mark-assessment/presentation/presentation.module`).then(m => m.PresentationModule) },
       { path: 'studentQueries', loadChildren: () => import(`./student-queries/student-queries.module`).then(m => m.StudentQueriesModule) },
       // tslint:disable-next-line:max-line-length
       { path: 'teacherInformation', loadChildren: () => import(`./teacher-information/teacher-information.module`).then(m => m.TeacherInformationModule) },
