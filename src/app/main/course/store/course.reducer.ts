@@ -99,30 +99,29 @@ const initialState: State = {
     new SubmitAssignmentModal('Assignment No 4', '02/6/20', ''),
     new SubmitAssignmentModal('Assignment No 5', '22/7/20', '')
   ],
-  gradeBook: new GradeBookModal(
-    [
-      new GradeTypeModal('assigmnent 01', '12/1/20', 50, 46),
-      new GradeTypeModal('assigmnent 02', '02/3/20', 50, 41),
-      new GradeTypeModal('assigmnent 03', '11/10/20', 50, 45),
-      new GradeTypeModal('assigmnent 04', '21/11/20', 50, 48)
-    ],
-    [
-      new GradeTypeModal('quiz 01', '12/1/20', 50, 46),
-      new GradeTypeModal('quiz 02', '02/3/20', 50, 41),
-      new GradeTypeModal('quiz 03', '02/3/20', 50, 43)
-    ],
-    [
-      new GradeTypeModal('mid term 01', '12/1/20', 50, 46),
-      new GradeTypeModal('mid term 02', '02/3/20', 50, 41)
-    ],
-    [
-      new GradeTypeModal('final term 01', '12/1/20', 50, 46)
-    ],
-    [
-      new GradeTypeModal('project 01', '12/1/20', 50, 41),
-      new GradeTypeModal('presentation 02', '02/3/20', 50, 30)
-    ]
-  ),
+  gradeBook: new GradeBookModal([], [], [], [], []),
+  //   [
+  //     new GradeTypeModal('assigmnent 01', 50, 46),
+  //     new GradeTypeModal('assigmnent 02', 50, 41),
+  //     new GradeTypeModal('assigmnent 03', 50, 45),
+  //     new GradeTypeModal('assigmnent 04', 50, 48)
+  //   ],
+  //   [
+  //     new GradeTypeModal('quiz 01', 50, 46),
+  //     new GradeTypeModal('quiz 02', 50, 41),
+  //     new GradeTypeModal('quiz 03', 50, 43)
+  //   ],
+  //   [
+  //     new GradeTypeModal('mid term 01', 50, 46)
+  //   ],
+  //   [
+  //     new GradeTypeModal('final term 01', 50, 46)
+  //   ],
+  //   [
+  //     new GradeTypeModal('project 01', 50, 41),
+  //     new GradeTypeModal('presentation 02', 50, 30)
+  //   ]
+  // ),
   leaveStatus: new LeaveStatusModal('', '', []),
   // leaveStatus: new LeaveStatusModal(25, 3, [
   //   new AbsentteeModal(1, '02/02/20'),

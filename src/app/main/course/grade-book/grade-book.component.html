@@ -93,11 +93,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr
-                *ngFor="let gradeType of this.gradebook.midTerm;">
-                <td>{{gradeType.gradeType}}</td>
-                <td>{{gradeType.totalMarks}}</td>
-                <td>{{gradeType.obtainedMarks}}</td>
+              <tr>
+<!--                *ngFor="let gradeType of this.gradebook.midTerm;">-->
+                <td>Mid Term</td>
+                <td>{{this.midtermTotalMarks}}</td>
+                <td>{{this.midtermObtMarks}}</td>
               </tr>
               </tbody>
             </table>
@@ -127,11 +127,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr
-                *ngFor="let gradeType of this.gradebook.finalTerm;">
-                <td>{{gradeType.gradeType}}</td>
-                <td>{{gradeType.totalMarks}}</td>
-                <td>{{gradeType.obtainedMarks}}</td>
+              <tr>
+<!--                *ngFor="let gradeType of this.finalTermMarks;">-->
+                <td>Final Term</td>
+                <td>{{this.finaltermTotalMarks}}</td>
+                <td>{{this.finaltermObtMarks}}</td>
               </tr>
               </tbody>
             </table>
