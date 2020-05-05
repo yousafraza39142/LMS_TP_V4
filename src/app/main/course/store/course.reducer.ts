@@ -82,15 +82,15 @@ const initialState: State = {
     ],
   ),
   courseMaterial: [
-    new CourseMaterialModal('Discrete Mathematics-Outlines-Lectures.docx'),
-    new CourseMaterialModal('Assignment-01-Propositional Logic.pdf'),
-    new CourseMaterialModal('Lec02-03-F19-Propositional-Logic.pdf'),
-    new CourseMaterialModal('Lec04-05-F19-Propositional-Logic-Quantifiers.pdf'),
-    new CourseMaterialModal('Practice-Problems-01A.pdf'),
-    new CourseMaterialModal('Assignment-02-F19-Quantifiers.pdf'),
-    new CourseMaterialModal('Lec24-25-F19-PHP.pptx'),
-    new CourseMaterialModal('Lec-26-29-F19-Couting-Last-Week.pptx'),
-    new CourseMaterialModal('Assignment-03-F19-Proofs-A.pdf')
+    // new CourseMaterialModal('Discrete Mathematics-Outlines-Lectures.docx'),
+    // new CourseMaterialModal('Assignment-01-Propositional Logic.pdf'),
+    // new CourseMaterialModal('Lec02-03-F19-Propositional-Logic.pdf'),
+    // new CourseMaterialModal('Lec04-05-F19-Propositional-Logic-Quantifiers.pdf'),
+    // new CourseMaterialModal('Practice-Problems-01A.pdf'),
+    // new CourseMaterialModal('Assignment-02-F19-Quantifiers.pdf'),
+    // new CourseMaterialModal('Lec24-25-F19-PHP.pptx'),
+    // new CourseMaterialModal('Lec-26-29-F19-Couting-Last-Week.pptx'),
+    // new CourseMaterialModal('Assignment-03-F19-Proofs-A.pdf')
   ],
   submitAssigments: [
     new SubmitAssignmentModal('Assignment No 1', '12/2/20', ''),
@@ -123,13 +123,14 @@ const initialState: State = {
       new GradeTypeModal('presentation 02', '02/3/20', 50, 30)
     ]
   ),
-  leaveStatus: new LeaveStatusModal(25, 3, [
-    new AbsentteeModal(1, '02/02/20'),
-    new AbsentteeModal(2, '12/03/20'),
-    new AbsentteeModal(1, '22/08/20'),
-    new AbsentteeModal(3, '23/12/20'),
-    new AbsentteeModal(1, '30/02/20')
-  ]),
+  leaveStatus: new LeaveStatusModal('', '', []),
+  // leaveStatus: new LeaveStatusModal(25, 3, [
+  //   new AbsentteeModal(1, '02/02/20'),
+  //   new AbsentteeModal(2, '12/03/20'),
+  //   new AbsentteeModal(1, '22/08/20'),
+  //   new AbsentteeModal(3, '23/12/20'),
+  //   new AbsentteeModal(1, '30/02/20')
+  // ]),
   askQuestion: null,
   announcements: [
     new AnnouncementModal('Heading 1', 'this is the aavounrafsdds',

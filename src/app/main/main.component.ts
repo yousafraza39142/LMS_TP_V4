@@ -140,9 +140,11 @@ export class MainComponent implements OnInit {
     this.studentName = JSON.parse(localStorage.getItem('currentUser')).NM;
     this.rollNumber = JSON.parse(localStorage.getItem('currentUser')).ROLNO;
     this.cgpa = JSON.parse(localStorage.getItem('currentUser')).CGPA;
+
+
     // here we are requesting the api for the courses response
     // tslint:disable-next-line:max-line-length
-    const abc = this.http.get('http://localhost:12345/api/EnrollCourses/ListOfEnrollCourses?YEAR=2016&C_CODE=1&D_ID=1&MAJ_ID=1&RN=1')
+    this.http.get('http://localhost:12345/api/EnrollCourses/ListOfEnrollCourses?YEAR=2016&C_CODE=1&D_ID=1&MAJ_ID=1&RN=1')
       .subscribe(
         s => {
           for (const index in s) {
@@ -153,7 +155,6 @@ export class MainComponent implements OnInit {
     // here we are assigning the courses to the store so that we can use it from other components
     this.store.select('fromCourse').subscribe(
       state => {
-        console.log('working');
         state.semesterCourses = this.semesterCourses;
         // this.semesterCourses = state.semesterCourses;
         // console.log(state.semesterCourses);
