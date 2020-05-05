@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row mt-1">
+    <div class="col-sm-12 col-lg-4 p-2">
+      <div class="alert alert-danger d-flex justify-content-between" *ngIf="show" (click)="onClose()">
+        Invalid Input
+        <button class="btn btn-danger">Close</button>
+      </div>
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-group">
+          <label for="course" class="text-bold"><h5>Courses:</h5></label>
+          <select class="form-control shadow-sm"
+                  name="course"
+                  id="course"
+                  ngModel>
+            <option *ngFor="let course of info.courses">{{course.courseTitle}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="section" class="text-bold"><h5>Section:</h5></label>
+          <select class="form-control shadow-sm"
+                  name="section"
+                  id="section"
+                  ngModel>
+            <option *ngFor="let section of info.sections">{{section.sectionTitle}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="title" class="text-bold"><h5>Title:</h5></label>
+          <input type="text"
+                 class="form-control shadow-sm"
+                 name="title"
+                 id="title"
+                 aria-describedby="helpId"
+                 placeholder="Title of Upload"
+                 ngModel
+                 required>
+          <small id="helpId" class="form-text text-muted">Title of upload</small>
+        </div>
+        <div class="form-group">
+          <label for="filePath" class="h5">File:</label>
+          <input type="file" class="form-control-file" name="filePath" id="filePath"
+                 placeholder="Attach file"
+                 aria-describedby="fileHelpId"
+                 ngModel
+                 required>
+          <small id="fileHelpId" class="form-text text-muted"><i class="fa fa-sm fa-file"></i> select file to be
+            uploaded</small>
+        </div>
+        <style>
+
+          .lift-animation {
+            box-shadow: 3px 3px 5px grey;
+            transition: .2s ease-in-out;
+          }
+
+          .lift-animation:hover {
+            box-shadow: 5px 5px 10px grey;
+            transition: .2s ease-in-out;
+          }
+        </style>
+        <button class="btn btn-primary lift-animation mt-2" type="submit">Upload Course</button>
+      </form>
+    </div>
+  </div>
+</div>

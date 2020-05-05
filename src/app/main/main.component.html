@@ -1,4 +1,5 @@
 <div id="main-container" class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+
   <div class="app-header header-shadow">
     <div class="app-header__logo">
       <div class="logo-src"></div>
@@ -58,7 +59,7 @@
                     <div class="dropdown-menu-header">
                       <div class="dropdown-menu-header-inner bg-info">
                         <div class="menu-header-image opacity-2"
-                             style="background-image: url('src/assets/images/dropdown-header/city3.jpg');"></div>
+                             style="background-image: url('../../assets/images/dropdown-header/city3.jpg');"></div>
                         <div class="menu-header-content text-left">
                           <div class="widget-content p-0">
                             <div class="widget-content-wrapper">
@@ -68,13 +69,13 @@
                                      alt="">
                               </div>
                               <div class="widget-content-left">
-                                <div class="widget-heading">{{this.studentName}}
+                                <div class="widget-heading">Alina Mcloughlin
                                 </div>
-                                <div class="widget-subheading opacity-8">CGPA: {{this.cgpa}}
+                                <div class="widget-subheading opacity-8">CGPA: 4.0
                                 </div>
                               </div>
                               <div class="widget-content-right mr-2">
-                                <button class="btn-pill btn-shadow btn-shine btn btn-focus" (click)="onLogout()">
+                                <button class="btn-pill btn-shadow btn-shine btn btn-focus">
                                   Logout
                                 </button>
                               </div>
@@ -113,10 +114,10 @@
               </div>
               <div class="widget-content-left  ml-3 header-user-info">
                 <div class="widget-heading">
-                  {{this.studentName}}
+                  Surprise M.F
                 </div>
                 <div class="widget-subheading">
-                  {{this.rollNumber}}
+                  XX-BSCS-17
                 </div>
               </div>
             </div>
@@ -132,11 +133,10 @@
         <div class="logo-src"></div>
         <div class="header__pane ml-auto">
           <div>
-            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
-                    data-class="closed-sidebar">
-                                <span class="hamburger-box">
-                                    <span class="hamburger-inner"></span>
-                                </span>
+            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+              <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+              </span>
             </button>
           </div>
         </div>
@@ -151,14 +151,13 @@
         </div>
       </div>
       <div class="app-header__menu">
-                    <span>
-                        <button type="button"
-                                class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
-                            <span class="btn-icon-wrapper">
-                                <i class="fa fa-ellipsis-v fa-w-6"></i>
-                            </span>
-                        </button>
-                    </span>
+        <span>
+          <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+            <span class="btn-icon-wrapper">
+              <i class="fa fa-ellipsis-v fa-w-6"></i>
+            </span>
+          </button>
+        </span>
       </div>
       <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
@@ -168,36 +167,59 @@
               <a (click)="onHomeClicked()"><i class="metismenu-icon fa fa-home active"></i>Home</a>
             </li>
             <li>
-              <a (click)="OnTimeTableClicked()">
+              <a (click)="OnTeacherInfoClicked()">
                 <i class="metismenu-icon fa fa-calendar"></i>
-                Time Table
+                Teacher Information
                 <i class="metismenu-state-icon"></i>
               </a>
             </li>
-            <li class="app-sidebar__heading">Student</li>
-            <li tabindex="0" autoCloseItem id="menu-list-1" class="menu-list"
-                (click)="OnShowMenuListItem('menu-list-1')">
+            <li class="app-sidebar__heading">Student Actions</li>
+            <li tabindex="0" autoCloseItem id="menu-list-1" class="menu-list" (click)="OnShowMenuListItem('menu-list-1')">
               <a>
                 <i class="metismenu-icon fa fa-user-graduate"></i>
-                Student Service
+                Mark Assessment
                 <i class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
               </a>
               <ul class="mm-collapse">
                 <li>
-                  <a (click)="OnStudentInformationClicked()">
-                    <i class="metismenu-icon">
-                    </i>Student Information
+                  <a (click)="OnAssignmentClicked()">
+                    <i class="metismenu-icon"></i>
+                    Assignment
                   </a>
                 </li>
                 <li>
-                  <a (click)="OnFeeStructureClicked()">
-                    <i class="metismenu-icon">
-                    </i>Fee Structure
+                  <a (click)="OnProjectsClicked()">
+                    <i class="metismenu-icon"></i>
+                    Project
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnPresentationClicked()">
+                    <i class="metismenu-icon"></i>
+                    Presentation
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnLabClicked()">
+                    <i class="metismenu-icon"></i>
+                    Lab
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnMidTermClicked()">
+                    <i class="metismenu-icon"></i>
+                    Mid-Term
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnFinalTermClicked()">
+                    <i class="metismenu-icon"></i>
+                    Final-Term
                   </a>
                 </li>
               </ul>
             </li>
-            <li tabindex="0" autoCloseItem id="menu-list-2" class="menu-list"
+            <!--<li tabindex="0" autoCloseItem id="menu-list-2" class="menu-list"
                 (click)="OnShowMenuListItem('menu-list-2')">
               <a>
                 <i class="metismenu-icon fa fa-paperclip"></i>
@@ -224,39 +246,66 @@
                   </a>
                 </li>
               </ul>
-            </li>
-            <li class="app-sidebar__heading">Courses</li>
-            <li tabindex="0" autoCloseItem id="menu-list-3" class="menu-list">
+            </li>-->
+            <!--<li tabindex="0" autoCloseItem id="menu-list-3" class="menu-list">
               <a>
                 <i class="metismenu-icon fa fa-book-open"></i>Semester Courses<i
                 class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
               </a>
               <ul class="mm-collapse">
-                <li #element *ngFor="let course of this.semesterCourses;let i = index; " value="{{i}}" (click)="OnCourseClicked(element)">
-                    <a>
-                    <i class="metismenu-icon"></i>
-                    {{course.courseTitle}}
-                  </a>
-                </li>
+                <li
+                  *ngFor="let course of this.semesterCourses;"
+                  (click)="OnCourseClicked()"
+                ><a><i class="metismenu-icon"></i>{{course.courseTitle}}</a></li>
               </ul>
-            </li>
-            <li (click)="OnPreviousCoursesClicked()">
+            </li>-->
+            <li (click)="OnAttendanceClicked()">
               <a>
-                <i class="metismenu-icon fa fa-book-reader "></i>
-                Previous Courses
+                <i class="metismenu-icon fa fa-book "></i>
+                Attendance
+              </a>
+            </li>
+            <li (click)="OnViewStudentProfileClicked()">
+              <a>
+                <i class="metismenu-icon fa fa-user-graduate "></i>
+                View Student Profile
               </a>
             </li>
             <li class="app-sidebar__heading">Help</li>
             <li>
-              <a (click)="OnTeacherAssesmentClicked()">
-                <i class="metismenu-icon fa fa-hands-helping">
-                </i>Teacher Assessment
+              <a (click)="OncourseUploadClicked()">
+                <i class="metismenu-icon fa fa-cloud-upload-alt">
+                </i>Course Upload
               </a>
             </li>
+
+            <!--Student Queries-->
+            <!--<li tabindex="0" autoCloseItem id="menu-list-2" class="menu-list"
+                (click)="OnShowMenuListItem('menu-list-2')">
+              <a>
+                <i class="metismenu-icon fa fa-paperclip"></i>
+                Student Queries
+                <i class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
+              </a>
+              <ul class="mm-collapse">
+                <li>
+                  <a (click)="OnQueriesClicked()">
+                    <i class="metismenu-icon">
+                    </i>Queries
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnAnswerQueriesClicked()">
+                    <i class="metismenu-icon">
+                    </i>Answer Queries
+                  </a>
+                </li>
+              </ul>
+            </li>-->
             <li>
-              <a (click)="OnCompliantClicked()">
-                <i class="metismenu-icon fa fa-envelope">
-                </i>Complaint
+              <a (click)="OnStudentQueriesClicked()">
+                <i class="metismenu-icon fa fa-question">
+                </i>Student Queries
               </a>
             </li>
           </ul>

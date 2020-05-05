@@ -5,14 +5,12 @@ import { map } from 'rxjs/operators';
 import {User} from '../_models';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
-import {StudentInformationModel} from '../../main/student-services/student-information/student-information.model';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    public studentInfo: StudentInformationModel;
 
     constructor(private http: HttpClient,
                 private store: Store<fromApp.AppState>) {

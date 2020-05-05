@@ -1,13 +1,9 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromApp from './../store/app.reducers';
 import {Store} from '@ngrx/store';
-import {CourseModal} from './course/course.modal';
+import {CourseModal} from '../shared/course.modal';
 import {AppComponentEventEmitterService} from './event-emmiter.service';
-import { User } from '../auth/_models/user';
-import { AuthenticationService } from '../auth/_services/authentication.service';
-import {HttpClient} from '@angular/common/http';
-import {StudentInformationModel} from './student-services/student-information/student-information.model';
 
 declare var $: any;
 
@@ -17,72 +13,30 @@ declare var $: any;
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  public studentName: string;
-  public rollNumber: string;
-  public cgpa: string;
-  // from the role based authentication
-  loading = false;
-  currentUser: User;
-  userFromApi: User;
-
-
-  IsUserLoggedIn = false;
-  public semesterCourses: CourseModal[] = [];
+  public semesterCourses: CourseModal[];
   showResetForm = false;
-
 
   constructor(private router: Router,
               private store: Store<fromApp.AppState>,
-              private route: ActivatedRoute,
               private clickEvent: AppComponentEventEmitterService,
-              private authenticationService: AuthenticationService,
-              private http: HttpClient) {
-    this.currentUser = this.authenticationService.currentUserValue;
+              private route: ActivatedRoute) {
   }
 
-  OnStudentInformationClicked() {
-    this.router.navigate(['studentInformation'], {relativeTo: this.route});
-  }
 
   onHomeClicked() {
-    this.router.navigate(['home'], {relativeTo: this.route});
-  }
-
-  OnFeeStructureClicked() {
-    this.router.navigate(['feeStructure'], {relativeTo: this.route});
-  }
-
-  OnSemesterTranscriptClicked() {
-    this.router.navigate(['semesterTranscript'], {relativeTo: this.route});
-  }
-
-  OnCompleteTranscriptClicked() {
-    this.router.navigate(['completeTranscript'], {relativeTo: this.route});
-  }
-
-  OnDateSheetClicked() {
-    this.router.navigate(['dateSheet'], {relativeTo: this.route});
-  }
-
-  OnTeacherAssesmentClicked() {
-    this.router.navigate(['teacherAssessment'], {relativeTo: this.route});
-  }
-
-  OnCompliantClicked() {
-    this.router.navigate(['complaints'], {relativeTo: this.route});
-  }
-
-  OnTimeTableClicked() {
     this.router.navigate(['timeTable'], {relativeTo: this.route});
   }
 
-  OnCourseClicked(element: HTMLLIElement) {
-    console.log(this.semesterCourses[element.value]);
-    this.router.navigate(['course'], {relativeTo: this.route});
+  OncourseUploadClicked() {
+    this.router.navigate(['courseUpload'], {relativeTo: this.route});
   }
 
-  OnPreviousCoursesClicked() {
-    this.router.navigate(['previousCourses'], {relativeTo: this.route});
+  OnStudentQueriesClicked() {
+    this.router.navigate(['studentQueries'], {relativeTo: this.route});
+  }
+
+  OnTeacherInfoClicked() {
+    this.router.navigate(['teacherInformation'], {relativeTo: this.route});
   }
 
   OnShowMenuListItem(id: string) {
@@ -135,34 +89,8 @@ export class MainComponent implements OnInit {
       buttonContent.classList.add('header-mobile-open');
     }
   }
+
   ngOnInit(): void {
-    // here are the values of the student for the header
-    this.studentName = JSON.parse(localStorage.getItem('currentUser')).NM;
-    this.rollNumber = JSON.parse(localStorage.getItem('currentUser')).ROLNO;
-    this.cgpa = JSON.parse(localStorage.getItem('currentUser')).CGPA;
-
-
-    // here we are requesting the api for the courses response
-    // tslint:disable-next-line:max-line-length
-    this.http.get('http://localhost:12345/api/EnrollCourses/ListOfEnrollCourses?YEAR=2016&C_CODE=1&D_ID=1&MAJ_ID=1&RN=1')
-      .subscribe(
-        s => {
-          for (const index in s) {
-            this.semesterCourses[index] = new CourseModal(s[index].SUB_NM, s[index].SUB_CODE);
-        }
-        }
-      );
-    // here we are assigning the courses to the store so that we can use it from other components
-    this.store.select('fromCourse').subscribe(
-      state => {
-        state.semesterCourses = this.semesterCourses;
-        // this.semesterCourses = state.semesterCourses;
-        // console.log(state.semesterCourses);
-      }
-    );
-    // from the role based authentiction
-    this.loading = true;
-
     $('.menu-list ul').on('click', () => {
       if (window.innerWidth < 992) {
         $('#navBarHamBtn').removeClass('is-active');
@@ -184,9 +112,37 @@ export class MainComponent implements OnInit {
   onShowResetForm() {
     this.showResetForm = true;
   }
-  onLogout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/auth']);
+  OnAssignmentClicked() {
+    console.log('clicked Assignments');
+    this.router.navigate(['assignment'], {relativeTo: this.route});
+  }
+
+  OnProjectsClicked() {
+    this.router.navigate(['project'], {relativeTo: this.route});
+  }
+
+  OnPresentationClicked() {
+    this.router.navigate(['presentation'], {relativeTo: this.route});
+  }
+
+  OnLabClicked() {
+    this.router.navigate(['lab'], {relativeTo: this.route});
+  }
+
+  OnMidTermClicked() {
+    this.router.navigate(['midTerm'], {relativeTo: this.route});
+  }
+
+  OnFinalTermClicked() {
+    this.router.navigate(['finalTerm'], {relativeTo: this.route});
+  }
+
+  OnAttendanceClicked() {
+    this.router.navigate(['attendance'], {relativeTo: this.route});
+  }
+
+  OnViewStudentProfileClicked() {
+    this.router.navigate(['viewStudentProfile'], {relativeTo: this.route});
   }
 
 }

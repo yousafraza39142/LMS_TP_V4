@@ -1,0 +1,95 @@
+<div class="row mt-5">
+  <div class="col-sm-12 col-lg-4 p-2">
+    <form #form='ngForm' (ngSubmit)="OnSubmit(form)">
+      <div class="form-group">
+        <label for="courses">Course:</label>
+        <select id="courses" class="form-control shadow-sm" name="courses" ngModel required>
+          <option *ngFor="let course of courses">{{course.courseTitle}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="section">Section:</label>
+        <select id="section" class="form-control shadow-sm" name="section" ngModel required>
+          <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="presentationTitle">Presentation</label>
+        <select id="presentationTitle" class="form-control shadow-sm" name="presentationTitle" ngModel required>
+          <option *ngFor="let presentation of presentations">{{presentation.title}}</option>
+        </select>
+      </div>
+
+      <button class="btn btn-sm btn-outline-primary" type="submit">Filter</button>
+      <style>
+
+        .lift-animation {
+          box-shadow: 3px 3px 10px grey;
+        }
+
+        .lift-animation:hover {
+          box-shadow: 6px 6px 20px grey;
+          transition: .4s;
+        }
+      </style>
+    </form>
+  </div>
+  <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
+    <div class="card text-left shadow">
+      <div class="card-header bg-light"><i class="fa fa-chart-line">Presentation Table</i></div>
+      <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll">
+        <table class="table table-no-bordered table-borderless bg-light m-0 p-0">
+          <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th class="text-center">Group</th>
+            <th class="text-center">Download</th>
+            <th class="text-center">Marks Obtained/10</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td scope="row">0000-BSCS-17</td>
+            <td>Yousaf</td>
+            <td class="text-center">Group 1</td>
+            <td class="text-center">
+              <button class="download"><i class="fa fa-download"></i></button>
+            </td>
+            <td class="text-center">6</td>
+
+          </tr>
+          <tr>
+            <td scope="row">0000-BSCS-17</td>
+            <td>Adnan Jamil</td>
+            <td class="text-center">Group 2</td>
+            <td class="text-center">
+              <button class="download"><i class="fa fa-download"></i></button>
+            </td>
+            <td class="text-center">7</td>
+          </tr>
+          <tr>
+            <td scope="row">0000-BSCS-17</td>
+            <td>Hamza Suleman</td>
+            <td class="text-center">Group 3</td>
+            <td class="text-center">
+              <button class="download"><i class="fa fa-download"></i></button>
+            </td>
+            <td class="text-center">8</td>
+          </tr>
+          <tr>
+            <td scope="row">0000-BSCS-17</td>
+            <td>Umair Ahmad</td>
+            <td class="text-center">Group 4</td>
+            <td class="text-center">
+              <button class="download"><i class="fa fa-download"></i></button>
+            </td>
+            <td class="text-center">8</td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

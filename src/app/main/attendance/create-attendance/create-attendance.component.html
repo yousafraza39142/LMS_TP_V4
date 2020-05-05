@@ -1,0 +1,96 @@
+<div class="row mt-5 p-3 p-lg-0">
+  <div class="col-sm-12 col-lg-4 p-2">
+    <form #form='ngForm' (ngSubmit)="OnSubmit(form)">
+      <div class="form-group">
+        <label for="courses">Course:</label>
+        <select id="courses" class="form-control shadow-sm" name="courses" ngModel required>
+          <option *ngFor="let course of courses">{{course.courseTitle}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="section">Section:</label>
+        <select id="section" class="form-control shadow-sm" name="section" ngModel required>
+          <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lecturetitle">Lecture Title:</label>
+        <input type="text"
+               class="form-control shadow-sm" name="lecturetitle" id="lecturetitle" aria-describedby="helpId"
+               placeholder="Presentation title" ngModel required>
+      </div>
+      <button class="btn btn-sm btn-primary shadow-sm" type="submit">Create Presentation</button>
+    </form>
+  </div>
+  <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
+    <div class="card text-left shadow">
+      <div class="card-header bg-light"><i class="fa fa-chart-line">Attendance Report</i></div>
+      <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll; overflow-x: scroll">
+        <table class="table table-bordered bg-light m-0 p-0">
+          <thead>
+          <tr>
+            <th>SR#</th>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Section</th>
+            <th>Session</th>
+            <th>Total Lectures</th>
+            <th>Attended Lectures</th>
+            <th>Percantage%</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td scope="row">1</td>
+            <td>276-BSCS-16</td>
+            <td>Muhammad Adnan Jamil</td>
+            <td>E2</td>
+            <td>2016-2020</td>
+            <td>25</td>
+            <td>20</td>
+            <td>83</td>
+            <td>Eligible</td>
+          </tr>
+          <tr>
+            <td scope="row">2</td>
+            <td>276-BSCS-16</td>
+            <td>Muhammad Adnan Jamil</td>
+            <td>E2</td>
+            <td>2016-2020</td>
+            <td>25</td>
+            <td>20</td>
+            <td>83</td>
+            <td>Eligible</td>
+          </tr>
+          <tr>
+            <td scope="row">3</td>
+            <td>276-BSCS-16</td>
+            <td>Muhammad Adnan Jamil</td>
+            <td>E2</td>
+            <td>2016-2020</td>
+            <td>25</td>
+            <td>20</td>
+            <td>83</td>
+            <td>Eligible</td>
+          </tr>
+          <tr>
+            <td scope="row">4</td>
+            <td>276-BSCS-16</td>
+            <td>Muhammad Adnan Jamil</td>
+            <td>E2</td>
+            <td>2016-2020</td>
+            <td>25</td>
+            <td>20</td>
+            <td>83</td>
+            <td>Eligible</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+  </div>
+
+</div>
+

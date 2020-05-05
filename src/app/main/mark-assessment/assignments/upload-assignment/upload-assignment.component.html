@@ -1,0 +1,115 @@
+<div class="row mt-3 mb-3">
+  <div class="col-12  p-4">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <div class="row">
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for="course" class="text-bold">Courses:</label>
+            <select class="form-control shadow-sm"
+                    name="course"
+                    id="course"
+                    ngModel>
+              <option *ngFor="let course of courses">{{course.courseTitle}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-5 col-12">
+          <div class="form-group">
+            <label for="helpLinks" class="text-bold">Help Material Links</label>
+            <textarea class="form-control shadow-sm"
+                      name="helpMaterialLinks"
+                      id="helpLinks"
+                      ngModel
+                      required
+                      rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="section" class="text-bold">Section:</label>
+            <select class="form-control shadow-sm"
+                    name="section"
+                    id="section"
+                    ngModel>
+              <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-5">
+          <div class="form-group">
+            <label for="title" class="text-bold">Title:</label>
+            <input type="text"
+                   class="form-control shadow-sm"
+                   name="title"
+                   id="title"
+                   aria-describedby="helpId"
+                   placeholder="Title of Assignment"
+                   ngModel
+                   required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="totalMarks" class="text-bold">Marks:</label>
+            <input type="number"
+                   [maxLength]="3"
+                   class="form-control shadow-sm"
+                   name="totalMarks"
+                   id="totalMarks"
+                   aria-describedby="helpId"
+                   placeholder="Title of Upload"
+                   ngModel
+                   required>
+            <small id="helpId" class="form-text text-muted">Title of upload</small>
+          </div>
+        </div>
+        <div class="col-12 col-md-5">
+          <div class="form-group">
+            <label for="filePath" class="text-bold">File:</label>
+            <input type="file" class="form-control-file" name="filePath" id="filePath"
+                   placeholder="Attach file"
+                   aria-describedby="fileHelpId"
+                   ngModel
+                   required>
+            <small id="fileHelpId" class="form-text text-muted"><i class="fa fa-sm fa-file"></i> select file to be
+              uploaded</small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="form-group">
+            <label for="dueDate" class="text-bold">Due Date:</label>
+            <input type="datetime-local"
+                   [maxLength]="3"
+                   class="form-control shadow-sm"
+                   name="dueDate"
+                   id="dueDate"
+                   aria-describedby="dueDateHelp"
+                   ngModel
+                   required>
+            <small id="dueDateHelp" class="form-text text-muted">Due date of assignment</small>
+          </div>
+        </div>
+      </div>
+
+
+      <style>
+        .lift-animation {
+          box-shadow: 3px 3px 5px grey;
+          transition: .2s ease-in-out;
+        }
+
+        .lift-animation:hover {
+          box-shadow: 5px 5px 10px grey;
+          transition: .2s ease-in-out;
+        }
+      </style>
+      <button class="btn btn-primary lift-animation mt-2" type="submit">Upload Assignment</button>
+    </form>
+  </div>
+</div>

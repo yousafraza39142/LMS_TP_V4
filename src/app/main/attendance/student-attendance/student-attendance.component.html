@@ -1,0 +1,125 @@
+<div class="row mt-5">
+  <div class="col-sm-12 col-lg-4 p-2">
+    <form>
+      <div class="form-group">
+        <label for="courses">Course:</label>
+        <select id="courses" class="form-control shadow-sm">
+          <option *ngFor="let course of courses">{{course.courseTitle}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="section">Section:</label>
+        <select id="section" class="form-control shadow-sm">
+          <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+        </select>
+      </div>
+      <style>
+
+        .lift-animation {
+          box-shadow: 3px 3px 10px grey;
+        }
+
+        .lift-animation:hover {
+          box-shadow: 6px 6px 20px grey;
+          transition: .4s;
+        }
+      </style>
+      <div class="form-group">
+        <label for="lecInput">Date:</label>
+        <input type="date" class="form-control shadow-sm" name="date" id="lecInput" aria-describedby="helpId">
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
+    <div class="card text-left shadow">
+      <div class="card-header"><i class="fa fa-chart-line">Attendance Table</i></div>
+      <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll">
+        <table class="table table-no-bordered table-borderless bg-light m-0 p-0">
+          <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Attendance Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>0000-BSCS-16</td>
+            <td>Adnan</td>
+            <td>5/5/2020</td>
+            <td>
+              <div class="badge badge-pill badge-danger">Absent</div>
+            </td>
+          </tr>
+          <td>0000-BSCS-16</td>
+          <td>Adnan</td>
+          <td>5/5/2020</td>
+          <td>
+            <div class="badge badge-pill badge-success">Present</div>
+          </td>
+          <tr>
+            <td>0000-BSCS-16</td>
+            <td>Adnan</td>
+            <td>5/5/2020</td>
+            <td>
+              <div class="badge badge-pill badge-danger">Absent</div>
+            </td>
+          </tr>
+          <td>0000-BSCS-16</td>
+          <td>Adnan</td>
+          <td>5/5/2020</td>
+          <td>
+            <div class="badge badge-pill badge-success">Present</div>
+          </td>
+          <tr>
+            <td>0000-BSCS-16</td>
+            <td>Adnan</td>
+            <td>5/5/2020</td>
+            <td>
+              <div class="badge badge-pill badge-danger">Absent</div>
+            </td>
+          </tr>
+          <td>0000-BSCS-16</td>
+          <td>Adnan</td>
+          <td>5/5/2020</td>
+
+          <td>
+            <div class="badge badge-pill badge-success">Present</div>
+          </td>
+          <tr>
+            <td>0000-BSCS-16</td>
+            <td>Adnan</td>
+            <td>5/5/2020</td>
+            <td>
+              <div class="badge badge-pill badge-danger">Absent</div>
+            </td>
+          </tr>
+          <td>0000-BSCS-16</td>
+          <td>Adnan</td>
+          <td>5/5/2020</td>
+
+          <td>
+            <div class="badge badge-pill badge-success">Present</div>
+          </td>
+          <tr>
+            <td>0000-BSCS-16</td>
+            <td>Adnan</td>
+            <td>5/5/2020</td>
+            <td>
+              <div class="badge badge-pill badge-danger">Absent</div>
+            </td>
+          </tr>
+          <td>0000-BSCS-16</td>
+          <td>Adnan</td>
+          <td>5/5/2020</td>
+
+          <td>
+            <div class="badge badge-pill badge-success">Present</div>
+          </td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

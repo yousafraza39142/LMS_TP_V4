@@ -1,0 +1,56 @@
+<div class="row p-lg-2 p-3 mt-5">
+  <div class="col-12">
+    <div class="alert alert-danger d-flex justify-content-between" *ngIf="show" (click)="onClose()">
+      Invalid Input
+      <button class="btn btn-danger">Close</button>
+    </div>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <div class="row">
+        <div class="col-12 col-lg-4">
+          <div class="form-group">
+            <label for="inputStudentName" class="text-bold">To:</label>
+            <input type="text"
+                   class="form-control shadow-sm"
+                   name="inputStudentName"
+                   id="inputStudentName"
+                   ngModel
+                   required
+                   placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="inputSubject" class="text-bold">Subject</label>
+            <input type="text"
+                   class="form-control shadow-sm"
+                   name="inputSubject"
+                   id="inputSubject"
+                   ngModel
+                   required
+                   placeholder="">
+          </div>
+        </div>
+        <div class="col-12 col-lg-8 pd-lg">
+          <div class="form-group">
+            <label for="inputAnswer" class="text-bold">Message</label>
+            <textarea class="form-control shadow-sm"
+                      name="inputAnswer"
+                      id="inputAnswer"
+                      ngModel
+                      required
+                      rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+      <style>
+        .lift-animation {
+          box-shadow: 1px 1px 5px grey;
+        }
+
+        .lift-animation:hover {
+          box-shadow: 3px 3px 10px grey;
+          transition: .2s;
+        }
+      </style>
+      <button class="btn btn-primary lift-animation" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
