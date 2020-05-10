@@ -32,7 +32,7 @@
       <div class="collapse" id="contentId">
         <div class="card" style="margin-top: 250px;margin-right: -40px;">
           <div class="card-header" style="color:white;min-width: 200px;background-color:rgba(0,105,217,0.63);">
-            Teacher Name
+            {{this.teacherName}}
           </div>
           <div class="card-body">
             <div>
@@ -42,7 +42,7 @@
               <button class="btn btn-link" (click)="onShowResetForm()">Recover Password</button>
             </div>
             <div>
-              <button class="btn btn-link">Logout</button>
+              <button class="btn btn-link" (click)="onLogout()">Logout</button>
             </div>
           </div>
         </div>
@@ -96,11 +96,11 @@
                                        alt="">
                                 </div>
                                 <div class="widget-content-left">
-                                  <div class="widget-heading">Teacher Name
+                                  <div class="widget-heading">{{this.teacherName}}
                                   </div>
                                 </div>
                                 <div class="widget-content-right mr-2">
-                                  <button class="btn-pill btn-shadow btn-shine btn btn-focus">
+                                  <button class="btn-pill btn-shadow btn-shine btn btn-focus" (click)="onLogout()">
                                     Logout
                                   </button>
                                 </div>
@@ -141,10 +141,10 @@
               </div>
               <div class="widget-content-left  ml-3 header-user-info">
                 <div class="widget-heading">
-                  Surprise M.F
+                  {{this.teacherName}}
                 </div>
                 <div class="widget-subheading">
-                  XX-BSCS-17
+                  {{this.FM_ID}}
                 </div>
               </div>
             </div>

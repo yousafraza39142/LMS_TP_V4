@@ -1,8 +1,20 @@
 export class TeacherInformationModel {
-
-  constructor(public registrationNo: string, public teacherName: string,
-              public cnic: string, public phoneNumber: string, public city: number,
-              public password: string) {
+      public  FM_ID: string;
+      public NM: string;
+      public DES: string;
+      public D_ID: string;
+      public NIC: string;
+      public DOB: string;
+      public PH1: string;
+      public ADD1: string;
+      public PHTO: string;
+      public GENDER: string;
+      public RELIG: string;
+      public EMAIL: string;
+      public QUALIFICATION: string;
+      public JOIN_DATE: string;
+      public F_ID: string;
+  constructor() {
 
 
     // Just Ignore This Rubbish No business

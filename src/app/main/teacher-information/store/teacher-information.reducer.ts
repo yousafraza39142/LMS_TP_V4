@@ -6,8 +6,7 @@ export interface State {
 }
 
 const initialState: State = {
-  teacherInformation: new TeacherInformationModel('0263-bscs-2016', 'saqlain', 'ghulam',
-    '33202-5654879465', 465421324, 'lahore'),
+  teacherInformation: new TeacherInformationModel(),
 };
 
 export function teacherInformationReducer(
