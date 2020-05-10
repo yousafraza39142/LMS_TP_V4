@@ -4,11 +4,15 @@ import {SectionModal} from '../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/app.reducers';
 import {NgForm} from '@angular/forms';
+import { SlideInFromLeft } from 'src/app/transitions';
 
 @Component({
   selector: 'app-view-student-profile',
   templateUrl: './view-student-profile.component.html',
-  styleUrls: ['./view-student-profile.component.css']
+  styleUrls: ['./view-student-profile.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class ViewStudentProfileComponent implements OnInit {
 

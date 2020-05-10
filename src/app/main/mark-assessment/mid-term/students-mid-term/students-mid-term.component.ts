@@ -5,11 +5,15 @@ import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {studentMidtermTable} from '../store/mid-term.component.reducer';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-students-mid-term',
   templateUrl: './students-mid-term.component.html',
-  styleUrls: ['./students-mid-term.component.css']
+  styleUrls: ['./students-mid-term.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class StudentsMidTermComponent implements OnInit {
   totalMarks: number;

@@ -5,11 +5,15 @@ import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {studentFinaltermTable} from '../store/final-term.component.reducer';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-create-final-term',
   templateUrl: './create-final-term.component.html',
-  styleUrls: ['./create-final-term.component.css']
+  styleUrls: ['./create-final-term.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class CreateFinalTermComponent implements OnInit {
   totalMarks: number;

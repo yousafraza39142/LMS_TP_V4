@@ -4,11 +4,15 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
 import * as fromCourseUpload from './store/course-upload.actions';
 import {CourseUpload, UploadResponse} from './store/course-upload.reducer';
+import {SlideInFromLeft} from '../../transitions';
 
 @Component({
   selector: 'app-course-upload',
   templateUrl: './course-upload.component.html',
-  styleUrls: ['./course-upload.component.css']
+  styleUrls: ['./course-upload.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class CourseUploadComponent implements OnInit {
   show: boolean;

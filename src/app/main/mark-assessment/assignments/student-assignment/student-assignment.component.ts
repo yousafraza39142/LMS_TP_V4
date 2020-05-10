@@ -6,11 +6,15 @@ import {AssignmentData, student_assignments_table} from '../store/assignment.com
 import {CourseModal} from '../../../../shared/course.modal';
 import {SectionModal} from '../../../../shared/SectionModal';
 import {AssignmentModal} from '../../../../shared/AssignmentModal';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-student-assignment',
   templateUrl: './student-assignment.component.html',
-  styleUrls: ['./student-assignment.component.css']
+  styleUrls: ['./student-assignment.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class StudentAssignmentComponent implements OnInit {
 

@@ -5,11 +5,15 @@ import {AppState} from '../../../../store/app.reducers';
 import {AssignmentData} from '../store/assignment.component.reducer';
 import {CourseModal} from '../../../../shared/course.modal';
 import {SectionModal} from '../../../../shared/SectionModal';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-upload-assignment',
   templateUrl: './upload-assignment.component.html',
-  styleUrls: ['./upload-assignment.component.css']
+  styleUrls: ['./upload-assignment.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class UploadAssignmentComponent implements OnInit {
   data: AssignmentData;

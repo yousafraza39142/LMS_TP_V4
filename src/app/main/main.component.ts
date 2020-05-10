@@ -4,13 +4,17 @@ import * as fromApp from './../store/app.reducers';
 import {Store} from '@ngrx/store';
 import {CourseModal} from '../shared/course.modal';
 import {AppComponentEventEmitterService} from './event-emmiter.service';
+import {FadeIn} from '../transitions';
 
 declare var $: any;
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
+  animations: [
+    FadeIn()
+  ]
 })
 export class MainComponent implements OnInit {
   public semesterCourses: CourseModal[];

@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SlideInFromLeft} from '../../transitions';
 
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
-  styleUrls: ['./attendance.component.css']
+  styleUrls: ['./attendance.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class AttendanceComponent implements OnInit {
 

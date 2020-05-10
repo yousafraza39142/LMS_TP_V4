@@ -6,11 +6,15 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {ProjectModal} from '../../../../shared/ProjectModal';
 import {studentProjectsTable} from '../store/project.component.reducer';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-student-projects',
   templateUrl: './student-projects.component.html',
-  styleUrls: ['./student-projects.component.css']
+  styleUrls: ['./student-projects.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class StudentProjectsComponent implements OnInit {
   totalMarks: number;

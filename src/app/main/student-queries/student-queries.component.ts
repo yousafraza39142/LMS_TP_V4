@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SlideInFromLeft} from '../../transitions';
 
 @Component({
   selector: 'app-student-queries',
   templateUrl: './student-queries.component.html',
-  styleUrls: ['./student-queries.component.css']
+  styleUrls: ['./student-queries.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class StudentQueriesComponent implements OnInit {
 

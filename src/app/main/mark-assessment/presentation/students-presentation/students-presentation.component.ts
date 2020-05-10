@@ -6,12 +6,15 @@ import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {PresentationModal} from '../../../../shared/PresentationModal';
-import {studentMidtermTable} from '../../mid-term/store/mid-term.component.reducer';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-students-presentation',
   templateUrl: './students-presentation.component.html',
-  styleUrls: ['./students-presentation.component.css']
+  styleUrls: ['./students-presentation.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class StudentsPresentationComponent implements OnInit {
   totalMarks: number;

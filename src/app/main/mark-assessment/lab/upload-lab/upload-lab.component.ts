@@ -4,11 +4,15 @@ import {CourseModal} from '../../../../shared/course.modal';
 import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
+import {SlideInFromLeft} from '../../../../transitions';
 
 @Component({
   selector: 'app-upload-lab',
   templateUrl: './upload-lab.component.html',
-  styleUrls: ['./upload-lab.component.css']
+  styleUrls: ['./upload-lab.component.css'],
+  animations: [
+    SlideInFromLeft()
+  ]
 })
 export class UploadLabComponent implements OnInit {
 
