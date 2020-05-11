@@ -74,14 +74,15 @@ export class StudentAssignmentComponent implements OnInit {
         this.sections = state.sections;
       }
     );*/
-    this.markAssessmentService.getCourseForTeacher(1).subscribe(
+    this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
         for (const course: { SUB_NM: string } of data) {
           this.courses.push(new CourseModal(course.SUB_NM));
         }
         if (this.courses.length > 0) {
-          this.markAssessmentService.getSectionsForTeacherinCourse(1, this.courses[0].courseTitle).subscribe(
+          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+            this.courses[0].courseTitle).subscribe(
             section => {
               // @ts-ignore
               for (const sec: { SECTION: string } of section) {
@@ -133,7 +134,8 @@ export class StudentAssignmentComponent implements OnInit {
     }
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(1, c.value).subscribe(
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+      c.value).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {

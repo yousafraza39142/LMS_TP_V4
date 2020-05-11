@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
           <label for="title" class="text-bold"><h5>Title:</h5></label>
-          <input type="text"
+          <input #title type="text"
                  class="form-control shadow-sm"
                  name="title"
                  id="title"
@@ -42,7 +42,8 @@
                  placeholder="Attach file"
                  aria-describedby="fileHelpId"
                  ngModel
-                 required>
+                 required
+                 (change)="getFileDetails($event)">
           <small id="fileHelpId" class="form-text text-muted"><i class="fa fa-sm fa-file"></i> select file to be
             uploaded</small>
         </div>
@@ -58,7 +59,8 @@
             transition: .2s ease-in-out;
           }
         </style>
-        <button class="btn btn-primary lift-animation mt-2" type="submit">Upload Course</button>
+        <button class="btn btn-primary lift-animation mt-2" type="submit"
+                (click)="uploadFiles()">Upload Course</button>
       </form>
     </div>
   </div>

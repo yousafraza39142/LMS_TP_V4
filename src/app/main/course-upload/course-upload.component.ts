@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import * as fromApp from '../../store/app.reducers';
 import * as fromCourseUpload from './store/course-upload.actions';
 import {CourseUpload, UploadResponse} from './store/course-upload.reducer';
 import {SlideInFromLeft} from '../../transitions';
@@ -10,8 +9,7 @@ import {SectionModal} from '../../shared/SectionModal';
 import {AppState} from '../../store/app.reducers';
 import {AssignmentApiService} from '../mark-assessment/assignments/assignment-services/assignment-api.service';
 import {MarkAssessmentService} from '../mark-assessment/mark-assessment.service';
-import {AssignmentModal} from '../../shared/AssignmentModal';
-import {AssessmentTable} from '../mark-assessment/assignments/student-assignment/student-assignment.component';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-course-upload',
@@ -25,17 +23,19 @@ export class CourseUploadComponent implements OnInit {
   show: boolean;
   uploadResponse: UploadResponse;
   info: CourseUpload;
-  private file: any;
-
+  myFiles: string[] = [];
 
   courses: Array<CourseModal>;
   sections: Array<SectionModal>;
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
+  @ViewChild('title') title: ElementRef;
 
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
-              private markAssessmentService: MarkAssessmentService) {
+              private markAssessmentService: MarkAssessmentService,
+              private httpService: HttpClient
+  ) {
     this.show = false;
     this.courses = new Array<CourseModal>();
     this.sections = new Array<SectionModal>();
@@ -47,14 +47,15 @@ export class CourseUploadComponent implements OnInit {
         this.info = state.info;
       }
     );*/
-    this.markAssessmentService.getCourseForTeacher(1).subscribe(
+    this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
         for (const course: { SUB_NM: string } of data) {
           this.courses.push(new CourseModal(course.SUB_NM));
         }
         if (this.courses.length > 0) {
-          this.markAssessmentService.getSectionsForTeacherinCourse(1, this.courses[0].courseTitle).subscribe(
+          // tslint:disable-next-line:max-line-length
+          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
             section => {
               // @ts-ignore
               for (const sec: { SECTION: string } of section) {
@@ -74,7 +75,7 @@ export class CourseUploadComponent implements OnInit {
     }
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(1, c.value).subscribe(
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
@@ -86,7 +87,7 @@ export class CourseUploadComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     // Testing
-    console.log('C:', this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value);
+    console.log('C:', this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.title.nativeElement.value);
     if (form.invalid) {
       this.show = true;
     } else {
@@ -100,9 +101,9 @@ export class CourseUploadComponent implements OnInit {
       this.store.dispatch(new fromCourseUpload.StoreInformation(this.uploadResponse));
       setTimeout(() => {
         this.store.select('fromCourseUpload').subscribe(
-          state => {
-            console.log(state.response);
-          }
+          // state => {
+          //   // console.log(state.response);
+          // }
         );
       }, 2000);
     }
@@ -110,5 +111,55 @@ export class CourseUploadComponent implements OnInit {
 
   onClose() {
     this.show = false;
+  }
+
+  getFileDetails(e) {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < e.target.files.length; i++) {
+      this.myFiles.push(e.target.files[i]);
+    }
+  }
+
+  uploadFiles() {
+    // tslint:disable-next-line:variable-name
+    const _uploadFolderId = this.getUniqueId(2);
+    // tslint:disable-next-line:variable-name
+    const _userId = 1;
+    const frmData = new FormData();
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.myFiles.length; i++) {
+      frmData.append('fileUpload', this.myFiles[i]);
+    }
+    // tslint:disable-next-line:max-line-length
+    this.httpService.post('http://localhost:12345/api/upload/UploadFiles?uploadFolderId=' + _uploadFolderId +
+      '&userId=' + _userId + '', frmData).subscribe(
+      s => {
+        // here we are passing the assignment to submitted assignment
+        this.httpService.get<any>('http://localhost:12345/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?',
+          {
+            params: {
+              FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+              SUB_NM: this.selectCourse.nativeElement.value,
+              SECTION: this.selectSection.nativeElement.value,
+              CM_TITLE: this.title.nativeElement.value,
+              FILE_ID: s[0].FILE_ID
+            }
+          })
+          .pipe().subscribe(
+          // m => {
+          //   // console.log('success');
+          // }
+        );
+      }
+    );
+  }
+  getUniqueId(parts: number) {
+    const stringArr = [];
+    for (let i = 0; i < parts; i++) {
+      // tslint:disable-next-line:no-bitwise
+      const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      stringArr.push(S4);
+    }
+    return stringArr.join('-');
   }
 }
