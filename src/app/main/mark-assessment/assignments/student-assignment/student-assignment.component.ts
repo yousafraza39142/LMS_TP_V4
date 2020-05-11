@@ -143,10 +143,12 @@ export class StudentAssignmentComponent implements OnInit {
     );
 
     this.clearAssignments();
+    console.log('OnCourseChange', this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
     this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
       assignments => {
+        console.log(assignments)
         // @ts-ignore
         for (const assignment of assignments) {
           this.assignments.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));

@@ -5,6 +5,8 @@ import * as fromApp from '../../store/app.reducers';
 import * as fromCourseUpload from './store/course-upload.actions';
 import {CourseUpload, UploadResponse} from './store/course-upload.reducer';
 import {SlideInFromLeft} from '../../transitions';
+import {HttpClient} from '@angular/common/http';
+import {CourseModal} from '../../shared/course.modal';
 
 @Component({
   selector: 'app-course-upload',
@@ -18,13 +20,27 @@ export class CourseUploadComponent implements OnInit {
   show: boolean;
   uploadResponse: UploadResponse;
   info: CourseUpload;
+  public courses: CourseModal[] = [];
+  public section: string[] = [];
   private file: any;
 
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(private store: Store<fromApp.AppState>,
+              private httpService: HttpClient) {
     this.show = false;
   }
 
   ngOnInit(): void {
+    // here we are calling for the assignment courses from the web api
+    this.httpService.get<any>('http://localhost:12345/api/CoursesForTeacher/GetCoursesForTeacher?',
+      {
+        params: {
+          FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID
+        }
+      })
+      .pipe().subscribe(
+      s => {
+      }
+    );
     this.store.select('fromCourseUpload').subscribe(
       state => {
         this.info = state.info;
