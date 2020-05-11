@@ -126,7 +126,7 @@ export class StudentAssignmentComponent implements OnInit {
     );
   }
 
-  OnCourseChange(c: HTMLSelectElement) {
+  OnCourseChange(c: HTMLSelectElement, s: HTMLSelectElement) {
     // Clear previous sections
     for (const sec of this.sections) {
       this.sections.pop();
@@ -139,19 +139,25 @@ export class StudentAssignmentComponent implements OnInit {
         for (const sec: { SECTION: string } of section) {
           this.sections.push(new SectionModal(sec.SECTION));
         }
-      }
-    );
 
-    this.clearAssignments();
-    console.log('OnCourseChange', this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value);
-    // @ts-ignore
-    // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
-      assignments => {
-        console.log(assignments)
-        // @ts-ignore
-        for (const assignment of assignments) {
-          this.assignments.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
+        // Clear Assignments List for new Incoming Assignments
+        this.clearAssignments();
+        console.log('Course Change New:', this.sections[0].sectionTitle, c.value);
+
+
+        if (this.sections.length > 0) {
+          console.log('called');
+          // tslint:disable-next-line:max-line-length
+          console.log('Course Change:', this.sections[0].sectionTitle, c.value);
+          // tslint:disable-next-line:max-line-length
+          this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
+            assignments => {
+              // @ts-ignore
+              for (const assignment of assignments) {
+                this.assignments.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
+              }
+            }
+          );
         }
       }
     );

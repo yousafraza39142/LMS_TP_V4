@@ -32,7 +32,7 @@ export class TeacherInformationComponent implements OnInit {
     this.teacherInformation.PHTO = obj.PHTO;
     this.teacherInformation.GENDER = obj.GENDER;
     this.teacherInformation.RELIG = obj.RELIG;
-    this.teacherInformation.EMAIL=  obj.EMAIL;
+    this.teacherInformation.EMAIL =  obj.EMAIL;
     this.teacherInformation.QUALIFICATION = obj.QUALIFICATION ;
     this.teacherInformation.JOIN_DATE = obj.JOIN_DATE;
     this.teacherInformation.F_ID = obj.F_ID;
