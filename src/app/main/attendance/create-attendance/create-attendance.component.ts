@@ -40,6 +40,7 @@ export class CreateAttendanceComponent implements OnInit {
     this.sections = new Array<SectionModal>();
     this.students = new Array<Student>();
     this.date = new Date();
+    console.log(this.date.getDate());
     console.log();
   }
 
