@@ -8,20 +8,20 @@
       <form #form="ngForm" (ngSubmit)="onSubmit(form)">
         <div class="form-group">
           <label for="course" class="text-bold"><h5>Courses:</h5></label>
-          <select class="form-control shadow-sm"
+          <select #c class="form-control shadow-sm" (change)="OnCourseChange(c)"
                   name="course"
                   id="course"
                   ngModel>
-            <option *ngFor="let course of info.courses">{{course.courseTitle}}</option>
+            <option *ngFor="let course of courses">{{course.courseTitle}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="section" class="text-bold"><h5>Section:</h5></label>
-          <select class="form-control shadow-sm"
+          <select #s class="form-control shadow-sm"
                   name="section"
                   id="section"
                   ngModel>
-            <option *ngFor="let section of info.sections">{{section.sectionTitle}}</option>
+            <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
           </select>
         </div>
         <div class="form-group">
