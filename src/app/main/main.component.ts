@@ -5,6 +5,7 @@ import {Store} from '@ngrx/store';
 import {CourseModal} from '../shared/course.modal';
 import {AppComponentEventEmitterService} from './event-emmiter.service';
 import {FadeIn} from '../transitions';
+import {AuthenticationService} from "../auth/_services";
 
 declare var $: any;
 
@@ -18,12 +19,15 @@ declare var $: any;
 })
 export class MainComponent implements OnInit {
   public semesterCourses: CourseModal[];
+  public teacherName: string;
+  public FM_ID: string;
   showResetForm = false;
 
   constructor(private router: Router,
               private store: Store<fromApp.AppState>,
               private clickEvent: AppComponentEventEmitterService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService) {
   }
 
 
@@ -95,6 +99,9 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.teacherName = JSON.parse(localStorage.getItem('teacherInfo')).NM;
+    this.FM_ID = JSON.parse(localStorage.getItem('teacherInfo')).FM_ID;
+    // jquery
     $('.menu-list ul').on('click', () => {
       if (window.innerWidth < 992) {
         $('#navBarHamBtn').removeClass('is-active');
@@ -147,6 +154,10 @@ export class MainComponent implements OnInit {
 
   OnViewStudentProfileClicked() {
     this.router.navigate(['viewStudentProfile'], {relativeTo: this.route});
+  }
+  onLogout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/auth']);
   }
 
 }

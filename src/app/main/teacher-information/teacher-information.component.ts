@@ -18,9 +18,28 @@ export class TeacherInformationComponent implements OnInit {
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
+    // getting the data from the login and storing it in the teacher component
+    const obj = JSON.parse(localStorage.getItem('teacherInfo'));
+    this.teacherInformation = new TeacherInformationModel();
+    this.teacherInformation.FM_ID =  obj.FM_ID;
+    this.teacherInformation.NM = obj.NM;
+    this.teacherInformation.DES = obj.DES;
+    this.teacherInformation.D_ID = obj.D_ID;
+    this.teacherInformation.NIC =  obj.NIC;
+    this.teacherInformation.DOB =  obj.DOB;
+    this.teacherInformation.PH1 = obj.PH1;
+    this.teacherInformation.ADD1 = obj.ADD1;
+    this.teacherInformation.PHTO = obj.PHTO;
+    this.teacherInformation.GENDER = obj.GENDER;
+    this.teacherInformation.RELIG = obj.RELIG;
+    this.teacherInformation.EMAIL=  obj.EMAIL;
+    this.teacherInformation.QUALIFICATION = obj.QUALIFICATION ;
+    this.teacherInformation.JOIN_DATE = obj.JOIN_DATE;
+    this.teacherInformation.F_ID = obj.F_ID;
+    // console.log(this.teacherInformation);
     this.store.select('fromTeacherInformation').subscribe(
       state => {
-        this.teacherInformation = state.teacherInformation;
+        state.teacherInformation = this.teacherInformation;
       }
     );
   }
