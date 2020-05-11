@@ -47,7 +47,7 @@
           <tbody>
           <tr *ngFor="let r of studentsLabTable">
             <td>{{r.ROLNO}}</td>
-            <td>Not Provided</td>
+            <td>{{r.NM}}</td>
             <td class="text-center">
               <button class="download" [disabled]='!r.FILEPATH'><i class="fa fa-download"></i></button>
             </td>

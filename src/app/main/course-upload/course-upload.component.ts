@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import * as fromApp from '../../store/app.reducers';
 import * as fromCourseUpload from './store/course-upload.actions';
 import {CourseUpload, UploadResponse} from './store/course-upload.reducer';
 import {SlideInFromLeft} from '../../transitions';
@@ -10,8 +9,7 @@ import {SectionModal} from '../../shared/SectionModal';
 import {AppState} from '../../store/app.reducers';
 import {AssignmentApiService} from '../mark-assessment/assignments/assignment-services/assignment-api.service';
 import {MarkAssessmentService} from '../mark-assessment/mark-assessment.service';
-import {AssignmentModal} from '../../shared/AssignmentModal';
-import {AssessmentTable} from '../mark-assessment/assignments/student-assignment/student-assignment.component';
+
 
 @Component({
   selector: 'app-course-upload',
@@ -33,6 +31,8 @@ export class CourseUploadComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
 
+
+
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
               private markAssessmentService: MarkAssessmentService) {
@@ -42,11 +42,7 @@ export class CourseUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.store.select('fromCourseUpload').subscribe(
-      state => {
-        this.info = state.info;
-      }
-    );*/
+
     this.markAssessmentService.getCourseForTeacher(1).subscribe(
       data => {
         // @ts-ignore

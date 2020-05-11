@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
-import {student_assignments_table} from '../store/assignment.component.reducer';
 import {CourseModal} from '../../../../shared/course.modal';
 import {SectionModal} from '../../../../shared/SectionModal';
 import {AssignmentModal} from '../../../../shared/AssignmentModal';
@@ -13,6 +12,7 @@ import {AssessmentTypes} from '../../../../shared/AssessmentTypes';
 
 
 export interface AssessmentTable {
+  NM: string;
   YEAR: number;
   C_CODE: number;
   MAJ_ID: number;
@@ -55,25 +55,6 @@ export class StudentAssignmentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.assignmentApiService.getAssignmentList('A', 'programming fundamental', AssessmentTypes.ASSIGNMENT);
-    // tslint:disable-next-line:max-line-length
-    // this.assignmentApiService.getAssignmentsListOfStudents('A', 'programming fundamental', 'PRIMS ALGORITHM', AssessmentTypes.ASSIGNMENT);
-
-    /*this.store.select('fromAssignment').subscribe(
-      state => {
-        console.log(state);
-        this.totalMarks = state.data.total_marks;
-        this.studentsAssignmentTable = state.data.students_assignments;
-        this.assignments = state.data.assignments;
-      }
-    );
-    this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        console.log(state);
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );*/
     this.markAssessmentService.getCourseForTeacher(1).subscribe(
       data => {
         // @ts-ignore
@@ -110,6 +91,14 @@ export class StudentAssignmentComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    for (const s of this.studentsAssignmentTable) {
+      this.studentsAssignmentTable.pop();
+    }
+    if (this.selectSection.nativeElement.value === '' ||
+      this.selectCourse.nativeElement.value === '' ||
+      this.selectAssignment.nativeElement.value === '') {
+      return;
+    }
     this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
       this.selectCourse.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
       students => {
@@ -159,10 +148,11 @@ export class StudentAssignmentComponent implements OnInit {
             }
           );
         }
+
+
       }
     );
   }
-
 
   OnSectionChange(s: HTMLSelectElement) {
     // Clear Assignments Drop Down

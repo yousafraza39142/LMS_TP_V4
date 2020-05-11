@@ -5,12 +5,10 @@ import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {LabModal} from '../../../../shared/LabModal';
-import {studentLabsTable} from '../store/lab.component.reducer';
 import {SlideInFromLeft} from '../../../../transitions';
 import {AssessmentTable} from '../../assignments/student-assignment/student-assignment.component';
 import {AssignmentApiService} from '../../assignments/assignment-services/assignment-api.service';
 import {MarkAssessmentService} from '../../mark-assessment.service';
-import {AssignmentModal} from '../../../../shared/AssignmentModal';
 import {AssessmentTypes} from '../../../../shared/AssessmentTypes';
 
 @Component({
@@ -39,20 +37,9 @@ export class StudentsLabComponent implements OnInit {
     this.labs = new Array<LabModal>();
     this.studentsLabTable = new Array<AssessmentTable>();
   }
+
   ngOnInit(): void {
-    /*this.store.select('fromLab').subscribe(
-      state => {
-        this.totalMarks = state.data.total_marks;
-        this.studentsLabTable = state.data.students_labs;
-        this.labs = state.data.labs;
-  }
-    );
-    this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );*/
+
     this.markAssessmentService.getCourseForTeacher(1).subscribe(
       data => {
         // @ts-ignore
@@ -88,6 +75,16 @@ export class StudentsLabComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+
+    for (const s of this.studentsLabTable) {
+      this.studentsLabTable.pop();
+    }
+    console.log(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, this.selectLab.nativeElement.value);
+    if (this.selectSection.nativeElement.value === '' ||
+      this.selectCourse.nativeElement.value === '' ||
+      this.selectLab.nativeElement.value === '') {
+      return;
+    }
     this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
       this.selectCourse.nativeElement.value, this.selectLab.nativeElement.value, AssessmentTypes.LAB).subscribe(
       students => {
@@ -118,18 +115,23 @@ export class StudentsLabComponent implements OnInit {
         for (const sec: { SECTION: string } of section) {
           this.sections.push(new SectionModal(sec.SECTION));
         }
-      }
-    );
 
-    this.clearLab();
-    // @ts-ignore
-    // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.LAB).subscribe(
-      labs => {
-        // @ts-ignore
-        for (const lab of labs) {
-          this.labs.push(new LabModal(lab.ASSIGNMENT_TITLE));
+
+        this.clearLab();
+        if (this.sections.length > 0) {
+          // @ts-ignore
+          // tslint:disable-next-line:max-line-length
+          this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.LAB).subscribe(
+            labs => {
+              // @ts-ignore
+              for (const lab of labs) {
+                this.labs.push(new LabModal(lab.ASSIGNMENT_TITLE));
+              }
+            }
+          );
         }
+
+
       }
     );
   }

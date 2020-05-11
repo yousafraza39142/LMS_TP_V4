@@ -5,7 +5,6 @@ import {SectionModal} from '../../../../shared/SectionModal';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
 import {ProjectModal} from '../../../../shared/ProjectModal';
-import {studentProjectsTable} from '../store/project.component.reducer';
 import {SlideInFromLeft} from '../../../../transitions';
 import {AssignmentApiService} from '../../assignments/assignment-services/assignment-api.service';
 import {MarkAssessmentService} from '../../mark-assessment.service';
@@ -41,26 +40,6 @@ export class StudentProjectsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // this.assignmentApiService.getAssignmentList('A', 'programming fundamental', AssessmentTypes.ASSIGNMENT);
-    // tslint:disable-next-line:max-line-length
-    // this.assignmentApiService.getAssignmentsListOfStudents('A', 'programming fundamental', 'PRIMS ALGORITHM', AssessmentTypes.ASSIGNMENT);
-
-    /*this.store.select('fromAssignment').subscribe(
-      state => {
-        console.log(state);
-        this.totalMarks = state.data.total_marks;
-        this.studentsAssignmentTable = state.data.students_assignments;
-        this.assignments = state.data.assignments;
-      }
-    );
-    this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        console.log(state);
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );*/
     this.markAssessmentService.getCourseForTeacher(1).subscribe(
       data => {
         // @ts-ignore
@@ -96,40 +75,34 @@ export class StudentProjectsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+
+    for (const s of this.studentsProjectTable) {
+      this.studentsProjectTable.pop();
+    }
+
+
+    if (this.selectSection.nativeElement.value === '' ||
+      this.selectCourse.nativeElement.value === '' ||
+      this.selectedProject.nativeElement.value === '') {
+      return;
+    }
+
+
     this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
       this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
       students => {
-        console.log(students);
         const list = students as AssessmentTable[];
         if (list.length > 0) {
           this.totalMarks = students[0].ASS_TOT_MRKS;
         }
         // @ts-ignore
         for (const std of students) {
-          console.log(std);
           this.studentsProjectTable.push(std);
         }
       }
     );
   }
 
-  /*onSubmit(form: NgForm) {
-    this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
-      this.selectCourse.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
-      students => {
-        const list = students as AssignmentsStudentList[];
-        if (list.length > 0) {
-          this.totalMarks = students[0].ASS_TOT_MRKS;
-        }
-        // @ts-ignore
-        for (const std of students) {
-          console.log(std);
-          this.studentsAssignmentTable.push(std);
-        }
-      }
-    );
-  }
-*/
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
     for (const sec of this.sections) {
@@ -143,29 +116,28 @@ export class StudentProjectsComponent implements OnInit {
         for (const sec: { SECTION: string } of section) {
           this.sections.push(new SectionModal(sec.SECTION));
         }
-      }
-    );
 
-    this.clearProjects();
-    // @ts-ignore
-    // tslint:disable-next-line:max-line-length
-    console.log('Course:', this.selectCourse.nativeElement.value);
-    console.log('Section:', this.selectSection.nativeElement.value);
-    // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
-      projs => {
-        // @ts-ignore
-        // console.log(projects);
-        // @ts-ignore
-        for (const project of projs) {
-          // @ts-ignore
-          this.projects.push(new ProjectModal(project.ASSIGNMENT_TITLE));
+        if (this.sections.length > 0) {
+          this.clearProjects();
+          console.log('Course:', this.selectCourse.nativeElement.value);
+          console.log('Section:', this.selectSection.nativeElement.value);
+          // tslint:disable-next-line:max-line-length
+          this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
+            projs => {
+              // @ts-ignore
+              for (const project of projs) {
+                this.projects.push(new ProjectModal(project.ASSIGNMENT_TITLE));
+              }
+            }
+          );
         }
-        console.log(this.projects);
+
+
+
+
       }
     );
   }
-
 
   OnSectionChange(s: HTMLSelectElement) {
     // Clear Assignments Drop Down
