@@ -7,7 +7,7 @@
       <form #form="ngForm" (ngSubmit)="onSubmit(form)">
         <div class="form-group">
           <label for="course" class="text-bold">Course:</label>
-          <select #c (change)="OnCourseChange(c,s)" class="form-control shadow-sm"
+          <select #c (change)="OnCourseChange(c)" class="form-control shadow-sm"
                   name="course"
                   id="course"
                   ngModel>
