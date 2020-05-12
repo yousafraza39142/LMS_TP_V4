@@ -19,13 +19,16 @@ export class FileuploadComponent implements OnInit {
   }
   getFileDetails(e) {
     // console.log (e.target.files);
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
   }
 
   uploadFiles() {
+    // tslint:disable-next-line:variable-name
       const _uploadFolderId = this.getUniqueId(2);
+    // tslint:disable-next-line:variable-name
       const _userId = 2;
       const frmData = new FormData();
     // tslint:disable-next-line:prefer-for-of

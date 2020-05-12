@@ -117,7 +117,7 @@ export class StudentAssignmentComponent implements OnInit {
     );
   }
 
-  OnCourseChange(c: HTMLSelectElement, s: HTMLSelectElement) {
+  OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
     for (const sec of this.sections) {
       this.sections.pop();
