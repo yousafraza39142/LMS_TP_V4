@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {ViewStudentProfileComponent} from './view-student-profile/view-student-profile.component';
 import {CourseUploadComponent} from './course-upload/course-upload.component';
 import {TimeTableComponent} from './time-table/time-table.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -21,7 +22,8 @@ import {TimeTableComponent} from './time-table/time-table.component';
     ViewStudentProfileComponent,
     CourseUploadComponent,
     TimeTableComponent,
-    AutoCloseDirective
+    AutoCloseDirective,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,

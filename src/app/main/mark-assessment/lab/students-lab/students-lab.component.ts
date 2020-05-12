@@ -28,6 +28,7 @@ export class StudentsLabComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('l') selectLab: ElementRef;
+  @ViewChild('marks') marksInp: ElementRef;
 
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
@@ -159,5 +160,27 @@ export class StudentsLabComponent implements OnInit {
     for (const lab of this.labs) {
       this.labs.pop();
     }
+  }
+
+  OnMarksChange(param: { std: AssessmentTable; marks: string }) {
+    let marks = parseInt(param.marks, 0);
+    if (marks > this.totalMarks) {
+      marks = this.totalMarks;
+      this.marksInp.nativeElement.value = this.totalMarks;
+    } else if (marks < 0) {
+      marks = 0;
+      this.marksInp.nativeElement.value = 0;
+    } else if (isNaN(marks)) {
+      marks = 0;
+      this.marksInp.nativeElement.value = 0;
+    }
+    console.log(param.std, param.marks);
+    console.log(this.selectSection.nativeElement.value, this.selectLab.nativeElement.value, this.selectCourse.nativeElement.value);
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.markAssessment(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectLab.nativeElement.value, AssessmentTypes.LAB, marks)
+      .subscribe(
+        data => {
+        }
+      );
   }
 }

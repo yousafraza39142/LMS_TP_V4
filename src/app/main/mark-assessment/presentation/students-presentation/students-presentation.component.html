@@ -62,7 +62,8 @@
               <button class="download" [disabled]='!r.FILEPATH'><i class="fa fa-download"></i></button>
             </td>
             <td class="text-center">
-              <input type="number" value="{{r.ASS_OBT_MRKS}}">
+              <input #marks type="number" max="10" (change)="OnMarksChange({std:r,marks:marks.value})"
+                     value="{{r.ASS_OBT_MRKS}}">
             </td>
           </tr>
           </tbody>

@@ -29,6 +29,7 @@ export class StudentProjectsComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('p') selectedProject: ElementRef;
+  @ViewChild('marks') marksInp: ElementRef;
 
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
@@ -89,7 +90,7 @@ export class StudentProjectsComponent implements OnInit {
 
 
     this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
-      this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
+      this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
       students => {
         const list = students as AssessmentTable[];
         if (list.length > 0) {
@@ -99,6 +100,7 @@ export class StudentProjectsComponent implements OnInit {
         for (const std of students) {
           this.studentsProjectTable.push(std);
         }
+        console.log(this.studentsProjectTable);
       }
     );
   }
@@ -131,10 +133,6 @@ export class StudentProjectsComponent implements OnInit {
             }
           );
         }
-
-
-
-
       }
     );
   }
@@ -147,7 +145,7 @@ export class StudentProjectsComponent implements OnInit {
     console.log(this.selectCourse);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
+    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
       assignments => {
         // @ts-ignore
         for (const assignment of assignments) {
@@ -161,5 +159,27 @@ export class StudentProjectsComponent implements OnInit {
     for (const pr of this.projects) {
       this.projects.pop();
     }
+  }
+
+  OnMarksChange(param: { std: AssessmentTable; marks: string }) {
+    let marks = parseInt(param.marks, 0);
+    if (marks > this.totalMarks) {
+      marks = this.totalMarks;
+      this.marksInp.nativeElement.value = this.totalMarks;
+    } else if (marks < 0) {
+      marks = 0;
+      this.marksInp.nativeElement.value = 0;
+    } else if (isNaN(marks)) {
+      marks = 0;
+      this.marksInp.nativeElement.value = 0;
+    }
+    console.log(param.std, param.marks);
+    console.log(this.selectSection.nativeElement.value, this.selectedProject.nativeElement.value, this.selectCourse.nativeElement.value);
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.markAssessment(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT, marks)
+      .subscribe(
+        data => {
+        }
+      );
   }
 }

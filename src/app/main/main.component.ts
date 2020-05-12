@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import {CourseModal} from '../shared/course.modal';
 import {AppComponentEventEmitterService} from './event-emmiter.service';
 import {FadeIn} from '../transitions';
-import {AuthenticationService} from "../auth/_services";
+import {AuthenticationService} from '../auth/_services';
 
 declare var $: any;
 
@@ -22,6 +22,7 @@ export class MainComponent implements OnInit {
   public teacherName: string;
   public FM_ID: string;
   showResetForm = false;
+  showChangePassword = false;
 
   constructor(private router: Router,
               private store: Store<fromApp.AppState>,
@@ -160,4 +161,11 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/auth']);
   }
 
+  OnChangePasswordClicked() {
+    this.showChangePassword = true;
+  }
+
+  onCloseChangePasswordForm() {
+    this.showChangePassword = false;
+  }
 }

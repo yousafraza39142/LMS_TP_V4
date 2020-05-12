@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -21,5 +21,11 @@ export class MarkAssessmentService {
   getCourseForTeacher(fmId: number) {
     const url = `${this.baseUrl}/api/CoursesForTeacher/GetCoursesForTeacher?fm_id=${fmId}`;
     return this.http.get(url);
+  }
+
+  // tslint:disable-next-line:variable-name max-line-length
+  markAssessment(year: number, c_code: number, dep_id: number, maj_id: number, rn: number, sub_nm: string, section: string, ass_title: string, ass_type: string, mark: number) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(this.baseUrl + `/api/MarkAssessments/mark?year=${year}&c_code=${c_code}&dep_id=${dep_id}&maj_id=${maj_id}&rn=${rn}&sub_nm=${sub_nm}&section=${section}&ass_title=${ass_title}&ass_type=${ass_type}&mark=${mark}`);
   }
 }

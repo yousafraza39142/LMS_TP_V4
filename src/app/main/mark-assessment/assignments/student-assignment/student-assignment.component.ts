@@ -12,6 +12,7 @@ import {AssessmentTypes} from '../../../../shared/AssessmentTypes';
 
 
 export interface AssessmentTable {
+  D_ID: number;
   NM: string;
   YEAR: number;
   C_CODE: number;
@@ -43,6 +44,7 @@ export class StudentAssignmentComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('a') selectAssignment: ElementRef;
+  @ViewChild('marks') marksInp: ElementRef;
 
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
@@ -176,5 +178,28 @@ export class StudentAssignmentComponent implements OnInit {
     for (const assignment of this.assignments) {
       this.assignments.pop();
     }
+  }
+
+
+  OnMarksChange(param: { std: AssessmentTable; marks: string }) {
+    let marks = parseInt(param.marks, 0);
+    if (marks > this.totalMarks) {
+      marks = this.totalMarks;
+      this.marksInp.nativeElement.value = this.totalMarks;
+    } else if (marks < 0) {
+      marks = 0;
+      this.marksInp.nativeElement.value = 0;
+    } else if (isNaN(marks)) {
+      marks = 0;
+      this.marksInp.nativeElement.value = 0;
+    }
+    console.log(param.std, param.marks);
+    console.log(this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, this.selectCourse.nativeElement.value);
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.markAssessment(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks)
+      .subscribe(
+        data => {
+        }
+      );
   }
 }
