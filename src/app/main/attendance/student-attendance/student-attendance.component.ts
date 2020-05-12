@@ -50,14 +50,14 @@ export class StudentAttendanceComponent implements OnInit {
       }
     );*/
 
-    this.markAssessmentService.getCourseForTeacher(1).subscribe(
+    this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
         for (const course: { SUB_NM: string } of data) {
           this.courses.push(new CourseModal(course.SUB_NM));
         }
         if (this.courses.length > 0) {
-          this.markAssessmentService.getSectionsForTeacherinCourse(1, this.courses[0].courseTitle).subscribe(
+          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
             section => {
               // @ts-ignore
               for (const sec: { SECTION: string } of section) {
@@ -80,7 +80,7 @@ export class StudentAttendanceComponent implements OnInit {
     }
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(1, c.value).subscribe(
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
@@ -91,21 +91,35 @@ export class StudentAttendanceComponent implements OnInit {
   }
 
   OnSubmit() {
-    if (this.dateInput.nativeElement.value === '') {
+
+    // Clear Previous Data in Table
+    for (const a of this.students) {
+      this.students.pop();
+    }
+    // Check for any empty entries
+    if (this.dateInput.nativeElement.value === '' ||
+      this.selectCourse.nativeElement.value === '' ||
+      this.selectSection.nativeElement.value === '') {
+      console.error('Empty Entries Detected');
       return;
     }
+    console.log('Submitted');
+    console.log(this.dateInput.nativeElement.value);
+    console.log(this.selectCourse.nativeElement.value);
+    console.log(this.selectSection.nativeElement.value);
     const selectedDate: string[] = this.dateInput.nativeElement.value.split('-');
     this.attendanceService.checkAttendance(this.selectCourse.nativeElement.value,
-      this.selectSection.nativeElement.value, `${selectedDate[2]}-${parseInt(selectedDate[1], 0) - 1}-${selectedDate[0]}`,
+      this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`,
     ).subscribe(
       stds => {
-        // console.log(data);
+        console.log(stds);
         // tslint:disable-next-line:forin
         const studentsList = stds as Student[];
         for (let i = 0; i < studentsList.length; i++) {
           // console.log(stds[i]);
           this.students.push(stds[i]);
         }
+        console.log(this.students);
       }
     );
   }

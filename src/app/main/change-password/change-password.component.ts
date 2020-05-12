@@ -14,6 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   msg: string;
 
   constructor(private passwordService: PasswordService) {
+    this.msg = ''
   }
 
   // @Input() message = 'Fuck';
@@ -28,6 +29,7 @@ export class ChangePasswordComponent implements OnInit {
     setTimeout(() => {
       $('.backdrop').css('opacity', '1');
     }, 50);
+    console.log('ID' + JSON.parse(localStorage.getItem('teacherInfo')).FM_ID);
   }
 
   OnChangeClicked(form: NgForm) {
@@ -36,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
     }
     // this.passwordService.changePwd()
     console.log(form.value);
-    this.passwordService.changePwd('1', form.value.oldpass, form.value.newpass).subscribe(
+    this.passwordService.changePwd(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, form.value.oldpass, form.value.newpass).subscribe(
       response => {
         const res = response as { Expr1: boolean }[];
         if (res.length > 0) {
@@ -44,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
           this.msg = 'Changed';
           setTimeout(() => {
             this.close.emit();
-          }, 600);
+          }, 1000);
         } else {
           console.log('wrong');
           this.msg = 'Wrong';
