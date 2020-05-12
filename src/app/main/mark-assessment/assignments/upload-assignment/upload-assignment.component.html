@@ -16,7 +16,7 @@
         <div class="col-md-5 col-12">
           <div class="form-group">
             <label for="helpLinks" class="text-bold">Help Material Links</label>
-            <textarea class="form-control shadow-sm"
+            <textarea #helpingMaterial class="form-control shadow-sm"
                       name="helpMaterialLinks"
                       id="helpLinks"
                       ngModel
@@ -40,7 +40,7 @@
         <div class="col-12 col-md-5">
           <div class="form-group">
             <label for="title" class="text-bold">Title:</label>
-            <input type="text"
+            <input #title type="text"
                    class="form-control shadow-sm"
                    name="title"
                    id="title"
@@ -55,13 +55,13 @@
         <div class="col-12 col-md-4">
           <div class="form-group">
             <label for="totalMarks" class="text-bold">Marks:</label>
-            <input type="number"
+            <input #marks type="number"
                    [maxLength]="3"
                    class="form-control shadow-sm"
                    name="totalMarks"
                    id="totalMarks"
                    aria-describedby="helpId"
-                   placeholder="Title of Upload"
+                   placeholder="marks"
                    ngModel
                    required>
             <small id="helpId" class="form-text text-muted">Title of upload</small>
@@ -74,7 +74,8 @@
                    placeholder="Attach file"
                    aria-describedby="fileHelpId"
                    ngModel
-                   required>
+                   required
+                   (change)="getFileDetails($event)">
             <small id="fileHelpId" class="form-text text-muted"><i class="fa fa-sm fa-file"></i> select file to be
               uploaded</small>
           </div>
@@ -84,7 +85,7 @@
         <div class="col-12 col-md-8">
           <div class="form-group">
             <label for="dueDate" class="text-bold">Due Date:</label>
-            <input type="datetime-local"
+            <input #date type="datetime-local"
                    [maxLength]="3"
                    class="form-control shadow-sm"
                    name="dueDate"
@@ -109,7 +110,7 @@
           transition: .2s ease-in-out;
         }
       </style>
-      <button class="btn btn-primary lift-animation mt-2" type="submit">Upload Assignment</button>
+      <button class="btn btn-primary lift-animation mt-2" type="submit" (click)="uploadFiles()">Upload Assignment</button>
     </form>
   </div>
 </div>

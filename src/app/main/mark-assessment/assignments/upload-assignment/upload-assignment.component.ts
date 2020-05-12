@@ -29,6 +29,39 @@ export class UploadAssignmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /*this.store.select('fromAssignment').subscribe(
+      state => {
+        console.log(state.data.assignments);
+        this.data = state.data;
+      }
+    );
+    this.store.select('fromMarkAssessment').subscribe(
+      state => {
+        console.log(state);
+        this.courses = state.courses;
+        this.sections = state.sections;
+      }
+    );
+*/
+    // if Wanna dispatch own courses
+    /*this.info = {
+      courses: [
+        new CourseModal('YOousaf'),
+        new CourseModal('Dani'),
+        new CourseModal('Math'),
+        new CourseModal('Chinese'),
+        new CourseModal('Pk.Std')
+      ],
+        sections: [
+        new SectionModal('Section Dani'),
+        new SectionModal('Section B'),
+        new SectionModal('Section C'),
+        new SectionModal('Section E1'),
+        new SectionModal('Section Ali')
+      ]
+    };*/
+    // this.store.dispatch(new fromAssignmentActions.StoreData(this.info));
+
     this.markAssessmentService.getCourseForTeacher(1).subscribe(
       data => {
         // @ts-ignore
