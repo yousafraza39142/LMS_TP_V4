@@ -13,12 +13,6 @@
           <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
         </select>
       </div>
-      <!--<div class="form-group">
-        <label for="lecturetitle">Lecture Title:</label>
-        <input type="text"
-               class="form-control shadow-sm" name="lecturetitle" id="lecturetitle" aria-describedby="helpId"
-               placeholder="Presentation title" ngModel required>
-      </div>-->
       <button class="btn btn-sm btn-primary shadow-sm" [disabled]="form.invalid" type="submit">Create Attendance
       </button>
     </form>
@@ -30,35 +24,34 @@
         <table class="table table-no-bordered table-borderless bg-light m-0 p-0">
           <thead>
           <tr>
+            <th>Attendance Status</th>
             <th>Roll No</th>
             <th>Name</th>
             <th>Date</th>
-            <th>Attendance Status</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let std of students">
-            <td>{{std.ROLNO}}</td>
-            <td>{{std.NM}}</td>
-            <td>{{date.getMonth() + 1}}-{{date.getDate()}}-{{this.date.getFullYear()}}</td>
+          <tr *ngFor="let std of students;let i = index">
             <td>
-              <div class="form-check" style="margin-top: -15px">
+              <!--<div class="form-check" style="margin-top: -15px">
                 <label class="form-check-label">
                   <input #tog type="checkbox" class="form-check-input" (click)="OnToggle({toggle:tog, std:std})" name=""
                          id="{{std.ROLNO}}-attendanceStatus" value="checkedValue" checked>
                 </label>
-              </div>
-              <!--<div class="custom-control custom-switch form-group">
+              </div>-->
+              <div class="custom-control custom-switch form-group">
                 <input #attendanceToggle type="checkbox"
                        class="custom-control-input"
                        ngModel
                        name="{{std.ROLNO}}-attendanceStatus"
-                       [defaultChecked]
-                       (change)="OnToggle(std)"
-                       id="attendanceStatus">
-                <label class="custom-control-label" [htmlFor]="std.ROLNO+'-attendanceStatus'"></label>
-              </div>-->
+                       (change)="OnToggle({toggle:attendanceToggle, std:std})"
+                       id="{{'attendanceStatus-' + i}}">
+                <label class="custom-control-label" for="{{'attendanceStatus-' + i}}" ></label>
+              </div>
             </td>
+            <td>{{std.ROLNO}}</td>
+            <td>{{std.NM}}</td>
+            <td>{{date.getMonth() + 1}}-{{date.getDate()}}-{{this.date.getFullYear()}}</td>
           </tr>
           </tbody>
         </table>

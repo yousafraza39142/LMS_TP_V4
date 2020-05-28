@@ -1,0 +1,105 @@
+<div [@SlideInFromLeft]>
+  <hr>
+  <h3>Student Quizzes</h3>
+  <hr>
+  <div class="row mt-1">
+    <div class="col-sm-12 col-md-7 col-lg-4 p-2">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-group">
+          <label for="course" class="text-bold">Course:</label>
+          <select #c (change)="OnCourseChange(c)" class="form-control shadow-sm"
+                  name="course"
+                  id="course"
+                  ngModel>
+            <option *ngFor="let course of courses">{{course.courseTitle}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="section" class="text-bold">Section:</label>
+          <select #s (change)="OnSectionChange(s)" class="form-control shadow-sm"
+                  name="section"
+                  id="section"
+                  ngModel>
+            <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="assignment" class="text-bold">Assignment:</label>
+          <select #a class="form-control shadow-sm"
+                  name="assignment"
+                  id="assignment"
+                  ngModel>
+            <option *ngFor="let assignment of assignments">{{assignment.title}}</option>
+          </select>
+        </div>
+        <button class="btn btn-primary lift-animation mt-4 float-right" type="submit">Filter</button>
+      </form>
+    </div>
+    <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
+      <div class="card text-left shadow">
+        <div class="card-header bg-light"><i class="fa fa-chart-line">Assignment Table</i></div>
+        <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll;overflow-x: scroll">
+          <table class="table table-no-bordered table-borderless bg-light m-0 p-0">
+            <thead>
+            <tr>
+              <th>Roll No</th>
+              <th>Name</th>
+              <th class="text-center">Download</th>
+              <th class="text-center">Marks Obtained/{{totalMarks || 0}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let r of studentsAssignmentTable">
+              <td>{{r.ROLNO}}</td>
+              <td>{{r.NM}}</td>
+              <td class="text-center">
+                <button class="download" [disabled]='!r.FILEPATH'><i class="fa fa-download"></i></button>
+              </td>
+              <td class="text-center">
+                <input #marks type="number" max="10" (change)="OnMarksChange({std:r,marks:marks.value})"
+                       value="{{r.ASS_OBT_MRKS}}">
+              </td>
+            </tr>
+            <!--<tr>
+              <td>0000-BSCS-17</td>
+              <td>Adnan Jamil</td>
+              <td class="text-center">Group 2</td>
+              <td class="text-center">
+                <button class="download"><i class="fa fa-download"></i></button>
+              </td>
+              <td class="text-center">
+                <button class="remove"><i class="fa fa-remove"></i></button>
+              </td>
+              <td class="text-center">7</td>
+            </tr>
+            <tr>
+              <td>0000-BSCS-17</td>
+              <td>Hamza Suleman</td>
+              <td class="text-center">Group 3</td>
+              <td class="text-center">
+                <button class="download"><i class="fa fa-download"></i></button>
+              </td>
+              <td class="text-center">
+                <button class="remove"><i class="fa fa-remove"></i></button>
+              </td>
+              <td class="text-center">8</td>
+            </tr>
+            <tr>
+              <td>0000-BSCS-17</td>
+              <td>Umair Ahmad</td>
+              <td class="text-center">Group 4</td>
+              <td class="text-center">
+                <button class="download"><i class="fa fa-download"></i></button>
+              </td>
+              <td class="text-center">
+                <button class="remove"><i class="fa fa-remove"></i></button>
+              </td>
+              <td class="text-center">8</td>
+            </tr>-->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

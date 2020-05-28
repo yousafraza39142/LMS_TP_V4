@@ -41,25 +41,22 @@ export class CreateAttendanceComponent implements OnInit {
   course: string;
   private currentSection: string;
 
+
   constructor(private store: Store<AppState>,
               private markAssessmentService: MarkAssessmentService,
               private attendanceService: AttendanceService) {
     this.courses = new Array<CourseModal>();
     this.sections = new Array<SectionModal>();
     this.students = new Array<Student>();
+    /*this.students = [
+      {YEAR: 2016, D_ID: 1, NM: 'Yousaf', C_CODE: 1, MAJ_ID: 1, RN: 1, ROLNO: '1-BSCS-2016'},
+      {YEAR: 2016, D_ID: 1, NM: 'Ali', C_CODE: 1, MAJ_ID: 1, RN: 2, ROLNO: '2-BSCS-2016'},
+      {YEAR: 2016, D_ID: 1, NM: 'Dan', C_CODE: 1, MAJ_ID: 1, RN: 3, ROLNO: '3-BSCS-2016'}
+    ];*/
     this.date = new Date();
-    // console.log(this.date.getDate());
-    // console.log();
   }
 
   ngOnInit(): void {
-    /*this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        // console.log(state);
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );*/
 
     this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
@@ -78,6 +75,9 @@ export class CreateAttendanceComponent implements OnInit {
             }
           );
         }
+      },
+      error => {
+        console.log('Some Error Occured');
       }
     );
   }
@@ -86,7 +86,6 @@ export class CreateAttendanceComponent implements OnInit {
   OnSubmit(form: NgForm) {
     // Do not get values from form as it can cause bugs.....
     this.currentSection = this.selectSection.nativeElement.value;
-    // console.log(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value);
 
 
     // tslint:disable-next-line:forin
@@ -100,19 +99,16 @@ export class CreateAttendanceComponent implements OnInit {
         // @ts-ignore
         for (const std: Student of stdList) {
           this.students.push(std);
-          // console.log(this.selectSection.nativeElement.value);
+          console.log(std)
           // tslint:disable-next-line:max-line-length
-          this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.currentSection, `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`, AttendanceStatus.present)
+          this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.currentSection, `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`, AttendanceStatus.absent)
             .subscribe(
-            data => {
-             //  console.log(data);
-            }
-          );
+              data => {
+              }
+            );
         }
-        // console.log(this.students);
       }
     );
-    // console.log(form.valid);
   }
 
   OnToggle(param: { std: Student; toggle: HTMLInputElement }) {
@@ -122,11 +118,16 @@ export class CreateAttendanceComponent implements OnInit {
     } else {
       attendance = 'a';
     }
-    // console.log(this.selectSection.nativeElement.value);
     // tslint:disable-next-line:max-line-length
     this.attendanceService.markAttendance(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.currentSection, `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`, attendance).subscribe(
       data => {
-        // console.log(data);
+        // No-Return Data.
+      },
+      error => {
+        console.log('Some Error Occurred');
+        // param.toggle.parentElement.style.maxWidth = '50%';
+        // param.toggle.parentElement.style.backgroundColor = 'rgba(255,43,43,0.47)';
+        // param.toggle.parentElement.style.borderRadius  = '5px';
       }
     );
   }
@@ -147,5 +148,4 @@ export class CreateAttendanceComponent implements OnInit {
       }
     );
   }
-
 }

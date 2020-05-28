@@ -124,6 +124,7 @@ export class MainComponent implements OnInit {
   onShowResetForm() {
     this.showResetForm = true;
   }
+
   OnAssignmentClicked() {
     console.log('clicked Assignments');
     this.router.navigate(['assignment'], {relativeTo: this.route});
@@ -156,6 +157,7 @@ export class MainComponent implements OnInit {
   OnViewStudentProfileClicked() {
     this.router.navigate(['viewStudentProfile'], {relativeTo: this.route});
   }
+
   onLogout() {
     this.authenticationService.logout();
     this.router.navigate(['/auth']);
@@ -167,5 +169,9 @@ export class MainComponent implements OnInit {
 
   onCloseChangePasswordForm() {
     this.showChangePassword = false;
+  }
+
+  OnQuizClicked() {
+    this.router.navigate(['quiz'], {relativeTo: this.route});
   }
 }

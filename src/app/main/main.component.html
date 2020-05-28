@@ -195,16 +195,15 @@
             </li>
             <li>
               <a (click)="OnTeacherInfoClicked()">
-                <i class="metismenu-icon fa fa-calendar"></i>
+                <i class="metismenu-icon material-icons">info</i>
                 Teacher Information
-                <i class="metismenu-state-icon"></i>
               </a>
             </li>
             <li class="app-sidebar__heading">Student Actions</li>
             <li tabindex="0" autoCloseItem id="menu-list-1" class="menu-list"
                 (click)="OnShowMenuListItem('menu-list-1')">
               <a>
-                <i class="metismenu-icon fa fa-user-graduate"></i>
+                <i class="metismenu-icon material-icons">create</i>
                 Mark Assessment
                 <i class="metismenu-state-icon pe-7s-angle-down fa fa-caret-down"></i>
               </a>
@@ -231,6 +230,12 @@
                   <a (click)="OnLabClicked()">
                     <i class="metismenu-icon"></i>
                     Lab
+                  </a>
+                </li>
+                <li>
+                  <a (click)="OnQuizClicked()">
+                    <i class="metismenu-icon"></i>
+                    Quiz
                   </a>
                 </li>
                 <li>

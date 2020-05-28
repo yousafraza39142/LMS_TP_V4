@@ -57,6 +57,7 @@ export class StudentAttendanceComponent implements OnInit {
           this.courses.push(new CourseModal(course.SUB_NM));
         }
         if (this.courses.length > 0) {
+          // tslint:disable-next-line:max-line-length
           this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
             section => {
               // @ts-ignore

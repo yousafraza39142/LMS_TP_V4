@@ -26,10 +26,9 @@
 <!--  </div>-->
 <!--</div>-->
 
-
-
-
+<!--style="background: url('./assets/animation-fire.gif') no-repeat center;-->
 <div class="app-container app-theme-white w" [@FadeSlideInDown]>
+
   <div class="app-container">
     <div class="h-100">
       <div class="h-100 no-gutters row">
@@ -46,7 +45,8 @@
             </div>
           </div>
         </div>
-        <div class="h-100 d-flex bg-white justify-content-center align-items-center col-md-12 col-lg-8">
+        <div
+          class="h-100 d-flex bg-white justify-content-center align-items-center col-md-12 col-lg-8">
           <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
             <!--Logo-->
             <div class="app-logo-remove">
@@ -63,7 +63,8 @@
                   <div class="col-md-6">
                     <div class="position-relative form-group">
                       <label for="username">Username</label>
-                      <input type="text" formControlName="username" id="username" placeholder="Username here..." class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                      <input type="text" formControlName="username" id="username" placeholder="Username here..."
+                             class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
                       <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                         <div *ngIf="f.username.errors.required">Username is required</div>
                       </div>
@@ -72,7 +73,8 @@
                   <div class="col-md-6">
                     <div class="position-relative form-group">
                       <label for="password">Password</label>
-                      <input type="password" id="password" formControlName="password" placeholder="Password here..." class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                      <input type="password" id="password" formControlName="password" placeholder="Password here..."
+                             class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
                       <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                         <div *ngIf="f.password.errors.required">Password is required</div>
                       </div>
