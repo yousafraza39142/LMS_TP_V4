@@ -14,7 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   msg: string;
 
   constructor(private passwordService: PasswordService) {
-    this.msg = ''
+    this.msg = '';
   }
 
   // @Input() message = 'Fuck';

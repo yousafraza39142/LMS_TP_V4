@@ -10,6 +10,7 @@ import {AppState} from '../../store/app.reducers';
 import {AssignmentApiService} from '../mark-assessment/assignments/assignment-services/assignment-api.service';
 import {MarkAssessmentService} from '../mark-assessment/mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
+import {baseUrl} from '../attendance/attendance-services/attendance.service';
 
 @Component({
   selector: 'app-course-upload',
@@ -131,11 +132,11 @@ export class CourseUploadComponent implements OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
     // tslint:disable-next-line:max-line-length
-    this.httpService.post('http://localhost:12345/api/upload/UploadFiles?uploadFolderId=' + _uploadFolderId +
+    this.httpService.post(`${baseUrl}/api/upload/UploadFiles?uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment
-        this.httpService.get<any>('http://localhost:12345/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?',
+        this.httpService.get<any>(`${baseUrl}/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?`,
           {
             params: {
               FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,

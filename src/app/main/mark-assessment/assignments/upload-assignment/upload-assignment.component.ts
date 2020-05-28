@@ -8,6 +8,7 @@ import {SectionModal} from '../../../../shared/SectionModal';
 import {SlideInFromLeft} from '../../../../transitions';
 import {MarkAssessmentService} from '../../mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
+import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
 
 @Component({
   selector: 'app-upload-assignment',
@@ -36,39 +37,6 @@ export class UploadAssignmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.store.select('fromAssignment').subscribe(
-      state => {
-        console.log(state.data.assignments);
-        this.data = state.data;
-      }
-    );
-    this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        console.log(state);
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );
-*/
-    // if Wanna dispatch own courses
-    /*this.info = {
-      courses: [
-        new CourseModal('YOousaf'),
-        new CourseModal('Dani'),
-        new CourseModal('Math'),
-        new CourseModal('Chinese'),
-        new CourseModal('Pk.Std')
-      ],
-        sections: [
-        new SectionModal('Section Dani'),
-        new SectionModal('Section B'),
-        new SectionModal('Section C'),
-        new SectionModal('Section E1'),
-        new SectionModal('Section Ali')
-      ]
-    };*/
-    // this.store.dispatch(new fromAssignmentActions.StoreData(this.info));
-
     this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
@@ -132,11 +100,11 @@ export class UploadAssignmentComponent implements OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
     // tslint:disable-next-line:max-line-length
-    this.httpService.post('http://localhost:12345/api/upload/UploadFiles?uploadFolderId=' + _uploadFolderId +
+    this.httpService.post(`${baseUrl}/api/upload/UploadFiles?uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment
-        this.httpService.get<any>('http://localhost:12345/api/TeacherUploadAssignment/AssignmentUploadedByTeacher?',
+        this.httpService.get<any>(`${baseUrl}/api/TeacherUploadAssignment/AssignmentUploadedByTeacher?`,
           {
             params: {
               FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
@@ -150,9 +118,6 @@ export class UploadAssignmentComponent implements OnInit {
             }
           })
           .pipe().subscribe(
-          // m => {
-          //   console.log('success');
-          // }
         );
       }
     );

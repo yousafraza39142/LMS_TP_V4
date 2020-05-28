@@ -8,6 +8,7 @@ import {SlideInFromLeft} from '../../../../transitions';
 import {MarkAssessmentService} from '../../mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
 import {AssignmentData} from '../../assignments/store/assignment.component.reducer';
+import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
 
 @Component({
   selector: 'app-upload-assignment',
@@ -132,11 +133,11 @@ export class UploadQuizComponent implements OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
     // tslint:disable-next-line:max-line-length
-    this.httpService.post('http://localhost:12345/api/upload/UploadFiles?uploadFolderId=' + _uploadFolderId +
+    this.httpService.post(`${baseUrl}/api/upload/UploadFiles?uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment
-        this.httpService.get<any>('http://localhost:12345/api/TeacherUploadAssignment/AssignmentUploadedByTeacher?',
+        this.httpService.get<any>(`${baseUrl}/api/TeacherUploadAssignment/AssignmentUploadedByTeacher?`,
           {
             params: {
               FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
@@ -148,8 +149,7 @@ export class UploadQuizComponent implements OnInit {
               DUE_DATE: this.dueDate.nativeElement.value.replace('T', ' '),
               FILE_ID: s[0].FILE_ID
             }
-          })
-          .pipe().subscribe(
+          }).pipe().subscribe(
           // m => {
           //   console.log('success');
           // }

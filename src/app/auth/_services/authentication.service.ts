@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {User} from '../_models';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
+import {baseUrl} from '../../main/attendance/attendance-services/attendance.service';
 
 
 @Injectable({providedIn: 'root'})
@@ -23,7 +24,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.http.get<any>('http://localhost:12345/api/TeacherAuthentication/TeacherLogin?',
+    return this.http.get<any>(`${baseUrl}/api/TeacherAuthentication/TeacherLogin?`,
       {params: {_username: username, _password: password}})
       .pipe(map(user => {
           // login successful if there's a jwt token in the response

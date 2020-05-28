@@ -3,6 +3,7 @@ import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/c
 import {Observable} from 'rxjs';
 import { saveAs } from 'file-saver';
 import {map} from 'rxjs/operators';
+import {baseUrl} from '../main/attendance/attendance-services/attendance.service';
 
 @Component({
   selector: 'app-download-file',
@@ -63,7 +64,7 @@ export class DownloadFileComponent implements OnInit {
   DownloadFile(filePath: string, fileType: string): Observable<any> {
     const fileExtension = fileType;
     const input = filePath;
-    return this.http.post('http://localhost:12345/api/Download/DownloadFile?folderPath=' + this.folderPath + '&fileName=' + this.attachmentFileName, '',
+    return this.http.post(`${baseUrl}/api/Download/DownloadFile?folderPath=` + this.folderPath + '&fileName=' + this.attachmentFileName, '',
       { responseType: 'blob',
                 observe: 'response'})
       .pipe(
