@@ -43,13 +43,6 @@ export class StudentAttendanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );*/
-
     this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
@@ -69,9 +62,6 @@ export class StudentAttendanceComponent implements OnInit {
         }
       }
     );
-
-
-    // this.attendanceService.checkAttendance()
   }
 
   OnCourseChange(c: HTMLSelectElement) {
@@ -92,11 +82,8 @@ export class StudentAttendanceComponent implements OnInit {
   }
 
   OnSubmit() {
+    this.students = new Array<CheckAttendanceDate>();
 
-    // Clear Previous Data in Table
-    for (const a of this.students) {
-      this.students.pop();
-    }
     // Check for any empty entries
     if (this.dateInput.nativeElement.value === '' ||
       this.selectCourse.nativeElement.value === '' ||
@@ -108,16 +95,13 @@ export class StudentAttendanceComponent implements OnInit {
     console.log(this.dateInput.nativeElement.value);
     console.log(this.selectCourse.nativeElement.value);
     console.log(this.selectSection.nativeElement.value);
-    const selectedDate: string[] = this.dateInput.nativeElement.value.split('-');
     this.attendanceService.checkAttendance(this.selectCourse.nativeElement.value,
       this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`,
     ).subscribe(
       stds => {
-        console.log(stds);
         // tslint:disable-next-line:forin
         const studentsList = stds as Student[];
         for (let i = 0; i < studentsList.length; i++) {
-          // console.log(stds[i]);
           this.students.push(stds[i]);
         }
         console.log(this.students);

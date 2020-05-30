@@ -99,7 +99,7 @@ export class CreateAttendanceComponent implements OnInit {
         // @ts-ignore
         for (const std: Student of stdList) {
           this.students.push(std);
-          console.log(std)
+          console.log(std);
           // tslint:disable-next-line:max-line-length
           this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.currentSection, `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`, AttendanceStatus.absent)
             .subscribe(
