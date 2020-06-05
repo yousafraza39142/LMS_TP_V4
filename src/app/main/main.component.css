@@ -1,5 +1,10 @@
 /* Header Css */
 
+
+.my-modal{
+  transition: all .5s ease-out !important;
+}
+
 #heading{
   font-family: 'Simplifica', sans-serif;
   font-size: 30px;

@@ -11,6 +11,7 @@ import {AssignmentApiService} from '../mark-assessment/assignments/assignment-se
 import {MarkAssessmentService} from '../mark-assessment/mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
 import {baseUrl} from '../attendance/attendance-services/attendance.service';
+import {AppComponentEventEmitterService} from "../event-emmiter.service";
 
 @Component({
   selector: 'app-course-upload',
@@ -35,7 +36,8 @@ export class CourseUploadComponent implements OnInit {
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
               private markAssessmentService: MarkAssessmentService,
-              private httpService: HttpClient
+              private httpService: HttpClient,
+              private clickEvent: AppComponentEventEmitterService
   ) {
     this.show = false;
     this.courses = new Array<CourseModal>();
@@ -147,9 +149,12 @@ export class CourseUploadComponent implements OnInit {
             }
           })
           .pipe().subscribe(
-          // m => {
-          //   // console.log('success');
-          // }
+            value => {
+              this.clickEvent.showMessages(true);
+            },
+          error => {
+            console.log('Error');
+          }
         );
       }
     );

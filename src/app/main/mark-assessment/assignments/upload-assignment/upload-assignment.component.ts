@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/app.reducers';
@@ -9,6 +9,9 @@ import {SlideInFromLeft} from '../../../../transitions';
 import {MarkAssessmentService} from '../../mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
 import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
+import {AppComponentEventEmitterService} from '../../../event-emmiter.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-upload-assignment',
@@ -30,8 +33,10 @@ export class UploadAssignmentComponent implements OnInit {
   @ViewChild('marks') marks: ElementRef;
   @ViewChild('date') dueDate: ElementRef;
 
-  constructor(private store: Store<AppState>, private markAssessmentService: MarkAssessmentService,
-              private httpService: HttpClient) {
+  constructor(private store: Store<AppState>,
+              private markAssessmentService: MarkAssessmentService,
+              private httpService: HttpClient,
+              private clickEvent: AppComponentEventEmitterService) {
     this.courses = new Array<CourseModal>();
     this.sections = new Array<SectionModal>();
   }
@@ -57,6 +62,7 @@ export class UploadAssignmentComponent implements OnInit {
       }
     );
   }
+
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
     for (const sec of this.sections) {
@@ -89,6 +95,7 @@ export class UploadAssignmentComponent implements OnInit {
     }
     return stringArr.join('-');
   }
+
   uploadFiles() {
     // tslint:disable-next-line:variable-name
     const _uploadFolderId = this.getUniqueId(2);
@@ -118,10 +125,14 @@ export class UploadAssignmentComponent implements OnInit {
             }
           })
           .pipe().subscribe(
+          value => {
+            this.clickEvent.showMessages(true)
+          }
         );
       }
     );
   }
+
   getFileDetails(e) {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < e.target.files.length; i++) {

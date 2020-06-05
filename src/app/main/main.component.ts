@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromApp from './../store/app.reducers';
 import {Store} from '@ngrx/store';
@@ -22,7 +22,9 @@ export class MainComponent implements OnInit {
   public teacherName: string;
   public FM_ID: string;
   showResetForm = false;
+  @Input() message: string;
   showChangePassword = false;
+  showMessage = false;
 
   constructor(private router: Router,
               private store: Store<fromApp.AppState>,
@@ -49,15 +51,6 @@ export class MainComponent implements OnInit {
   }
 
   OnShowMenuListItem(id: string) {
-    /*const menu = document.getElementById(id);
-    const ul = menu.getElementsByTagName('ul')[0];
-    if (ul.classList.contains('mm-show')) {
-      ul.classList.remove('mm-show');
-      menu.classList.remove('mm-active');
-    } else {
-      ul.classList.add('mm-show');
-      menu.classList.add('mm-active');
-    }*/
   }
 
   OnnavBarHamBtnClicked() {
@@ -115,6 +108,12 @@ export class MainComponent implements OnInit {
         $('#main-container').removeClass('sidebar-mobile-open');
       }
     });
+
+    this.clickEvent.showMessage.subscribe(
+      value => {
+        this.showMessage = true;
+      }
+    );
   }
 
   onCloseResetForm() {
@@ -174,4 +173,9 @@ export class MainComponent implements OnInit {
   OnQuizClicked() {
     this.router.navigate(['quiz'], {relativeTo: this.route});
   }
+
+  onCloseMessage() {
+    this.showMessage = false;
+  }
+
 }

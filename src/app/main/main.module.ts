@@ -12,6 +12,7 @@ import {ViewStudentProfileComponent} from './view-student-profile/view-student-p
 import {CourseUploadComponent} from './course-upload/course-upload.component';
 import {TimeTableComponent} from './time-table/time-table.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MessageModalComponent } from './message-modal/message-modal.component';
 
 
 
@@ -23,7 +24,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     CourseUploadComponent,
     TimeTableComponent,
     AutoCloseDirective,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    MessageModalComponent
   ],
   imports: [
     CommonModule,

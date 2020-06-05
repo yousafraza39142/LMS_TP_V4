@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {baseUrl} from "../main/attendance/attendance-services/attendance.service";
+import {baseUrl} from '../main/attendance/attendance-services/attendance.service';
 
 
 @Component({

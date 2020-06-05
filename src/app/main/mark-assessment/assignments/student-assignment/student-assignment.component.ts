@@ -94,9 +94,8 @@ export class StudentAssignmentComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    for (const s of this.studentsAssignmentTable) {
-      this.studentsAssignmentTable.pop();
-    }
+    this.studentsAssignmentTable = new Array<AssessmentTable>();
+
     if (this.selectSection.nativeElement.value === '' ||
       this.selectCourse.nativeElement.value === '' ||
       this.selectAssignment.nativeElement.value === '') {
