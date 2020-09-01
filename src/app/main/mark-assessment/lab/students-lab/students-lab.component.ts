@@ -58,7 +58,7 @@ export class StudentsLabComponent implements OnInit {
               if (this.sections.length > 0) {
                 console.log('Course', this.courses[0]);
                 console.log('section', this.sections[0]);
-                this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle,
+                this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle,
                   this.courses[0].courseTitle,
                   AssessmentTypes.LAB).subscribe(
                   labs => {
@@ -87,7 +87,7 @@ export class StudentsLabComponent implements OnInit {
       this.selectLab.nativeElement.value === '') {
       return;
     }
-    this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
+    this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
       this.selectCourse.nativeElement.value, this.selectLab.nativeElement.value, AssessmentTypes.LAB).subscribe(
       students => {
         console.log(students);
@@ -123,7 +123,7 @@ export class StudentsLabComponent implements OnInit {
         if (this.sections.length > 0) {
           // @ts-ignore
           // tslint:disable-next-line:max-line-length
-          this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.LAB).subscribe(
+          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.LAB).subscribe(
             labs => {
               // @ts-ignore
               for (const lab of labs) {
@@ -145,7 +145,7 @@ export class StudentsLabComponent implements OnInit {
     console.log(this.selectCourse);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.LAB).subscribe(
+    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.LAB).subscribe(
       labs => {
         // @ts-ignore
         for (const lab of labs) {

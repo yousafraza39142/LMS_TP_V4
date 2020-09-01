@@ -58,7 +58,7 @@ export class StudentProjectsComponent implements OnInit {
                 console.log('Course', this.courses[0]);
                 console.log('section', this.sections[0]);
                 // tslint:disable-next-line:max-line-length
-                this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.courses[0].courseTitle, AssessmentTypes.PROJECT).subscribe(
+                this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.courses[0].courseTitle, AssessmentTypes.PROJECT).subscribe(
                   projects => {
                     // @ts-ignore
                     for (const proj of projects) {
@@ -89,7 +89,7 @@ export class StudentProjectsComponent implements OnInit {
     }
 
 
-    this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
+    this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
       this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
       students => {
         const list = students as AssessmentTable[];
@@ -124,7 +124,7 @@ export class StudentProjectsComponent implements OnInit {
           console.log('Course:', this.selectCourse.nativeElement.value);
           console.log('Section:', this.selectSection.nativeElement.value);
           // tslint:disable-next-line:max-line-length
-          this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
+          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
             projs => {
               // @ts-ignore
               for (const project of projs) {
@@ -145,7 +145,7 @@ export class StudentProjectsComponent implements OnInit {
     console.log(this.selectCourse);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
+    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
       assignments => {
         // @ts-ignore
         for (const assignment of assignments) {

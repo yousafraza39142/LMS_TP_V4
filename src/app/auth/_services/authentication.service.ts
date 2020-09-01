@@ -7,6 +7,26 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
 import {baseUrl} from '../../main/attendance/attendance-services/attendance.service';
 
+export interface TeacherData {
+  FM_ID: number;
+  NM: string;
+  DES: string;
+  D_ID: number;
+  NIC: string;
+  DOB: Date;
+  PH1: string;
+  PH2: string;
+  ADD1: string;
+  ADD2: string;
+  PHTO: string;
+  GENDER: string;
+  RELIG: string;
+  EMAIL: string;
+  QUALIFICATION: string;
+  JOIN_DATE: Date;
+  F_ID: number;
+}
+
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {

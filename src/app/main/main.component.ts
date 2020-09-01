@@ -93,6 +93,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(JSON.parse(localStorage.getItem('teacherInfo')));
     this.teacherName = JSON.parse(localStorage.getItem('teacherInfo')).NM;
     this.FM_ID = JSON.parse(localStorage.getItem('teacherInfo')).FM_ID;
     // jquery

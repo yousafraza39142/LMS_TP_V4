@@ -84,10 +84,11 @@ export class CreateAttendanceComponent implements OnInit {
 
 
   OnSubmit(form: NgForm) {
+    if (this.selectSection.nativeElement.value === '' || this.selectSection.nativeElement.value === '') {
+      return;
+    }
     // Do not get values from form as it can cause bugs.....
     this.currentSection = this.selectSection.nativeElement.value;
-
-
     // tslint:disable-next-line:forin
     for (const std in this.students) {
       this.students.pop();

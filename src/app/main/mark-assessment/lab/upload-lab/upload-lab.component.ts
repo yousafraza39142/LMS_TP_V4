@@ -97,7 +97,8 @@ export class UploadLabComponent implements OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
     // tslint:disable-next-line:max-line-length
-    this.httpService.post(`${baseUrl}/api/upload/UploadFiles?uploadFolderId=` + _uploadFolderId +
+    this.httpService.post(`${baseUrl}/api/upload/UploadFiles?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&
+    uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment

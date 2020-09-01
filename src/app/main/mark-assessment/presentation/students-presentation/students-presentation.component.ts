@@ -60,7 +60,7 @@ export class StudentsPresentationComponent implements OnInit {
               if (this.sections.length > 0) {
                 console.log('Course', this.courses[0]);
                 console.log('section', this.sections[0]);
-                this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle,
+                this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle,
                   this.courses[0].courseTitle,
                   AssessmentTypes.PRESENTATION).subscribe(
                   presentations => {
@@ -89,7 +89,7 @@ export class StudentsPresentationComponent implements OnInit {
       return;
     }
 
-    this.assignmentApiService.getAssignmentsListOfStudents(this.selectSection.nativeElement.value,
+    this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
       this.selectCourse.nativeElement.value, this.selectedPresentation.nativeElement.value, AssessmentTypes.PRESENTATION).subscribe(
       students => {
         const list = students as AssessmentTable[];
@@ -130,7 +130,7 @@ export class StudentsPresentationComponent implements OnInit {
           // tslint:disable-next-line:max-line-length
           console.log('Course Change:', this.sections[0].sectionTitle, c.value);
           // tslint:disable-next-line:max-line-length
-          this.assignmentApiService.getAssignmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PRESENTATION).subscribe(
+          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PRESENTATION).subscribe(
             presentations => {
               // @ts-ignore
               for (const presentation of presentations) {
@@ -154,7 +154,7 @@ export class StudentsPresentationComponent implements OnInit {
     console.log(this.selectCourse);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssignmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PRESENTATION).subscribe(
+    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PRESENTATION).subscribe(
       presentations => {
         // @ts-ignore
         for (const assignment of presentations) {

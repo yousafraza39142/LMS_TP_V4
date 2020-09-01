@@ -6,8 +6,14 @@ import {baseUrl} from '../attendance/attendance-services/attendance.service';
   providedIn: 'root'
 })
 export class MarkAssessmentService {
+  private fmId: number;
 
   constructor(private http: HttpClient) {
+    if (JSON.parse(localStorage.getItem('teacherInfo'))) {
+      this.fmId = JSON.parse(localStorage.getItem('teacherInfo')).FM_ID;
+    } else {
+      this.fmId = -1;
+    }
   }
 
 

@@ -101,6 +101,7 @@ export class StudentAttendanceComponent implements OnInit {
       stds => {
         // tslint:disable-next-line:forin
         const studentsList = stds as Student[];
+        this.students = new Array<CheckAttendanceDate>();
         for (let i = 0; i < studentsList.length; i++) {
           this.students.push(stds[i]);
         }
