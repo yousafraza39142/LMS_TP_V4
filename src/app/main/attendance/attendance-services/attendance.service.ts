@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 // Online Api Url
-// export const baseUrl = 'https://lms-api-ravian.azurewebsites.net';
+export const baseUrl = 'https://lms-api-ravian.azurewebsites.net';
 
-export const baseUrl = 'http://localhost:12345';
+// export const baseUrl = 'http://localhost:12345';
 @Injectable({
   providedIn: 'root'
 })

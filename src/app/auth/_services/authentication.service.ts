@@ -35,7 +35,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient,
               private store: Store<fromApp.AppState>) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('teacherInfo')));
+    // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -51,10 +52,10 @@ export class AuthenticationService {
           // console.log(user[0]);
           // if (user[0].ROLNO.length > 4) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
+          console.log(user);
           localStorage.setItem('teacherInfo', JSON.stringify(user[0]));
-          localStorage.setItem('password', password);
-          this.currentUserSubject.next(user[0]);
-          // }
+          // this.currentUserSubject.next(user[0]);
+          // console.log(user[0]);
           return user[0];
         }
       ));

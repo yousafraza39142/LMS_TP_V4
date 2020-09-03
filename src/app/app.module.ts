@@ -14,6 +14,7 @@ import {FileuploadComponent} from './fileupload/fileupload.component';
 import {DownloadFileComponent} from './download-file/download-file.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {RouterModule} from '@angular/router';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    RouterModule
+    RouterModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

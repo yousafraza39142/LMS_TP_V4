@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
 import {AuthenticationService} from './_services';
 import {FadeSlideInDown} from '../transitions';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-auth',
@@ -25,10 +26,12 @@ export class AuthComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
-  ) {
-    // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    private authenticationService: AuthenticationService,
+    private toastr: ToastrService) {
+    console.log(this.authenticationService.currentUserValue);
+    // tslint:disable-next-line:triple-equals
+    if (this.authenticationService.currentUserValue != null) {
+      toastr.info('Already Loggin In', '', {timeOut: 3000, closeButton: true});
       this.router.navigate(['/main']);
     }
   }
@@ -38,13 +41,12 @@ export class AuthComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-    // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -59,11 +61,19 @@ export class AuthComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          // this.router.navigate([this.returnUrl]);
-           this.router.navigate(['/main']);
+          console.log(data);
+
+          if (data === null || data === undefined) {
+            this.toastr.error('Invalid Credentials', '', {timeOut: 3000, closeButton: true});
+            this.loading = false;
+            return;
+          }
+          this.toastr.success('Logged In Successfully', '', {timeOut: 3000, closeButton: true});
+          this.router.navigate(['/main']);
         },
         error => {
-          this.error = error;
+          console.log(error);
+          this.toastr.error(error);
           this.loading = false;
         });
   }
