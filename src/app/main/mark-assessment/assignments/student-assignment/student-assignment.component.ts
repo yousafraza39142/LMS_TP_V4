@@ -82,15 +82,11 @@ export class StudentAssignmentComponent implements OnInit {
                     for (const assignment of assignments) {
                       this.assignments.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
                     }
-                  }
-                );
+                  });
               }
-            }
-          );
+            });
         }
-      }
-    );
-
+      });
   }
 
   onSubmit(form: NgForm) {
@@ -119,9 +115,7 @@ export class StudentAssignmentComponent implements OnInit {
 
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
-    for (const sec of this.sections) {
-      this.sections.pop();
-    }
+    this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
     this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
@@ -132,7 +126,7 @@ export class StudentAssignmentComponent implements OnInit {
         }
 
         // Clear Assignments List for new Incoming Assignments
-        this.clearAssignments();
+        this.assignments = new Array<AssignmentModal>();
         console.log('Course Change New:', this.sections[0].sectionTitle, c.value);
 
 
@@ -158,7 +152,7 @@ export class StudentAssignmentComponent implements OnInit {
 
   OnSectionChange(s: HTMLSelectElement) {
     // Clear Assignments Drop Down
-    this.clearAssignments();
+    this.assignments = new Array<AssignmentModal>();
 
     console.log();
     console.log(this.selectCourse);
@@ -172,12 +166,6 @@ export class StudentAssignmentComponent implements OnInit {
         }
       }
     );
-  }
-
-  private clearAssignments() {
-    for (const assignment of this.assignments) {
-      this.assignments.pop();
-    }
   }
 
 

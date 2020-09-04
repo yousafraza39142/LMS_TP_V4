@@ -120,9 +120,7 @@ export class StudentQuizComponent implements OnInit {
 
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
-    for (const sec of this.sections) {
-      this.sections.pop();
-    }
+    this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
     this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(

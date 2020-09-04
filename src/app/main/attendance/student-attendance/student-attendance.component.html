@@ -39,7 +39,9 @@
   </div>
   <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
     <div class="card text-left shadow">
-      <div class="card-header bg-light"><i class="fa fa-chart-line">Attendance Report</i></div>
+      <div class="card-header bg-light">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <i class="fa fa-chart-line">Attendance Report</i></div>
       <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll; overflow-x: scroll">
         <table class="table table-bordered bg-light m-0 p-0">
           <thead>

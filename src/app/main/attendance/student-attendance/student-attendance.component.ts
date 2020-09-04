@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CourseModal} from '../../../shared/course.modal';
 import {SectionModal} from '../../../shared/SectionModal';
 import {SlideInFromLeft} from '../../../transitions';
@@ -33,6 +33,7 @@ export class StudentAttendanceComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('d') dateInput: ElementRef;
+  loading = false;
 
   constructor(private markAssessmentService: MarkAssessmentService,
               private attendanceService: AttendanceService) {
@@ -66,9 +67,7 @@ export class StudentAttendanceComponent implements OnInit {
 
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
-    for (const sec of this.sections) {
-      this.sections.pop();
-    }
+    this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
     this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
@@ -82,6 +81,7 @@ export class StudentAttendanceComponent implements OnInit {
   }
 
   OnSubmit() {
+    this.loading = true;
     this.students = new Array<CheckAttendanceDate>();
 
     // Check for any empty entries
@@ -96,9 +96,9 @@ export class StudentAttendanceComponent implements OnInit {
     console.log(this.selectCourse.nativeElement.value);
     console.log(this.selectSection.nativeElement.value);
     this.attendanceService.checkAttendance(this.selectCourse.nativeElement.value,
-      this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`,
-    ).subscribe(
+      this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`).subscribe(
       stds => {
+        this.loading = false;
         // tslint:disable-next-line:forin
         const studentsList = stds as Student[];
         this.students = new Array<CheckAttendanceDate>();
@@ -106,6 +106,9 @@ export class StudentAttendanceComponent implements OnInit {
           this.students.push(stds[i]);
         }
         console.log(this.students);
+      },
+      error => {
+        this.loading = false;
       }
     );
   }

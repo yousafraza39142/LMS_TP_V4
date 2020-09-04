@@ -65,9 +65,7 @@ export class UploadAssignmentComponent implements OnInit {
 
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
-    for (const sec of this.sections) {
-      this.sections.pop();
-    }
+    this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
     this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
@@ -122,7 +120,7 @@ export class UploadAssignmentComponent implements OnInit {
               ASS_DESC: this.helpingMaterial.nativeElement.value,
               TITLE: this.title.nativeElement.value,
               MARKS: this.marks.nativeElement.value,
-              DUE_DATE: this.dueDate.nativeElement.value.replace('T', ' '),
+              DUE_DATE: this.dueDate.nativeElement.value + ':00',
               FILE_ID: s[0].FILE_ID
             }
           })

@@ -8,7 +8,7 @@ import * as fromApp from '../app/store/app.reducers';
 import {ChartsModule} from 'ng2-charts';
 import {StoreModule} from '@ngrx/store';
 import {ReactiveFormsModule} from '@angular/forms';
-import {JwtInterceptor, ErrorInterceptor} from './auth/_helpers';
+import {JwtInterceptor, ErrorInterceptor, AuthGuard} from './auth/_helpers';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FileuploadComponent} from './fileupload/fileupload.component';
 import {DownloadFileComponent} from './download-file/download-file.component';
@@ -35,6 +35,7 @@ import {ToastrModule} from 'ngx-toastr';
     ToastrModule.forRoot()
   ],
   providers: [
+    AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],

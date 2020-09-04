@@ -66,4 +66,8 @@ export class AuthenticationService {
     localStorage.removeItem('teacherInfo');
     this.currentUserSubject.next(null);
   }
+
+  loggedIn(): boolean {
+    return !!localStorage.getItem('teacherInfo');
+  }
 }

@@ -9,15 +9,12 @@ export class MarkAssessmentService {
   private fmId: number;
 
   constructor(private http: HttpClient) {
-    if (JSON.parse(localStorage.getItem('teacherInfo'))) {
-      this.fmId = JSON.parse(localStorage.getItem('teacherInfo')).FM_ID;
-    } else {
-      this.fmId = -1;
-    }
   }
 
 
   getSectionsForTeacherinCourse(fmId: number, subjectName: string) {
+    subjectName = subjectName.replace('&', '%26');
+    console.log(subjectName);
     const url = `${baseUrl}/api/SectionsTeacher/GetSectionsForCourse?fm_id=${fmId}&sub_name=${subjectName}`;
     return this.http.get(url);
   }
