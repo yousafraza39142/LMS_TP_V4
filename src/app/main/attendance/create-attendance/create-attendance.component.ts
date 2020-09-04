@@ -90,9 +90,8 @@ export class CreateAttendanceComponent implements OnInit {
     // Do not get values from form as it can cause bugs.....
     this.currentSection = this.selectSection.nativeElement.value;
     // tslint:disable-next-line:forin
-    for (const std in this.students) {
-      this.students.pop();
-    }
+
+    this.students = new Array<Student>();
 
     this.attendanceService.getStudentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value).subscribe(
       stdList => {
