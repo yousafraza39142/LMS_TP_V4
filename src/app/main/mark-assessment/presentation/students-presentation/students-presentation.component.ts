@@ -139,7 +139,6 @@ export class StudentsPresentationComponent implements OnInit {
         }
 
 
-
       }
     );
   }
@@ -178,7 +177,7 @@ export class StudentsPresentationComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     console.log(this.selectSection.nativeElement.value, this.selectedPresentation.nativeElement.value, this.selectCourse.nativeElement.value);
     // tslint:disable-next-line:max-line-length
-    this.markAssessmentService.markAssessment(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectedPresentation.nativeElement.value, AssessmentTypes.PRESENTATION, marks)
+    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectedPresentation.nativeElement.value, AssessmentTypes.PRESENTATION, marks)
       .subscribe(
         data => {
         }

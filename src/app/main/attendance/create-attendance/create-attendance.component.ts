@@ -7,6 +7,7 @@ import {AppState} from '../../../store/app.reducers';
 import {SlideInFromLeft} from '../../../transitions';
 import {MarkAssessmentService} from '../../mark-assessment/mark-assessment.service';
 import {AttendanceService} from '../attendance-services/attendance.service';
+import {ToastrService} from "ngx-toastr";
 
 enum AttendanceStatus {
   present = 'p',
@@ -44,6 +45,7 @@ export class CreateAttendanceComponent implements OnInit {
 
   constructor(private store: Store<AppState>,
               private markAssessmentService: MarkAssessmentService,
+              private toastr: ToastrService,
               private attendanceService: AttendanceService) {
     this.courses = new Array<CourseModal>();
     this.sections = new Array<SectionModal>();
@@ -95,6 +97,7 @@ export class CreateAttendanceComponent implements OnInit {
 
     this.attendanceService.getStudentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value).subscribe(
       stdList => {
+        this.toastr.info('Creating Attendance', '', {timeOut: 4000});
         const currentSection = this.selectSection.nativeElement.value;
         // @ts-ignore
         for (const std: Student of stdList) {

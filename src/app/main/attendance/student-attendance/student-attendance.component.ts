@@ -5,6 +5,7 @@ import {SlideInFromLeft} from '../../../transitions';
 import {AttendanceService} from '../attendance-services/attendance.service';
 import {Student} from '../create-attendance/create-attendance.component';
 import {MarkAssessmentService} from '../../mark-assessment/mark-assessment.service';
+import {ToastrService} from 'ngx-toastr';
 
 
 export interface CheckAttendanceDate {
@@ -15,6 +16,8 @@ export interface CheckAttendanceDate {
   RN: number;
   ROLNO: string;
   YEAR: number;
+  D_ID: number;
+  NM: string;
 }
 
 @Component({
@@ -34,8 +37,11 @@ export class StudentAttendanceComponent implements OnInit {
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('d') dateInput: ElementRef;
   loading = false;
+  private course: string;
+  private section: string;
 
   constructor(private markAssessmentService: MarkAssessmentService,
+              private toastr: ToastrService,
               private attendanceService: AttendanceService) {
     this.courses = new Array<CourseModal>();
     this.sections = new Array<SectionModal>();
@@ -81,9 +87,6 @@ export class StudentAttendanceComponent implements OnInit {
   }
 
   OnSubmit() {
-    this.loading = true;
-    this.students = new Array<CheckAttendanceDate>();
-
     // Check for any empty entries
     if (this.dateInput.nativeElement.value === '' ||
       this.selectCourse.nativeElement.value === '' ||
@@ -91,6 +94,14 @@ export class StudentAttendanceComponent implements OnInit {
       console.error('Empty Entries Detected');
       return;
     }
+
+    this.course = this.selectCourse.nativeElement.value;
+    this.section = this.selectSection.nativeElement.value;
+    this.date = this.dateInput.nativeElement.value;
+
+    this.loading = true;
+    this.students = new Array<CheckAttendanceDate>();
+
     console.log('Submitted');
     console.log(this.dateInput.nativeElement.value);
     console.log(this.selectCourse.nativeElement.value);
@@ -109,6 +120,26 @@ export class StudentAttendanceComponent implements OnInit {
       },
       error => {
         this.loading = false;
+      }
+    );
+  }
+
+  OnToggle(checked: boolean, std: CheckAttendanceDate) {
+    const attendance = (checked) ? 'p' : 'a';
+
+    // console.log(this.date);
+    // console.log(this.course);
+    // console.log(this.section);
+    // console.log(std);
+    // console.log(checked);
+    // tslint:disable-next-line:max-line-length
+    this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.course, this.date, attendance).subscribe(
+      data => {
+        this.toastr.success('Updated', '', {timeOut: 500});
+      },
+      error => {
+        console.log('Some Error Occurred');
+        this.toastr.error('Failed to Update', '', {timeOut: 500});
       }
     );
   }

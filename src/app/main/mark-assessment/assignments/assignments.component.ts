@@ -19,11 +19,4 @@ export class AssignmentsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  OnUploadAssignmentClicked() {
-    this.router.navigate(['upload'], {relativeTo: this.route});
-  }
-
-  OnStudentAssignmentsCicked() {
-    this.router.navigate(['students-assignments'], {relativeTo: this.route});
-  }
 }

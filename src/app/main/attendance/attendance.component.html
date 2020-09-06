@@ -1,8 +1,8 @@
 <div class="row p-2" [@SlideInFromLeft]>
   <div class="col-sm-12">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-outline-info" (click)="OnCreateAttendanceClicked()">Create Attendance</button>
-      <button type="button" class="btn btn-outline-info" (click)="onAnswerQueriesClicked()">Student Attendance</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="create">Create Attendance</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="student-attendance">Student Attendance</button>
     </div>
   </div>
 </div>

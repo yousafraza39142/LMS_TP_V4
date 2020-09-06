@@ -27,11 +27,11 @@ export class AttendanceComponent implements OnInit {
 
   }
   OnCreateAttendanceClicked() {
-    this.router.navigate(['create'], {relativeTo: this.route});
+    // this.router.navigate(['create'], {relativeTo: this.route});
   }
 
   onAnswerQueriesClicked() {
-    this.router.navigate(['student-attendance'], {relativeTo: this.route});
+    // this.router.navigate(['student-attendance'], {relativeTo: this.route});
   }
 
   fetchSections() {

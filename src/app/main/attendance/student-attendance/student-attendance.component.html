@@ -47,16 +47,27 @@
           <thead>
           <tr>
             <th>Roll No</th>
+            <th>Name</th>
             <th>Date</th>
             <th>Status</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let std of students">
+          <tr *ngFor="let std of students; let i = index;">
             <td>{{std.ROLNO}}</td>
+            <td>{{std.NM}}</td>
             <td>{{this.dateInput.nativeElement.value}}</td>
-            <td *ngIf="(std.ATTEND == 'p')"><span class="badge badge-success">Present</span></td>
-            <td *ngIf="(std.ATTEND == 'a')"><span class="badge badge-danger">Absent</span></td>
+            <td>
+              <div class="custom-control custom-switch form-group">
+                <input #attendanceToggle type="checkbox"
+                       class="custom-control-input"
+                       name="{{std.ROLNO}}-attendanceStatus"
+                       [checked]="std.ATTEND === 'p'"
+                       (change)="OnToggle(attendanceToggle.checked,std)"
+                       id="{{'std-' + i}}">
+                <label class="custom-control-label" for="{{'std-' + i}}"></label>
+              </div>
+            </td>
           </tr>
           </tbody>
         </table>

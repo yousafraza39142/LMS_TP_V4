@@ -195,7 +195,7 @@ export class StudentQuizComponent implements OnInit {
     console.log(param.std, param.marks);
     console.log(this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, this.selectCourse.nativeElement.value);
     // tslint:disable-next-line:max-line-length
-    this.markAssessmentService.markAssessment(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks)
+    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks)
       .subscribe(
         data => {
         }

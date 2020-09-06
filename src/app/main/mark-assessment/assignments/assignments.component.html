@@ -1,8 +1,12 @@
 <div class="row" [@SlideInFromLeft]>
   <div class="col-sm-12">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-outline-info" (click)="OnUploadAssignmentClicked()">Upload Assignment</button>
-      <button type="button" class="btn btn-outline-info" (click)="OnStudentAssignmentsCicked()">Student Assignements</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="upload">Upload
+        Assignment
+      </button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="students-assignments">
+        Student Assignements
+      </button>
     </div>
   </div>
 </div>

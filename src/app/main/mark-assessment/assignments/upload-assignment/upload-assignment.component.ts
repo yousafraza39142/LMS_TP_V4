@@ -10,6 +10,7 @@ import {MarkAssessmentService} from '../../mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
 import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
 import {AppComponentEventEmitterService} from '../../../event-emmiter.service';
+import {ToastrService} from "ngx-toastr";
 
 declare var $: any;
 
@@ -36,6 +37,7 @@ export class UploadAssignmentComponent implements OnInit {
   constructor(private store: Store<AppState>,
               private markAssessmentService: MarkAssessmentService,
               private httpService: HttpClient,
+              private toastr: ToastrService,
               private clickEvent: AppComponentEventEmitterService) {
     this.courses = new Array<CourseModal>();
     this.sections = new Array<SectionModal>();
@@ -104,13 +106,13 @@ export class UploadAssignmentComponent implements OnInit {
     for (let i = 0; i < this.myFiles.length; i++) {
       frmData.append('fileUpload', this.myFiles[i]);
     }
+    this.toastr.info('Uploading Assignment...');
     // tslint:disable-next-line:max-line-length
     this.httpService.post(`${baseUrl}/api/upload/UploadFiles?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
-        console.log('File Uploaded')
+        console.log('File Uploaded');
         console.log(s);
-        // here we are passing the assignment to submitted assignment
         this.httpService.get<any>(`${baseUrl}/api/TeacherUploadAssignment/AssignmentUploadedByTeacher?`,
           {
             params: {
@@ -126,9 +128,13 @@ export class UploadAssignmentComponent implements OnInit {
           })
           .pipe().subscribe(
           value => {
-            this.clickEvent.showMessages(true)
+            this.toastr.success('Assignment Uploaded');
+            // this.clickEvent.showMessages(true);
           }
         );
+      },
+      error => {
+        this.toastr.error('Error Uploading File');
       }
     );
   }

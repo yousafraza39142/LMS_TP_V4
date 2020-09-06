@@ -1,5 +1,6 @@
 import {Action} from '@ngrx/store';
 import {AssignmentData} from './assignment.component.reducer';
+
 export const STORE_DATA = 'STORE_DATA';
 
 export class StoreData implements Action {

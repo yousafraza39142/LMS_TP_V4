@@ -15,8 +15,10 @@ const assignmentRoutes: Routes = [
     ]
   }
 ];
+
 @NgModule({
   imports: [RouterModule.forChild(assignmentRoutes)],
   exports: [RouterModule]
 })
-export class AssignmentRoutingModule {}
+export class AssignmentRoutingModule {
+}

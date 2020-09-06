@@ -9,6 +9,13 @@ import {SlideInFromLeft} from '../../../../transitions';
 import {AssignmentApiService} from '../assignment-services/assignment-api.service';
 import {MarkAssessmentService} from '../../mark-assessment.service';
 import {AssessmentTypes} from '../../../../shared/AssessmentTypes';
+import {ToastrService} from 'ngx-toastr';
+import {Observable} from 'rxjs';
+import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
+
+import {saveAs} from 'file-saver';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 
 export interface AssessmentTable {
@@ -22,7 +29,7 @@ export interface AssessmentTable {
   ASS_OBT_MRKS: number;
   ASS_TOT_MRKS: number;
   FILEPATH: string;
-
+  FILENAME: string;
 }
 
 
@@ -47,6 +54,8 @@ export class StudentAssignmentComponent implements OnInit {
   @ViewChild('marks') marksInp: ElementRef;
 
   constructor(private store: Store<AppState>,
+              private toastr: ToastrService,
+              private httpService: HttpClient,
               private assignmentApiService: AssignmentApiService,
               private markAssessmentService: MarkAssessmentService) {
     this.courses = new Array<CourseModal>();
@@ -184,10 +193,80 @@ export class StudentAssignmentComponent implements OnInit {
     console.log(param.std, param.marks);
     console.log(this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, this.selectCourse.nativeElement.value);
     // tslint:disable-next-line:max-line-length
-    this.markAssessmentService.markAssessment(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks)
+    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks)
       .subscribe(
         data => {
+          this.toastr.success(`Marks updated for ${param.std.NM}`);
         }
       );
   }
+
+  onAssignmentDownload(FILENAME: string, FILEPATH: string) {
+    this.DownLoadFiles(FILEPATH, FILENAME);
+
+  }
+
+  DownLoadFiles(filePath: string, fileName: string) {
+    // file type extension
+    const checkFileType = fileName.split('.').pop();
+    let fileType;
+    if (checkFileType === '.txt') {
+      fileType = 'text/plain';
+    }
+    if (checkFileType === '.pdf') {
+      fileType = 'application/pdf';
+    }
+    if (checkFileType === '.doc') {
+      fileType = 'application/vnd.ms-word';
+    }
+    if (checkFileType === '.docx') {
+      fileType = 'application/vnd.ms-word';
+    }
+    if (checkFileType === '.xls') {
+      fileType = 'application/vnd.ms-excel';
+    }
+    if (checkFileType === '.png') {
+      fileType = 'image/png';
+    }
+    if (checkFileType === '.jpg') {
+      fileType = 'image/jpeg';
+    }
+    if (checkFileType === '.jpeg') {
+      fileType = 'image/jpeg';
+    }
+    if (checkFileType === '.gif') {
+      fileType = 'image/gif';
+    }
+    if (checkFileType === '.csv') {
+      fileType = 'text/csv';
+    }
+    this.DownloadFile(filePath)
+      .subscribe(
+        success => {
+          console.log('Success');
+          console.log(success);
+          saveAs(success, fileName);
+        },
+        err => {
+          console.log('Err');
+          console.log(err);
+          alert('Server error while downloading file.');
+        }
+      );
+  }
+
+  DownloadFile(filePath: string): Observable<any> {
+    return this.httpService.post(baseUrl + '/api/Download/DownloadFile?filePath=' + filePath, '',
+      {
+        responseType: 'blob',
+        observe: 'response'
+      })
+      .pipe(
+        map((res: any) => {
+          console.log(res);
+          return new Blob([res.body]);
+        })
+      );
+  }
+
 }
