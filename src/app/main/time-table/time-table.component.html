@@ -19,9 +19,11 @@
         <th scope="row" class="fix-size">Monday</th>
         <td *ngFor="let day of timetableData.timetable[0]">
           <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
-            *{{day.teacher}} <br>
-            *{{day.roomNo}} <br>
-            *{{day.lecture}}
+            <ul class="time-table-column">
+              <li><b>{{day.teacher}}</b></li>
+              <li>{{day.roomNo}}</li>
+              <li>{{day.lecture}}</li>
+            </ul>
           </div>
         </td>
 
@@ -30,9 +32,11 @@
         <th scope="row" class="fix-size">Tuesday</th>
         <td *ngFor="let day of timetableData.timetable[1]">
           <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
-            *{{day.teacher}} <br>
-            *{{day.roomNo}} <br>
-            *{{day.lecture}}
+            <ul class="time-table-column">
+              <li><b>{{day.teacher}}</b></li>
+              <li>{{day.roomNo}}</li>
+              <li>{{day.lecture}}</li>
+            </ul>
           </div>
         </td>
 
@@ -41,9 +45,11 @@
         <th scope="row" class="fix-size">Wednesday</th>
         <td *ngFor="let day of timetableData.timetable[2]">
           <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
-            *{{day.teacher}} <br>
-            *{{day.roomNo}} <br>
-            *{{day.lecture}}
+            <ul class="time-table-column">
+              <li><b>{{day.teacher}}</b></li>
+              <li>{{day.roomNo}}</li>
+              <li>{{day.lecture}}</li>
+            </ul>
           </div>
         </td>
 
@@ -52,9 +58,11 @@
         <th scope="row" class="fix-size">Thursday</th>
         <td *ngFor="let day of timetableData.timetable[3]">
           <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
-            *{{day.teacher}} <br>
-            *{{day.roomNo}} <br>
-            *{{day.lecture}}
+            <ul class="time-table-column">
+              <li><b>{{day.teacher}}</b></li>
+              <li>{{day.roomNo}}</li>
+              <li>{{day.lecture}}</li>
+            </ul>
           </div>
         </td>
 
@@ -63,9 +71,11 @@
         <th scope="row" class="fix-size">Friday</th>
         <td *ngFor="let day of timetableData.timetable[4]">
           <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
-            *{{day.teacher}} <br>
-            *{{day.roomNo}} <br>
-            *{{day.lecture}}
+            <ul class="time-table-column">
+              <li><b>{{day.teacher}}</b></li>
+              <li>{{day.roomNo}}</li>
+              <li>{{day.lecture}}</li>
+            </ul>
           </div>
         </td>
       </tr>

@@ -10,9 +10,27 @@ const initialState: State = {
     [
       new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
+    ],
+    [
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
+    ],
+    [
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
     ],
@@ -21,36 +39,18 @@ const initialState: State = {
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
+      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
     ],
     [
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
       new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
-    ],
-    [
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
-    ],
-    [
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons'),
-      new TimeTableDay(true, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
+      new TimeTableDay(false, 'Mr.Atif Ishaq', 'Room-4', 'Compiler Cons')
     ]
   ])
 };

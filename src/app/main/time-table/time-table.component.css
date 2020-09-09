@@ -29,3 +29,9 @@ table.table-bordered > tbody > tr{
     font-size: .7rem;
   }
 }
+
+.time-table-column{
+  padding: 0 0 0 10px;
+  text-align: left;
+  /*list-style: none;*/
+}
