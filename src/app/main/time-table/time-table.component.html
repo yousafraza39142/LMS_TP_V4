@@ -4,81 +4,132 @@
     <table class="mb-0 table table-bordered">
       <thead class="bg-light">
       <tr>
-        <th>#</th>
-        <th>8:00-9:30</th>
+        <th>Day</th>
+        <!--<th>8:00-9:30</th>
         <th>9:30-11:00</th>
         <th>11:00-12:30</th>
         <th>12:30-2:00</th>
         <th>4:00-5:30</th>
         <th>5:30-7:00</th>
-        <th>0:30-0:00</th>
+        <th>0:30-0:00</th>-->
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row" class="fix-size">Monday</th>
-        <td *ngFor="let day of timetableData.timetable[0]">
-          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
-            <ul class="time-table-column">
-              <li><b>{{day.teacher}}</b></li>
-              <li>{{day.roomNo}}</li>
-              <li>{{day.lecture}}</li>
-            </ul>
-          </div>
-        </td>
-
+      <tr *ngFor="let day of timetableData">
+        <ng-container *ngFor="let lecture of day; let i = index">
+          <th *ngIf="i === 0" scope="row" class="fix-size">{{lecture.DAY}}</th>
+          <td>
+            <div class="container-fluid max-width-height text-center pb-4 pt-2">
+              <ul class="time-table-column">
+                <li><b>{{lecture.START_TIME}}</b></li>
+                <li>{{lecture.ROOM_NM}}</li>
+                <li>{{lecture.SUB_NM}}</li>
+              </ul>
+            </div>
+          </td>
+        </ng-container>
       </tr>
-      <tr>
+      <!--<tr>
         <th scope="row" class="fix-size">Tuesday</th>
-        <td *ngFor="let day of timetableData.timetable[1]">
-          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
+        <td *ngFor="let day of timetableData[1]">
+          <div class="container-fluid max-width-height text-center pb-4 pt-2">
             <ul class="time-table-column">
-              <li><b>{{day.teacher}}</b></li>
-              <li>{{day.roomNo}}</li>
-              <li>{{day.lecture}}</li>
+              <li><b>{{day.START_TIME}}</b></li>
+              <li>{{day.ROOM_NM}}</li>
+              <li>{{day.SUB_NM}}</li>
             </ul>
           </div>
         </td>
-
       </tr>
       <tr>
         <th scope="row" class="fix-size">Wednesday</th>
-        <td *ngFor="let day of timetableData.timetable[2]">
-          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
+        <td *ngFor="let day of timetableData[2]">
+          <div class="container-fluid max-width-height text-center pb-4 pt-2">
             <ul class="time-table-column">
-              <li><b>{{day.teacher}}</b></li>
-              <li>{{day.roomNo}}</li>
-              <li>{{day.lecture}}</li>
+              <li><b>{{day.START_TIME}}</b></li>
+              <li>{{day.ROOM_NM}}</li>
+              <li>{{day.SUB_NM}}</li>
             </ul>
           </div>
         </td>
-
       </tr>
       <tr>
         <th scope="row" class="fix-size">Thursday</th>
-        <td *ngFor="let day of timetableData.timetable[3]">
-          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
+        <td *ngFor="let day of timetableData[3]">
+          <div class="container-fluid max-width-height text-center pb-4 pt-2">
             <ul class="time-table-column">
-              <li><b>{{day.teacher}}</b></li>
-              <li>{{day.roomNo}}</li>
-              <li>{{day.lecture}}</li>
+              <li><b>{{day.START_TIME}}</b></li>
+              <li>{{day.ROOM_NM}}</li>
+              <li>{{day.SUB_NM}}</li>
             </ul>
           </div>
         </td>
-
       </tr>
       <tr>
         <th scope="row" class="fix-size">Friday</th>
-        <td *ngFor="let day of timetableData.timetable[4]">
-          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">
+        <td *ngFor="let day of timetableData[4]">
+          <div class="container-fluid max-width-height text-center pb-4 pt-2">
             <ul class="time-table-column">
-              <li><b>{{day.teacher}}</b></li>
-              <li>{{day.roomNo}}</li>
-              <li>{{day.lecture}}</li>
+              <li><b>{{day.START_TIME}}</b></li>
+              <li>{{day.ROOM_NM}}</li>
+              <li>{{day.SUB_NM}}</li>
             </ul>
           </div>
         </td>
-      </tr>
+      </tr>-->
+
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <th scope="row" class="fix-size">Tuesday</th>-->
+<!--        <td *ngFor="let day of timetableData.timetable[1]">-->
+<!--          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">-->
+<!--            <ul class="time-table-column">-->
+<!--              <li><b>{{day.teacher}}</b></li>-->
+<!--              <li>{{day.roomNo}}</li>-->
+<!--              <li>{{day.lecture}}</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </td>-->
+
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <th scope="row" class="fix-size">Wednesday</th>-->
+<!--        <td *ngFor="let day of timetableData.timetable[2]">-->
+<!--          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">-->
+<!--            <ul class="time-table-column">-->
+<!--              <li><b>{{day.teacher}}</b></li>-->
+<!--              <li>{{day.roomNo}}</li>-->
+<!--              <li>{{day.lecture}}</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </td>-->
+
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <th scope="row" class="fix-size">Thursday</th>-->
+<!--        <td *ngFor="let day of timetableData.timetable[3]">-->
+<!--          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">-->
+<!--            <ul class="time-table-column">-->
+<!--              <li><b>{{day.teacher}}</b></li>-->
+<!--              <li>{{day.roomNo}}</li>-->
+<!--              <li>{{day.lecture}}</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </td>-->
+
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <th scope="row" class="fix-size">Friday</th>-->
+<!--        <td *ngFor="let day of timetableData.timetable[4]">-->
+<!--          <div class="container-fluid text-center pb-4 pt-2" *ngIf="day.isLecture">-->
+<!--            <ul class="time-table-column">-->
+<!--              <li><b>{{day.teacher}}</b></li>-->
+<!--              <li>{{day.roomNo}}</li>-->
+<!--              <li>{{day.lecture}}</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </td>-->
+<!--      </tr>-->
       </tbody>
     </table>
   </div>

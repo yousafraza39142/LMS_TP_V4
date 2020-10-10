@@ -12,6 +12,7 @@ import {MarkAssessmentService} from '../mark-assessment/mark-assessment.service'
 import {HttpClient} from '@angular/common/http';
 import {baseUrl} from '../attendance/attendance-services/attendance.service';
 import {AppComponentEventEmitterService} from '../event-emmiter.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-course-upload',
@@ -32,12 +33,14 @@ export class CourseUploadComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('title') title: ElementRef;
+  @ViewChild('type') uploadType: ElementRef;
   private teacher = {SE_ID: 0, T_NO: 0};
 
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
               private markAssessmentService: MarkAssessmentService,
               private httpService: HttpClient,
+              private toastr: ToastrService,
               private clickEvent: AppComponentEventEmitterService
   ) {
     this.show = false;
@@ -137,26 +140,26 @@ export class CourseUploadComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     // Testing
-    console.log('C:', this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.title.nativeElement.value);
-    if (form.invalid) {
-      this.show = true;
-    } else {
-      this.show = false;
-      this.uploadResponse = {
-        course: form.value.course,
-        section: form.value.section,
-        title: form.value.title,
-        filePath: form.value.filePath,
-      };
-      this.store.dispatch(new fromCourseUpload.StoreInformation(this.uploadResponse));
-      setTimeout(() => {
-        this.store.select('fromCourseUpload').subscribe(
-          // state => {
-          //   // console.log(state.response);
-          // }
-        );
-      }, 2000);
-    }
+    // console.log('C:', this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.title.nativeElement.value);
+    // if (form.invalid) {
+    //   this.show = true;
+    // } else {
+    //   this.show = false;
+    //   this.uploadResponse = {
+    //     course: form.value.course,
+    //     section: form.value.section,
+    //     title: form.value.title,
+    //     filePath: form.value.filePath,
+    //   };
+    //   this.store.dispatch(new fromCourseUpload.StoreInformation(this.uploadResponse));
+    //   setTimeout(() => {
+    //     this.store.select('fromCourseUpload').subscribe(
+    //       // state => {
+    //       //   // console.log(state.response);
+    //       // }
+    //     );
+    //   }, 2000);
+    // }
   }
 
   onClose() {
@@ -171,6 +174,24 @@ export class CourseUploadComponent implements OnInit {
   }
 
   uploadFiles() {
+
+    const course = this.selectCourse.nativeElement.value;
+    const section = this.selectCourse.nativeElement.value;
+    const type = this.selectCourse.nativeElement.value;
+    const file = this.myFiles.length;
+
+    if (
+      course === '' || course === undefined ||
+      section === '' || section === undefined ||
+      type === '' || type === undefined ||
+      file === 0 || file === undefined || isNaN(file)
+    ) {
+      this.toastr.error('All Fields Must be filled');
+      return;
+    }
+
+
+
     // tslint:disable-next-line:variable-name
     const _uploadFolderId = this.getUniqueId(2);
     // tslint:disable-next-line:variable-name
@@ -180,22 +201,44 @@ export class CourseUploadComponent implements OnInit {
     for (let i = 0; i < this.myFiles.length; i++) {
       frmData.append('fileUpload', this.myFiles[i]);
     }
+    console.log(this.myFiles);
     // tslint:disable-next-line:max-line-length
     this.httpService.post(`${baseUrl}/api/upload/UploadFiles?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment
         // tslint:disable-next-line:max-line-length
-        this.httpService.get<any>(`${baseUrl}/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?FM_ID=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&SUB_NM=${this.selectCourse.nativeElement.value}&SECTION=${this.selectSection.nativeElement.value}&CM_TITLE=${this.title.nativeElement.value}&FILE_ID=${s[0].FILE_ID}&T_NO=${this.teacher.T_NO}&C_CODE=${11}`).pipe().subscribe(
-          value => {
-            this.clickEvent.showMessages(true);
-          },
-          error => {
-            console.log('Error');
-          }
-        );
+        if (this.uploadType.nativeElement.value === 'material'){
+          // tslint:disable-next-line:max-line-length
+          this.uploadCourseMaterial(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.title.nativeElement.value, s[0].FILE_ID, this.teacher.T_NO, 11).subscribe(
+            value => {
+              this.toastr.success('Material Uploaded');
+            },
+            error => {
+              console.log('Error');
+              this.toastr.error('Failed to Upload');
+            }
+          );
+        } else {
+          // tslint:disable-next-line:max-line-length
+          this.uploadCourseOutline(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.title.nativeElement.value, s[0].FILE_ID, this.teacher.T_NO, 11).subscribe(
+            value => {
+              this.toastr.success('Outline Uploaded');
+            },
+            error => {
+              console.log('Error');
+              this.toastr.error('Failed to Upload');
+            }
+          );
+        }
       }
     );
+  }
+
+  // tslint:disable-next-line:max-line-length
+  private uploadCourseMaterial(FM_ID: number, SUB_NM: string, SECTION: string, CM_TITLE: string, FILE_ID: number, T_NO: number, C_CODE: number) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpService.get<any>(`${baseUrl}/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?FM_ID=${FM_ID}&SUB_NM=${SUB_NM}&SECTION=${SECTION}&CM_TITLE=${CM_TITLE}&FILE_ID=${FILE_ID}&T_NO=${T_NO}&C_CODE=${C_CODE}`);
   }
 
   getUniqueId(parts: number) {
@@ -207,4 +250,12 @@ export class CourseUploadComponent implements OnInit {
     }
     return stringArr.join('-');
   }
+
+  uploadCourseOutline(FM_ID: number, SUB_NM: string, SECTION: string, CM_TITLE: string, FILE_ID: number, T_NO: number, C_CODE: number) {
+
+    // tslint:disable-next-line:max-line-length
+    const url = `${baseUrl}/api/CourseOutline/CourseOutlineUploadByTeacher?FM_ID=${FM_ID}&SUB_NM=${SUB_NM}&SECTION=${SECTION}&CM_TITLE=${CM_TITLE}&FILE_ID=${FILE_ID}&T_NO=${T_NO}&C_CODE=${C_CODE}`;
+    return this.httpService.get(url);
+  }
 }
+//FM_ID=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&SUB_NM=${this.selectCourse.nativeElement.value}&SECTION=${this.selectSection.nativeElement.value}&CM_TITLE=${this.title.nativeElement.value}&FILE_ID=${s[0].FILE_ID}&T_NO=${this.teacher.T_NO}&C_CODE=${11}

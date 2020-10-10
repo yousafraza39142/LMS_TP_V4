@@ -10,7 +10,7 @@
             Invalid Input
             <button class="btn btn-danger">Close</button>
           </div>
-          <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+          <form #form="ngForm">
             <div class="form-group">
               <label for="course" >Courses:</label>
               <select #c class="form-control shadow-sm" (change)="OnCourseChange(c)"
@@ -27,6 +27,16 @@
                       id="section"
                       ngModel>
                 <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="section">Upload Type:</label>
+              <select #type class="form-control shadow-sm"
+                      name="section"
+                      id="type"
+                      ngModel>
+                <option value="material">Course-Material</option>
+                <option value="outline">Course-Outline</option>
               </select>
             </div>
             <div class="form-group">
