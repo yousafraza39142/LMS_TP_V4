@@ -8,6 +8,7 @@ import {SlideInFromLeft} from '../../../../transitions';
 import {MarkAssessmentService} from '../../mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
 import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-upload-lab',
@@ -28,8 +29,10 @@ export class UploadLabComponent implements OnInit {
   @ViewChild('title') title: ElementRef;
   @ViewChild('marks') marks: ElementRef;
   @ViewChild('date') dueDate: ElementRef;
+  private teacher = {SE_ID: 0, T_NO: 0};
 
   constructor(private store: Store<AppState>,
+              private toastr: ToastrService,
               private markAssessmentService: MarkAssessmentService,
               private httpService: HttpClient) {
     this.courses = new Array<CourseModal>();
@@ -44,26 +47,39 @@ export class UploadLabComponent implements OnInit {
           this.courses.push(new CourseModal(course.SUB_NM));
         }
         if (this.courses.length > 0) {
-          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
-            this.courses[0].courseTitle).subscribe(
-            section => {
-              // @ts-ignore
-              for (const sec: { SECTION: string } of section) {
-                this.sections.push(new SectionModal(sec.SECTION));
-              }
+          // tslint:disable-next-line:max-line-length
+          this.markAssessmentService.getSessionAndTermNo(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle.trim(), 11).subscribe(
+            sect => {
+              console.log('SESSION ID');
+              console.log(sect);
+              this.teacher.SE_ID = sect[0].SE_ID;
+              this.teacher.T_NO = sect[0].T_NO;
+
+              this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+                this.courses[0].courseTitle.trim(), this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                section => {
+                  console.log('SECTIONS');
+                  console.log(section);
+                  // @ts-ignore
+                  for (const sec: { SECTION: string } of section) {
+                    this.sections.push(new SectionModal(sec.SECTION));
+                  }
+                }
+              );
             }
           );
         }
       }
     );
   }
+
   OnCourseChange(c: HTMLSelectElement) {
     // Clear previous sections
     this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
     this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
-      c.value).subscribe(
+      c.value, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
@@ -72,6 +88,7 @@ export class UploadLabComponent implements OnInit {
       }
     );
   }
+
   onSubmit(form: NgForm) {
   }
 
@@ -84,6 +101,7 @@ export class UploadLabComponent implements OnInit {
     }
     return stringArr.join('-');
   }
+
   uploadFiles() {
     // tslint:disable-next-line:variable-name
     const _uploadFolderId = this.getUniqueId(2);
@@ -94,33 +112,25 @@ export class UploadLabComponent implements OnInit {
     for (let i = 0; i < this.myFiles.length; i++) {
       frmData.append('fileUpload', this.myFiles[i]);
     }
+
+    this.toastr.info('Uploading Assignment...');
     // tslint:disable-next-line:max-line-length
     this.httpService.post(`${baseUrl}/api/upload/UploadFiles?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&
     uploadFolderId=` + _uploadFolderId +
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment
-        this.httpService.get<any>(`${baseUrl}/api/TeacherUploadLab/LabUploadedByTeacher?`,
-          {
-            params: {
-              FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
-              SUB_NM: this.selectCourse.nativeElement.value,
-              SECTION: this.selectSection.nativeElement.value,
-              ASS_DESC: this.helpingMaterial.nativeElement.value,
-              TITLE: this.title.nativeElement.value,
-              MARKS: this.marks.nativeElement.value,
-              DUE_DATE: this.dueDate.nativeElement.value.replace('T', ' '),
-              FILE_ID: s[0].FILE_ID
-            }
-          })
+        // tslint:disable-next-line:max-line-length
+        this.httpService.get<any>(`${baseUrl}/api/TeacherUploadLab/LabUploadedByTeacher?FM_ID=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&SUB_NM=${this.selectCourse.nativeElement.value}&SECTION=${this.selectSection.nativeElement.value}&ASS_DESC=${this.helpingMaterial.nativeElement.value}&TITLE=${this.title.nativeElement.value}&MARKS=${this.marks.nativeElement.value}&DUE_DATE=${this.dueDate.nativeElement.value + ':00'}&FILE_ID=${s[0].FILE_ID}&SE_ID=${this.teacher.SE_ID}&T_NO=${this.teacher.T_NO}&C_CODE=${11}`)
           .pipe().subscribe(
-          // m => {
-          //   console.log('success');
-          // }
+          value => {
+            this.toastr.success('Lab Uploaded');
+          }
         );
       }
     );
   }
+
   getFileDetails(e) {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < e.target.files.length; i++) {

@@ -29,7 +29,7 @@
                   name="assignment"
                   id="assignment"
                   ngModel>
-            <option *ngFor="let assignment of assignments">{{assignment.title}}</option>
+            <option *ngFor="let assignment of quizes">{{assignment.title}}</option>
           </select>
         </div>
         <button class="btn btn-primary lift-animation mt-4 float-right" type="submit">Filter</button>
@@ -53,7 +53,7 @@
               <td>{{r.ROLNO}}</td>
               <td>{{r.NM}}</td>
               <td class="text-center">
-                <button class="download" [disabled]='!r.FILEPATH'><i class="fa fa-download"></i></button>
+                <button class="download" [disabled]='!r.FILEPATH' (click)="onAssignmentDownload(r.FILENAME,r.FILEPATH)"><i class="fa fa-download"></i></button>
               </td>
               <td class="text-center">
                 <input #marks type="number" max="10" (change)="OnMarksChange({std:r,marks:marks.value})"

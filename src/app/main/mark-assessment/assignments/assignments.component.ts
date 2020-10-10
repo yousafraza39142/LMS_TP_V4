@@ -17,6 +17,7 @@ export class AssignmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // console.log(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID);
   }
 
 }

@@ -43,6 +43,7 @@
                 <input #attendanceToggle type="checkbox"
                        class="custom-control-input"
                        ngModel
+                       [defaultChecked]="true"
                        name="{{std.ROLNO}}-attendanceStatus"
                        (change)="OnToggle({toggle:attendanceToggle, std:std})"
                        id="{{'attendanceStatus-' + i}}">

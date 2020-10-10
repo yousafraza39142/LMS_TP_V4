@@ -15,20 +15,23 @@ export class AssignmentApiService {
   }
 
 
-  getAssessmentList(section: string, subjectName: string, type: AssessmentTypes) {
+  getAssessmentList(section: string, subjectName: string, type: AssessmentTypes, T_NO: number, SE_ID: number, C_CODE: number) {
     // subjectName = subjectName.replace('&', '%26');
-    const url = `${baseUrl}/api/GetAssignments/getAssignmentList?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&section=${section}&sub_name=${encodeURIComponent(subjectName)}&type=${type}`;
+    // tslint:disable-next-line:max-line-length
+    const url = `${baseUrl}/api/GetAssignments/getAssignmentList?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&section=${section}&sub_name=${encodeURIComponent(subjectName)}&type=${type}&T_NO=${T_NO}&SE_ID=${SE_ID}&C_CODE=${C_CODE}`;
     return this.http.get(url);
   }
 
 
-  getAssessmentListOfStudents(section: string, subjectName: string, assignmentTitle: string, type: AssessmentTypes) {
+  // tslint:disable-next-line:max-line-length
+  getAssessmentListOfStudents(section: string, subjectName: string, assignmentTitle: string, type: AssessmentTypes, T_NO: number, SE_ID: number, C_CODE: number) {
     // tslint:disable-next-line:max-line-length
     subjectName = subjectName.replace('&', '%26');
     console.log(subjectName);
     console.log(
       encodeURIComponent(subjectName));
-    const url = `${baseUrl}/api/GetAssignments/getAssignmentsListOfStudents?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&section=${section}&sub_name=${subjectName}&assignment_title=${assignmentTitle}&type=${type}`;
+    // tslint:disable-next-line:max-line-length
+    const url = `${baseUrl}/api/GetAssignments/getAssignmentsListOfStudents?fm_id=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&section=${section}&sub_name=${subjectName}&assignment_title=${assignmentTitle}&type=${type}&T_NO=${T_NO}&SE_ID=${SE_ID}&C_CODE=${C_CODE}`;
     return this.http.get(url);
   }
 

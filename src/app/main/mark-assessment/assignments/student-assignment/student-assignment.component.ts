@@ -16,6 +16,7 @@ import {baseUrl} from '../../../attendance/attendance-services/attendance.servic
 import {saveAs} from 'file-saver';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {mark} from '@angular/compiler-cli/src/ngtsc/perf/src/clock';
 
 
 export interface AssessmentTable {
@@ -52,6 +53,7 @@ export class StudentAssignmentComponent implements OnInit {
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('a') selectAssignment: ElementRef;
   @ViewChild('marks') marksInp: ElementRef;
+  private teacher = {SE_ID: 0, T_NO: 0};
 
   constructor(private store: Store<AppState>,
               private toastr: ToastrService,
@@ -74,26 +76,38 @@ export class StudentAssignmentComponent implements OnInit {
         }
         if (this.courses.length > 0) {
           // tslint:disable-next-line:max-line-length
-          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
-            section => {
-              // @ts-ignore
-              for (const sec: { SECTION: string } of section) {
-                this.sections.push(new SectionModal(sec.SECTION));
-              }
-              if (this.sections.length > 0) {
-                console.log('Course', this.courses[0]);
-                console.log('section', this.sections[0]);
-                this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle,
-                  this.courses[0].courseTitle,
-                  AssessmentTypes.ASSIGNMENT).subscribe(
-                  assignments => {
-                    // @ts-ignore
-                    for (const assignment of assignments) {
-                      this.assignments.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
+          this.markAssessmentService.getSessionAndTermNo(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle.trim(), 11).subscribe(
+            sect => {
+              console.log('SESSION ID');
+              console.log(sect);
+              this.teacher.SE_ID = sect[0].SE_ID;
+              this.teacher.T_NO = sect[0].T_NO;
+
+              this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+                this.courses[0].courseTitle.trim(), this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                section => {
+                  console.log('SECTIONS');
+                  console.log(section);
+                  // @ts-ignore
+                  for (const sec: { SECTION: string } of section) {
+                    this.sections.push(new SectionModal(sec.SECTION));
+                    if (this.sections.length > 0) {
+                      console.log('Course', this.courses[0]);
+                      console.log('section', this.sections[0]);
+                      // tslint:disable-next-line:max-line-length
+                      this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.courses[0].courseTitle, AssessmentTypes.ASSIGNMENT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                        assignments => {
+                          // @ts-ignore
+                          for (const assignment of assignments) {
+                            this.assignments.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
+                          }
+                        });
                     }
-                  });
-              }
-            });
+                  }
+                }
+              );
+            }
+          );
         }
       });
   }
@@ -107,7 +121,8 @@ export class StudentAssignmentComponent implements OnInit {
       return;
     }
     this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
-      this.selectCourse.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
+      // tslint:disable-next-line:max-line-length
+      this.selectCourse.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       students => {
         const list = students as AssessmentTable[];
         if (list.length > 0) {
@@ -127,7 +142,8 @@ export class StudentAssignmentComponent implements OnInit {
     this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
@@ -144,7 +160,7 @@ export class StudentAssignmentComponent implements OnInit {
           // tslint:disable-next-line:max-line-length
           console.log('Course Change:', this.sections[0].sectionTitle, c.value);
           // tslint:disable-next-line:max-line-length
-          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
+          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
             assignments => {
               // @ts-ignore
               for (const assignment of assignments) {
@@ -167,7 +183,7 @@ export class StudentAssignmentComponent implements OnInit {
     console.log(this.selectCourse);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT).subscribe(
+    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.ASSIGNMENT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       assignments => {
         // @ts-ignore
         for (const assignment of assignments) {
@@ -179,8 +195,20 @@ export class StudentAssignmentComponent implements OnInit {
 
 
   OnMarksChange(param: { std: AssessmentTable; marks: string }) {
-    let marks = parseInt(param.marks, 0);
-    if (marks > this.totalMarks) {
+    const marks: number = Math.round(parseInt(param.marks, 0));
+    console.log(marks);
+    console.log(typeof marks);
+    /*try {
+      marks = parseInt(param.marks, 0);
+      marks = Math.round(marks);
+    } catch (e) {
+      this.toastr.error('Invalid Input');
+    }*/
+    if (marks > this.totalMarks || marks < 0 || Number.isNaN(marks)) {
+      this.toastr.error('Invalid Marks :(');
+      return;
+    }
+    /*if (marks > this.totalMarks) {
       marks = this.totalMarks;
       this.marksInp.nativeElement.value = this.totalMarks;
     } else if (marks < 0) {
@@ -189,11 +217,11 @@ export class StudentAssignmentComponent implements OnInit {
     } else if (isNaN(marks)) {
       marks = 0;
       this.marksInp.nativeElement.value = 0;
-    }
+    }*/
     console.log(param.std, param.marks);
     console.log(this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, this.selectCourse.nativeElement.value);
     // tslint:disable-next-line:max-line-length
-    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks)
+    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, marks, this.teacher.T_NO, this.teacher.SE_ID)
       .subscribe(
         data => {
           this.toastr.success(`Marks updated for ${param.std.NM}`);

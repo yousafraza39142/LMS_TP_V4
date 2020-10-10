@@ -11,7 +11,7 @@ import {AssignmentApiService} from '../mark-assessment/assignments/assignment-se
 import {MarkAssessmentService} from '../mark-assessment/mark-assessment.service';
 import {HttpClient} from '@angular/common/http';
 import {baseUrl} from '../attendance/attendance-services/attendance.service';
-import {AppComponentEventEmitterService} from "../event-emmiter.service";
+import {AppComponentEventEmitterService} from '../event-emmiter.service';
 
 @Component({
   selector: 'app-course-upload',
@@ -32,6 +32,7 @@ export class CourseUploadComponent implements OnInit {
   @ViewChild('c') selectCourse: ElementRef;
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('title') title: ElementRef;
+  private teacher = {SE_ID: 0, T_NO: 0};
 
   constructor(private store: Store<AppState>,
               private assignmentApiService: AssignmentApiService,
@@ -50,6 +51,26 @@ export class CourseUploadComponent implements OnInit {
         this.info = state.info;
       }
     );*/
+    // this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
+    //   data => {
+    //     // @ts-ignore
+    //     for (const course: { SUB_NM: string } of data) {
+    //       this.courses.push(new CourseModal(course.SUB_NM));
+    //     }
+    //     if (this.courses.length > 0) {
+    //       // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:max-line-length
+    //       this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
+    //         section => {
+    //           // @ts-ignore
+    //           for (const sec: { SECTION: string } of section) {
+    //             this.sections.push(new SectionModal(sec.SECTION));
+    //           }
+    //         }
+    //       );
+    //     }
+    //   }
+    // );
     this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
@@ -58,12 +79,24 @@ export class CourseUploadComponent implements OnInit {
         }
         if (this.courses.length > 0) {
           // tslint:disable-next-line:max-line-length
-          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
-            section => {
-              // @ts-ignore
-              for (const sec: { SECTION: string } of section) {
-                this.sections.push(new SectionModal(sec.SECTION));
-              }
+          this.markAssessmentService.getSessionAndTermNo(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle.trim(), 11).subscribe(
+            sect => {
+              console.log('SESSION ID');
+              console.log(sect);
+              this.teacher.SE_ID = sect[0].SE_ID;
+              this.teacher.T_NO = sect[0].T_NO;
+
+              this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+                this.courses[0].courseTitle.trim(), this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                section => {
+                  console.log('SECTIONS');
+                  console.log(section);
+                  // @ts-ignore
+                  for (const sec: { SECTION: string } of section) {
+                    this.sections.push(new SectionModal(sec.SECTION));
+                  }
+                }
+              );
             }
           );
         }
@@ -72,14 +105,28 @@ export class CourseUploadComponent implements OnInit {
   }
 
   OnCourseChange(c: HTMLSelectElement) {
+    // // Clear previous sections
+    // for (const sec of this.sections) {
+    //   this.sections.pop();
+    // }
+    //
+    // // Fetch New Sections on Course Change
+    // this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
+    //   section => {
+    //     // @ts-ignore
+    //     for (const sec: { SECTION: string } of section) {
+    //       this.sections.push(new SectionModal(sec.SECTION));
+    //     }
+    //   }
+    // );
     // Clear previous sections
-    for (const sec of this.sections) {
-      this.sections.pop();
-    }
+    this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       section => {
+        this.sections = [];
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
           this.sections.push(new SectionModal(sec.SECTION));
@@ -138,20 +185,11 @@ export class CourseUploadComponent implements OnInit {
       '&userId=' + _userId + '', frmData).subscribe(
       s => {
         // here we are passing the assignment to submitted assignment
-        this.httpService.get<any>(`${baseUrl}/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?`,
-          {
-            params: {
-              FM_ID: JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
-              SUB_NM: this.selectCourse.nativeElement.value,
-              SECTION: this.selectSection.nativeElement.value,
-              CM_TITLE: this.title.nativeElement.value,
-              FILE_ID: s[0].FILE_ID
-            }
-          })
-          .pipe().subscribe(
-            value => {
-              this.clickEvent.showMessages(true);
-            },
+        // tslint:disable-next-line:max-line-length
+        this.httpService.get<any>(`${baseUrl}/api/TeacherCourseMaterialUpload/CourseMaterialUploadByTeacher?FM_ID=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&SUB_NM=${this.selectCourse.nativeElement.value}&SECTION=${this.selectSection.nativeElement.value}&CM_TITLE=${this.title.nativeElement.value}&FILE_ID=${s[0].FILE_ID}&T_NO=${this.teacher.T_NO}&C_CODE=${11}`).pipe().subscribe(
+          value => {
+            this.clickEvent.showMessages(true);
+          },
           error => {
             console.log('Error');
           }
@@ -159,6 +197,7 @@ export class CourseUploadComponent implements OnInit {
       }
     );
   }
+
   getUniqueId(parts: number) {
     const stringArr = [];
     for (let i = 0; i < parts; i++) {

@@ -17,7 +17,6 @@ export class ChangePasswordComponent implements OnInit {
     this.msg = '';
   }
 
-  // @Input() message = 'Fuck';
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter<void>();
 

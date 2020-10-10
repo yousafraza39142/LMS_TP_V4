@@ -39,6 +39,7 @@ export class StudentAttendanceComponent implements OnInit {
   loading = false;
   private course: string;
   private section: string;
+  private teacher = {SE_ID: 0, T_NO: 0};
 
   constructor(private markAssessmentService: MarkAssessmentService,
               private toastr: ToastrService,
@@ -58,12 +59,24 @@ export class StudentAttendanceComponent implements OnInit {
         }
         if (this.courses.length > 0) {
           // tslint:disable-next-line:max-line-length
-          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
-            section => {
-              // @ts-ignore
-              for (const sec: { SECTION: string } of section) {
-                this.sections.push(new SectionModal(sec.SECTION));
-              }
+          this.markAssessmentService.getSessionAndTermNo(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle.trim(), 11).subscribe(
+            sect => {
+              console.log('SESSION ID');
+              console.log(sect);
+              this.teacher.SE_ID = sect[0].SE_ID;
+              this.teacher.T_NO = sect[0].T_NO;
+
+              this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+                this.courses[0].courseTitle.trim(), this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                section => {
+                  console.log('SECTIONS');
+                  console.log(section);
+                  // @ts-ignore
+                  for (const sec: { SECTION: string } of section) {
+                    this.sections.push(new SectionModal(sec.SECTION));
+                  }
+                }
+              );
             }
           );
         }
@@ -76,7 +89,8 @@ export class StudentAttendanceComponent implements OnInit {
     this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
@@ -107,7 +121,7 @@ export class StudentAttendanceComponent implements OnInit {
     console.log(this.selectCourse.nativeElement.value);
     console.log(this.selectSection.nativeElement.value);
     this.attendanceService.checkAttendance(this.selectCourse.nativeElement.value,
-      this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`).subscribe(
+      this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       stds => {
         this.loading = false;
         // tslint:disable-next-line:forin
@@ -127,13 +141,8 @@ export class StudentAttendanceComponent implements OnInit {
   OnToggle(checked: boolean, std: CheckAttendanceDate) {
     const attendance = (checked) ? 'p' : 'a';
 
-    // console.log(this.date);
-    // console.log(this.course);
-    // console.log(this.section);
-    // console.log(std);
-    // console.log(checked);
     // tslint:disable-next-line:max-line-length
-    this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.course, this.date, attendance).subscribe(
+    this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.course, this.date, attendance, this.teacher.T_NO, this.teacher.SE_ID).subscribe(
       data => {
         this.toastr.success('Updated', '', {timeOut: 500});
       },

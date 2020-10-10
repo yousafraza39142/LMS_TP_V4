@@ -11,6 +11,12 @@ import {MarkAssessmentService} from '../../mark-assessment.service';
 import {AssignmentModal} from '../../../../shared/AssignmentModal';
 import {AssessmentTable} from '../../assignments/student-assignment/student-assignment.component';
 import {AssessmentTypes} from '../../../../shared/AssessmentTypes';
+import {Observable} from 'rxjs';
+import {baseUrl} from '../../../attendance/attendance-services/attendance.service';
+import {map} from 'rxjs/operators';
+import {saveAs} from 'file-saver';
+import {ToastrService} from 'ngx-toastr';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-student-projects',
@@ -30,8 +36,11 @@ export class StudentProjectsComponent implements OnInit {
   @ViewChild('s') selectSection: ElementRef;
   @ViewChild('p') selectedProject: ElementRef;
   @ViewChild('marks') marksInp: ElementRef;
+  private teacher = {SE_ID: 0, T_NO: 0};
 
   constructor(private store: Store<AppState>,
+              private toastr: ToastrService,
+              private httpService: HttpClient,
               private assignmentApiService: AssignmentApiService,
               private markAssessmentService: MarkAssessmentService) {
     this.courses = new Array<CourseModal>();
@@ -48,25 +57,37 @@ export class StudentProjectsComponent implements OnInit {
           this.courses.push(new CourseModal(course.SUB_NM));
         }
         if (this.courses.length > 0) {
-          this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle).subscribe(
-            section => {
-              // @ts-ignore
-              for (const sec: { SECTION: string } of section) {
-                this.sections.push(new SectionModal(sec.SECTION));
-              }
-              if (this.sections.length > 0) {
-                console.log('Course', this.courses[0]);
-                console.log('section', this.sections[0]);
-                // tslint:disable-next-line:max-line-length
-                this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.courses[0].courseTitle, AssessmentTypes.PROJECT).subscribe(
-                  projects => {
-                    // @ts-ignore
-                    for (const proj of projects) {
-                      this.projects.push(new ProjectModal(proj.ASSIGNMENT_TITLE));
+          // tslint:disable-next-line:max-line-length
+          this.markAssessmentService.getSessionAndTermNo(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, this.courses[0].courseTitle.trim(), 11).subscribe(
+            sect => {
+              console.log('SESSION ID');
+              console.log(sect);
+              this.teacher.SE_ID = sect[0].SE_ID;
+              this.teacher.T_NO = sect[0].T_NO;
+
+              this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID,
+                this.courses[0].courseTitle.trim(), this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                section => {
+                  console.log('SECTIONS');
+                  console.log(section);
+                  // @ts-ignore
+                  for (const sec: { SECTION: string } of section) {
+                    this.sections.push(new SectionModal(sec.SECTION));
+                    if (this.sections.length > 0) {
+                      console.log('Course', this.courses[0]);
+                      console.log('section', this.sections[0]);
+                      // tslint:disable-next-line:max-line-length
+                      this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.courses[0].courseTitle, AssessmentTypes.PROJECT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
+                        assignments => {
+                          // @ts-ignore
+                          for (const assignment of assignments) {
+                            this.projects.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
+                          }
+                        });
                     }
                   }
-                );
-              }
+                }
+              );
             }
           );
         }
@@ -90,7 +111,8 @@ export class StudentProjectsComponent implements OnInit {
 
 
     this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
-      this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
+      // tslint:disable-next-line:max-line-length
+      this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       students => {
         const list = students as AssessmentTable[];
         if (list.length > 0) {
@@ -110,7 +132,8 @@ export class StudentProjectsComponent implements OnInit {
     this.sections = new Array<SectionModal>();
 
     // Fetch New Sections on Course Change
-    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value).subscribe(
+    // tslint:disable-next-line:max-line-length
+    this.markAssessmentService.getSectionsForTeacherinCourse(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, c.value, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       section => {
         // @ts-ignore
         for (const sec: { SECTION: string } of section) {
@@ -122,7 +145,7 @@ export class StudentProjectsComponent implements OnInit {
           console.log('Course:', this.selectCourse.nativeElement.value);
           console.log('Section:', this.selectSection.nativeElement.value);
           // tslint:disable-next-line:max-line-length
-          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
+          this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
             projs => {
               // @ts-ignore
               for (const project of projs) {
@@ -160,24 +183,94 @@ export class StudentProjectsComponent implements OnInit {
   }
 
   OnMarksChange(param: { std: AssessmentTable; marks: string }) {
-    let marks = parseInt(param.marks, 0);
-    if (marks > this.totalMarks) {
-      marks = this.totalMarks;
-      this.marksInp.nativeElement.value = this.totalMarks;
-    } else if (marks < 0) {
-      marks = 0;
-      this.marksInp.nativeElement.value = 0;
-    } else if (isNaN(marks)) {
-      marks = 0;
-      this.marksInp.nativeElement.value = 0;
+    const marks: number = Math.round(parseInt(param.marks, 0));
+    console.log(marks);
+    console.log(typeof marks);
+    /*try {
+      marks = parseInt(param.marks, 0);
+      marks = Math.round(marks);
+    } catch (e) {
+      this.toastr.error('Invalid Input');
+    }*/
+    if (marks > this.totalMarks || marks < 0 || Number.isNaN(marks)) {
+      this.toastr.error('Invalid Marks :(');
+      return;
     }
     console.log(param.std, param.marks);
     console.log(this.selectSection.nativeElement.value, this.selectedProject.nativeElement.value, this.selectCourse.nativeElement.value);
     // tslint:disable-next-line:max-line-length
-    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT, marks)
+    this.markAssessmentService.markAssessment(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID, param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.selectSection.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT, marks, this.teacher.T_NO, this.teacher.SE_ID)
       .subscribe(
         data => {
+          this.toastr.success(`Marks updated for ${param.std.NM}`);
         }
+      );
+  }
+  onAssignmentDownload(FILENAME: string, FILEPATH: string) {
+    this.DownLoadFiles(FILEPATH, FILENAME);
+
+  }
+
+  DownLoadFiles(filePath: string, fileName: string) {
+    // file type extension
+    const checkFileType = fileName.split('.').pop();
+    let fileType;
+    if (checkFileType === '.txt') {
+      fileType = 'text/plain';
+    }
+    if (checkFileType === '.pdf') {
+      fileType = 'application/pdf';
+    }
+    if (checkFileType === '.doc') {
+      fileType = 'application/vnd.ms-word';
+    }
+    if (checkFileType === '.docx') {
+      fileType = 'application/vnd.ms-word';
+    }
+    if (checkFileType === '.xls') {
+      fileType = 'application/vnd.ms-excel';
+    }
+    if (checkFileType === '.png') {
+      fileType = 'image/png';
+    }
+    if (checkFileType === '.jpg') {
+      fileType = 'image/jpeg';
+    }
+    if (checkFileType === '.jpeg') {
+      fileType = 'image/jpeg';
+    }
+    if (checkFileType === '.gif') {
+      fileType = 'image/gif';
+    }
+    if (checkFileType === '.csv') {
+      fileType = 'text/csv';
+    }
+    this.DownloadFile(filePath)
+      .subscribe(
+        success => {
+          console.log('Success');
+          console.log(success);
+          saveAs(success, fileName);
+        },
+        err => {
+          console.log('Err');
+          console.log(err);
+          alert('Server error while downloading file.');
+        }
+      );
+  }
+
+  DownloadFile(filePath: string): Observable<any> {
+    return this.httpService.post(baseUrl + '/api/Download/DownloadFile?filePath=' + filePath, '',
+      {
+        responseType: 'blob',
+        observe: 'response'
+      })
+      .pipe(
+        map((res: any) => {
+          console.log(res);
+          return new Blob([res.body]);
+        })
       );
   }
 }
