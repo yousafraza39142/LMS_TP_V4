@@ -115,6 +115,29 @@ export class UploadAssignmentComponent implements OnInit {
   }
 
   uploadFiles() {
+
+    const course = this.selectCourse.nativeElement.value;
+    const section = this.selectCourse.nativeElement.value;
+    const helpingMaterial = this.helpingMaterial.nativeElement.value;
+    const title = this.title.nativeElement.value;
+    const dueDate = this.dueDate.nativeElement.value;
+    const marks = this.marks.nativeElement.value;
+    const file = this.myFiles?.length;
+
+    if (
+      course === '' || course === undefined ||
+      section === '' || section === undefined ||
+      helpingMaterial === '' || helpingMaterial === undefined ||
+      title === '' || title === undefined ||
+      dueDate === '' || dueDate === undefined ||
+      marks === '' || marks === undefined ||
+      file === 0 || file === undefined || isNaN(file)
+    ) {
+      this.toastr.error('All Fields Must be filled');
+      return;
+    }
+
+
     // tslint:disable-next-line:variable-name
     const _uploadFolderId = this.getUniqueId(2);
     // tslint:disable-next-line:variable-name

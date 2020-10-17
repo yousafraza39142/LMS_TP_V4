@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 // Online Api Url
 // export const baseUrl = 'http://192.168.147.2:82';
-
+// export const baseUrl = 'http://111.68.103.118:10025/';
 export const baseUrl = 'http://localhost:12345';
 @Injectable({
   providedIn: 'root'
