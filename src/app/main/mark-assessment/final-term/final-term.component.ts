@@ -18,12 +18,4 @@ export class FinalTermComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  OnCreateFinalTermClicked() {
-    this.router.navigate(['create'], {relativeTo: this.route});
-  }
-
-
-  OnStudentsFinaltermClicked() {
-    this.router.navigate(['students-final-term'], {relativeTo: this.route});
-  }
 }

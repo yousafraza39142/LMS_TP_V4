@@ -99,6 +99,27 @@ export class UploadProjectComponent implements OnInit {
     return stringArr.join('-');
   }
   uploadFiles() {
+
+    const course = this.selectCourse.nativeElement.value;
+    const section = this.selectCourse.nativeElement.value;
+    const helpingMaterial = this.helpingMaterial.nativeElement.value;
+    const title = this.title.nativeElement.value;
+    const dueDate = this.dueDate.nativeElement.value;
+    const marks = this.marks.nativeElement.value;
+    const file = this.myFiles?.length;
+
+    if (
+      course === '' || course === undefined ||
+      section === '' || section === undefined ||
+      helpingMaterial === '' || helpingMaterial === undefined ||
+      title === '' || title === undefined ||
+      dueDate === '' || dueDate === undefined ||
+      marks === '' || marks === undefined ||
+      file === 0 || file === undefined || isNaN(file)
+    ) {
+      this.toastr.error('All Fields Must be filled');
+      return;
+    }
     // tslint:disable-next-line:variable-name
     const _uploadFolderId = this.getUniqueId(2);
     // tslint:disable-next-line:variable-name
@@ -119,7 +140,7 @@ export class UploadProjectComponent implements OnInit {
         this.httpService.get<any>(`${baseUrl}/api/TeacherUploadProject/ProjectUploadedByTeacher?FM_ID=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&SUB_NM=${this.selectCourse.nativeElement.value}&SECTION=${this.selectSection.nativeElement.value}&ASS_DESC=${this.helpingMaterial.nativeElement.value}&TITLE=${this.title.nativeElement.value}&MARKS=${this.marks.nativeElement.value}&DUE_DATE=${this.dueDate.nativeElement.value + ':00'}&FILE_ID=${s[0].FILE_ID}&SE_ID=${this.teacher.SE_ID}&T_NO=${this.teacher.T_NO}&C_CODE=${11}`)
           .pipe().subscribe(
           value => {
-            this.toastr.success('Lab Uploaded');
+            this.toastr.success('Project Uploaded');
           }
         );
       }

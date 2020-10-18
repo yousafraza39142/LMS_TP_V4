@@ -8,7 +8,7 @@
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label for="course" class="text-bold">Courses:</label>
-                <select #c class="form-control shadow-sm" (change)="OnCourseChange(c)"
+                <select #c class="form-control" (change)="OnCourseChange(c)"
                         name="course"
                         id="course"
                         ngModel>
@@ -19,7 +19,7 @@
             <div class="col-md-5 col-12">
               <div class="form-group">
                 <label for="helpLinks" class="text-bold">Help Material Links</label>
-                <textarea #helpingMaterial class="form-control shadow-sm"
+                <textarea #helpingMaterial class="form-control"
                           name="helpMaterialLinks"
                           id="helpLinks"
                           ngModel
@@ -32,7 +32,7 @@
             <div class="col-12 col-md-4">
               <div class="form-group">
                 <label for="section" class="text-bold">Section:</label>
-                <select #s class="form-control shadow-sm"
+                <select #s class="form-control"
                         name="section"
                         id="section"
                         ngModel>
@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label for="title" class="text-bold">Title:</label>
                 <input #title type="text"
-                       class="form-control shadow-sm"
+                       class="form-control"
                        name="title"
                        id="title"
                        aria-describedby="helpId"
@@ -60,7 +60,7 @@
                 <label for="totalMarks" class="text-bold">Marks:</label>
                 <input #marks type="number"
                        [maxLength]="3"
-                       class="form-control shadow-sm"
+                       class="form-control"
                        name="totalMarks"
                        id="totalMarks"
                        aria-describedby="helpId"
@@ -90,7 +90,7 @@
                 <label for="dueDate" class="text-bold">Due Date:</label>
                 <input #date type="datetime-local"
                        [maxLength]="3"
-                       class="form-control shadow-sm"
+                       class="form-control"
                        name="dueDate"
                        id="dueDate"
                        aria-describedby="dueDateHelp"

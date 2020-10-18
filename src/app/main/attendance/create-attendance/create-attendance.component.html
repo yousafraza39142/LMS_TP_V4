@@ -1,24 +1,27 @@
-<div class="row mt-5 p-3 p-lg-0" [@SlideInFromLeft]>
-  <div class="col-sm-12 col-lg-4 p-2">
+<div class="card" [@SlideInFromLeft]>
+  <div class="card-header">Create Attendance</div>
+  <div class="card-body">
+    <div class="row p-lg-0">
+  <div class="col-sm-12 col-lg-4">
     <form #form='ngForm' (ngSubmit)="OnSubmit(form)">
       <div class="form-group">
         <label for="courses">Course:</label>
-        <select #c (change)="OnCourseChange(c)" id="courses" class="form-control shadow-sm" name="courses" ngModel>
+        <select #c (change)="OnCourseChange(c)" id="courses" class="form-control" name="courses" ngModel>
           <option *ngFor="let course of courses">{{course.courseTitle}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="section">Section:</label>
-        <select #s id="section" class="form-control shadow-sm" name="section" ngModel>
+        <select #s id="section" class="form-control" name="section" ngModel>
           <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
         </select>
       </div>
-      <button class="btn btn-sm btn-primary shadow-sm" [disabled]="form.invalid" type="submit">Create Attendance
+      <button class="btn btn-sm btn-primary" [disabled]="form.invalid" type="submit">Create Attendance
       </button>
     </form>
   </div>
   <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
-    <div class="card text-left shadow">
+    <div class="card text-left">
       <div class="card-header"><i class="fa fa-chart-line">Attendance Table</i></div>
       <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll">
         <table class="table table-no-bordered table-borderless bg-light m-0 p-0">
@@ -61,4 +64,5 @@
   </div>
 
 </div>
-
+  </div>
+</div>

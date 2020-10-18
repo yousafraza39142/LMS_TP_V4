@@ -1,9 +1,10 @@
 <div class="row" [@SlideInFromLeft]>
   <div class="col-sm-12">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-outline-info" (click)="OnCreateMidTermClicked()">Create MidTerm</button>
-      <button type="button" class="btn btn-outline-info" (click)="OnStudentsMidtermClicked()">Students MidTerm</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="create">Create MidTerm</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="students-mid-term">Students MidTerm</button>
     </div>
   </div>
 </div>
+<br><br>
 <router-outlet></router-outlet>

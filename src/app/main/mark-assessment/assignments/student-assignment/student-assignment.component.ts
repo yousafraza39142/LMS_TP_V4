@@ -113,13 +113,14 @@ export class StudentAssignmentComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.studentsAssignmentTable = new Array<AssessmentTable>();
 
     if (this.selectSection.nativeElement.value === '' ||
       this.selectCourse.nativeElement.value === '' ||
       this.selectAssignment.nativeElement.value === '') {
+      this.toastr.error('Select All Fields');
       return;
     }
+    this.studentsAssignmentTable = new Array<AssessmentTable>();
     this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
       // tslint:disable-next-line:max-line-length
       this.selectCourse.nativeElement.value, this.selectAssignment.nativeElement.value, AssessmentTypes.ASSIGNMENT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
@@ -133,6 +134,10 @@ export class StudentAssignmentComponent implements OnInit {
           console.log(std);
           this.studentsAssignmentTable.push(std);
         }
+      },
+      error => {
+        console.log(error);
+        this.toastr.error('Failed to Fetch');
       }
     );
   }
@@ -205,7 +210,7 @@ export class StudentAssignmentComponent implements OnInit {
       this.toastr.error('Invalid Input');
     }*/
     if (marks > this.totalMarks || marks < 0 || Number.isNaN(marks)) {
-      this.toastr.error('Invalid Marks :(');
+      this.toastr.error('Invalid Marks');
       return;
     }
     /*if (marks > this.totalMarks) {

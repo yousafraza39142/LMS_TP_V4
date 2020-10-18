@@ -18,12 +18,4 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  OnUploadProjectClicked() {
-    this.router.navigate(['upload'], {relativeTo: this.route});
-  }
-
-  OnStudenProjectClicked() {
-    this.router.navigate(['students-project'], {relativeTo: this.route});
-  }
 }

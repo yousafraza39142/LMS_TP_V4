@@ -158,6 +158,7 @@ export class ViewStudentProfileComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    this.toastr.info('Updating');
     console.log('clicked');
     const std = JSON.parse(this.selectedStudent.nativeElement.value);
     console.log(std);

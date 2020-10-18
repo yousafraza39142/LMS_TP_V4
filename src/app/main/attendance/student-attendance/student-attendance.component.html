@@ -1,78 +1,72 @@
-<div class="row mt-5" [@SlideInFromLeft]>
-  <div class="col-sm-12 col-lg-4 p-2">
-    <form (ngSubmit)="OnSubmit()">
-      <div class="form-group">
-        <label for="course">Course:</label>
-        <select #c class="form-control shadow-sm" (change)="OnCourseChange(c)"
-                name="course"
-                id="course"
-                ngModel>
-          <option *ngFor="let course of courses">{{course.courseTitle}}</option>
-        </select>
+<div class="card" [@SlideInFromLeft]>
+  <div class="card-header">Student Attendance</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-12 col-lg-4 p-2">
+        <form (ngSubmit)="OnSubmit()">
+          <div class="form-group">
+            <label for="course">Course:</label>
+            <select #c class="form-control " (change)="OnCourseChange(c)"
+                    name="course"
+                    id="course"
+                    ngModel>
+              <option *ngFor="let course of courses">{{course.courseTitle}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="section" class="text-bold"><h5>Section:</h5></label>
+            <select #s class="form-control"
+                    name="section"
+                    id="section"
+                    ngModel>
+              <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lecInput">Date:</label>
+            <input #d type="date" class="form-control" name="date" id="lecInput" aria-describedby="helpId">
+          </div>
+          <button class="btn btn-sm btn-primary">Get Attendance</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="section" class="text-bold"><h5>Section:</h5></label>
-        <select #s class="form-control shadow-sm"
-                name="section"
-                id="section"
-                ngModel>
-          <option *ngFor="let section of sections">{{section.sectionTitle}}</option>
-        </select>
-      </div>
-      <style>
-
-        .lift-animation {
-          box-shadow: 3px 3px 10px grey;
-        }
-
-        .lift-animation:hover {
-          box-shadow: 6px 6px 20px grey;
-          transition: .4s;
-        }
-      </style>
-      <div class="form-group">
-        <label for="lecInput">Date:</label>
-        <input #d type="date" class="form-control shadow-sm" name="date" id="lecInput" aria-describedby="helpId">
-      </div>
-      <button class="btn btn-sm btn-primary">Get Attendance</button>
-    </form>
-  </div>
-  <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
-    <div class="card text-left shadow">
-      <div class="card-header bg-light">
-        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-        <i class="fa fa-chart-line">Attendance Report</i></div>
-      <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll; overflow-x: scroll">
-        <table class="table table-bordered bg-light m-0 p-0">
-          <thead>
-          <tr>
-            <th>Roll No</th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let std of students; let i = index;">
-            <td>{{std.ROLNO}}</td>
-            <td>{{std.NM}}</td>
-            <td>{{this.dateInput.nativeElement.value}}</td>
-            <td>
-              <div class="custom-control custom-switch form-group">
-                <input #attendanceToggle type="checkbox"
-                       class="custom-control-input"
-                       name="{{std.ROLNO}}-attendanceStatus"
-                       [checked]="std.ATTEND === 'p'"
-                       (change)="OnToggle(attendanceToggle.checked,std)"
-                       id="{{'std-' + i}}">
-                <label class="custom-control-label" for="{{'std-' + i}}"></label>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="col-sm-12 col-lg-8 p-2 mt-sm-5 mt-lg-0">
+        <div class="card text-left">
+          <div class="card-header bg-light">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            <i class="fa fa-chart-line">Attendance Report</i></div>
+          <div class="card-body" style="max-height: 40rem; overflow: hidden;overflow-y: scroll; overflow-x: scroll">
+            <table class="table table-bordered bg-light m-0 p-0">
+              <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let std of students; let i = index;">
+                <td>{{std.ROLNO}}</td>
+                <td>{{std.NM}}</td>
+                <td>{{this.dateInput.nativeElement.value}}</td>
+                <td>
+                  <div class="custom-control custom-switch form-group">
+                    <input #attendanceToggle type="checkbox"
+                           class="custom-control-input"
+                           name="{{std.ROLNO}}-attendanceStatus"
+                           [checked]="std.ATTEND === 'p'"
+                           (change)="OnToggle(attendanceToggle.checked,std)"
+                           id="{{'std-' + i}}">
+                    <label class="custom-control-label" for="{{'std-' + i}}"></label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br>
       </div>
     </div>
-    <br>
   </div>
 </div>

@@ -1,9 +1,10 @@
 <div class="row" [@SlideInFromLeft]>
   <div class="col-sm-12">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-outline-info" (click)="OnUploadProjectClicked()">Upload Project</button>
-      <button type="button" class="btn btn-outline-info" (click)="OnStudenProjectClicked()">Student Projects</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="upload">Upload Project</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="students-project">Student Projects</button>
     </div>
   </div>
 </div>
+<br><br>
 <router-outlet></router-outlet>

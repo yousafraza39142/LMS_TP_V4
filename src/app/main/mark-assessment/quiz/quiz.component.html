@@ -1,9 +1,10 @@
 <div class="row" [@SlideInFromLeft]>
   <div class="col-sm-12">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-outline-info" (click)="OnCreateQuizClicked()">Create Quiz</button>
-      <button type="button" class="btn btn-outline-info" (click)="OnStudentQuizClicked()">Student Quiz</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="create">Create Quiz</button>
+      <button type="button" class="btn btn-outline-info" routerLinkActive="active" routerLink="students-quiz">Student Quiz</button>
     </div>
   </div>
 </div>
+<br><br>
 <router-outlet></router-outlet>

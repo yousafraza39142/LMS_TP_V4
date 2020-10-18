@@ -18,12 +18,4 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  OnCreateQuizClicked() {
-    this.router.navigate(['create'], {relativeTo: this.route});
-  }
-
-  OnStudentQuizClicked() {
-    this.router.navigate(['students-quiz'], {relativeTo: this.route});
-  }
 }

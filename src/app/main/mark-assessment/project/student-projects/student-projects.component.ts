@@ -98,18 +98,18 @@ export class StudentProjectsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
 
-    for (const s of this.studentsProjectTable) {
-      this.studentsProjectTable.pop();
-    }
+    this.studentsProjectTable = [];
 
 
     if (this.selectSection.nativeElement.value === '' ||
       this.selectCourse.nativeElement.value === '' ||
       this.selectedProject.nativeElement.value === '') {
+      this.toastr.error('All Fields must be selected');
       return;
     }
 
 
+    this.toastr.info('Fetching');
     this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
       // tslint:disable-next-line:max-line-length
       this.selectCourse.nativeElement.value, this.selectedProject.nativeElement.value, AssessmentTypes.PROJECT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
@@ -123,13 +123,15 @@ export class StudentProjectsComponent implements OnInit {
           this.studentsProjectTable.push(std);
         }
         console.log(this.studentsProjectTable);
+        this.toastr.success('Updated');
       }
     );
   }
 
   OnCourseChange(c: HTMLSelectElement) {
-    // Clear previous sections
+    // Clear previous sections and projects
     this.sections = new Array<SectionModal>();
+    this.projects = [];
 
     // Fetch New Sections on Course Change
     // tslint:disable-next-line:max-line-length
@@ -141,9 +143,8 @@ export class StudentProjectsComponent implements OnInit {
         }
 
         if (this.sections.length > 0) {
-          this.clearProjects();
-          console.log('Course:', this.selectCourse.nativeElement.value);
-          console.log('Section:', this.selectSection.nativeElement.value);
+          // console.log('Course:', this.selectCourse.nativeElement.value);
+          // console.log('Section:', this.selectSection.nativeElement.value);
           // tslint:disable-next-line:max-line-length
           this.assignmentApiService.getAssessmentList(this.sections[0].sectionTitle, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
             projs => {
@@ -159,41 +160,32 @@ export class StudentProjectsComponent implements OnInit {
   }
 
   OnSectionChange(s: HTMLSelectElement) {
-    // Clear Assignments Drop Down
-    this.clearProjects();
+    this.projects = [];
 
     console.log();
     console.log(this.selectCourse);
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT).subscribe(
+    this.assignmentApiService.getAssessmentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, AssessmentTypes.PROJECT, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       assignments => {
         // @ts-ignore
         for (const assignment of assignments) {
           this.projects.push(new AssignmentModal(assignment.ASSIGNMENT_TITLE));
         }
+        this.toastr.success('Updated');
+      },
+      error => {
+        this.toastr.error('Error Updating');
       }
     );
-  }
-
-  private clearProjects() {
-    for (const pr of this.projects) {
-      this.projects.pop();
-    }
   }
 
   OnMarksChange(param: { std: AssessmentTable; marks: string }) {
     const marks: number = Math.round(parseInt(param.marks, 0));
     console.log(marks);
     console.log(typeof marks);
-    /*try {
-      marks = parseInt(param.marks, 0);
-      marks = Math.round(marks);
-    } catch (e) {
-      this.toastr.error('Invalid Input');
-    }*/
     if (marks > this.totalMarks || marks < 0 || Number.isNaN(marks)) {
-      this.toastr.error('Invalid Marks :(');
+      this.toastr.error('Invalid Marks');
       return;
     }
     console.log(param.std, param.marks);

@@ -28,7 +28,7 @@ export interface AssessmentTable {
   ASS_OBT_MRKS: number;
   ASS_TOT_MRKS: number;
   FILEPATH: string;
-
+  FILENAME: string;
 }
 
 
@@ -113,12 +113,12 @@ export class StudentQuizComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    for (const s of this.studentsAssignmentTable) {
-      this.studentsAssignmentTable.pop();
-    }
+    this.studentsAssignmentTable = [];
+
     if (this.selectSection.nativeElement.value === '' ||
       this.selectCourse.nativeElement.value === '' ||
       this.selectAssignment.nativeElement.value === '') {
+      this.toastr.error('Empty Fields');
       return;
     }
     this.assignmentApiService.getAssessmentListOfStudents(this.selectSection.nativeElement.value,
@@ -157,7 +157,7 @@ export class StudentQuizComponent implements OnInit {
 
   OnSectionChange(s: HTMLSelectElement) {
     // Clear Assignments Drop Down
-    this.clearAssignments();
+    this.quizes = [];
 
     console.log();
     console.log(this.selectCourse);
@@ -173,25 +173,13 @@ export class StudentQuizComponent implements OnInit {
     );
   }
 
-  private clearAssignments() {
-    for (const assignment of this.quizes) {
-      this.quizes.pop();
-    }
-  }
-
 
   OnMarksChange(param: { std: AssessmentTable; marks: string }) {
     const marks: number = Math.round(parseInt(param.marks, 0));
-    console.log(marks);
-    console.log(typeof marks);
-    /*try {
-      marks = parseInt(param.marks, 0);
-      marks = Math.round(marks);
-    } catch (e) {
-      this.toastr.error('Invalid Input');
-    }*/
+    // console.log(marks);
+    // console.log(typeof marks);
     if (marks > this.totalMarks || marks < 0 || Number.isNaN(marks)) {
-      this.toastr.error('Invalid Marks :(');
+      this.toastr.error('Invalid Marks');
       return;
     }
     console.log(param.std, param.marks);
@@ -201,6 +189,9 @@ export class StudentQuizComponent implements OnInit {
       .subscribe(
         data => {
           this.toastr.success(`Marks updated for ${param.std.NM}`);
+        },
+        error => {
+          this.toastr.error('Error Updating');
         }
       );
   }

@@ -41,39 +41,6 @@ export class UploadQuizComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.store.select('fromAssignment').subscribe(
-      state => {
-        console.log(state.data.assignments);
-        this.data = state.data;
-      }
-    );
-    this.store.select('fromMarkAssessment').subscribe(
-      state => {
-        console.log(state);
-        this.courses = state.courses;
-        this.sections = state.sections;
-      }
-    );
-*/
-    // if Wanna dispatch own courses
-    /*this.info = {
-      courses: [
-        new CourseModal('YOousaf'),
-        new CourseModal('Dani'),
-        new CourseModal('Math'),
-        new CourseModal('Chinese'),
-        new CourseModal('Pk.Std')
-      ],
-        sections: [
-        new SectionModal('Section Dani'),
-        new SectionModal('Section B'),
-        new SectionModal('Section C'),
-        new SectionModal('Section E1'),
-        new SectionModal('Section Ali')
-      ]
-    };*/
-    // this.store.dispatch(new fromAssignmentActions.StoreData(this.info));
-
     this.markAssessmentService.getCourseForTeacher(JSON.parse(localStorage.getItem('teacherInfo')).FM_ID).subscribe(
       data => {
         // @ts-ignore
@@ -141,6 +108,30 @@ export class UploadQuizComponent implements OnInit {
   }
 
   uploadFiles() {
+
+    const course = this.selectCourse.nativeElement.value;
+    const section = this.selectCourse.nativeElement.value;
+    const helpingMaterial = this.helpingMaterial.nativeElement.value;
+    const title = this.title.nativeElement.value;
+    const dueDate = this.dueDate.nativeElement.value;
+    const marks = this.marks.nativeElement.value;
+    const file = this.myFiles?.length;
+
+    if (
+      course === '' || course === undefined ||
+      section === '' || section === undefined ||
+      helpingMaterial === '' || helpingMaterial === undefined ||
+      title === '' || title === undefined ||
+      dueDate === '' || dueDate === undefined ||
+      marks === '' || marks === undefined ||
+      file === 0 || file === undefined || isNaN(file)
+    ) {
+      this.toastr.error('All Fields Must be filled');
+      return;
+    }
+
+
+    this.toastr.info('Uploading');
     // tslint:disable-next-line:variable-name
     const _uploadFolderId = this.getUniqueId(2);
     // tslint:disable-next-line:variable-name
@@ -155,13 +146,16 @@ export class UploadQuizComponent implements OnInit {
       s => {
         console.log('File Uploaded');
         console.log(s);
+        // TODO: Have to change this api path to Quiz this is uploading to Assignments
         // tslint:disable-next-line:max-line-length
         this.httpService.get<any>(`${baseUrl}/api/TeacherUploadAssignment/AssignmentUploadedByTeacher?FM_ID=${JSON.parse(localStorage.getItem('teacherInfo')).FM_ID}&SUB_NM=${this.selectCourse.nativeElement.value}&SECTION=${this.selectSection.nativeElement.value}&ASS_DESC=${this.helpingMaterial.nativeElement.value}&TITLE=${this.title.nativeElement.value}&MARKS=${this.marks.nativeElement.value}&DUE_DATE=${this.dueDate.nativeElement.value + ':00'}&FILE_ID=${s[0].FILE_ID}&SE_ID=${this.teacher.SE_ID}&T_NO=${this.teacher.T_NO}&C_CODE=${11}`).subscribe(
           value => {
-            this.toastr.success('Assignment Uploaded');
-            // this.clickEvent.showMessages(true);
+            this.toastr.success('Quiz Uploaded');
           }
         );
+      },
+      error => {
+        this.toastr.error('Error Uploading Quiz');
       }
     );
   }

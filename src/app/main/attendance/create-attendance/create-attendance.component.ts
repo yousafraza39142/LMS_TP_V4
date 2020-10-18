@@ -92,7 +92,7 @@ export class CreateAttendanceComponent implements OnInit {
         }
       },
       error => {
-        console.log('Some Error Occured');
+        console.log('Some Error Occurred');
       }
     );
   }
@@ -100,6 +100,7 @@ export class CreateAttendanceComponent implements OnInit {
 
   OnSubmit(form: NgForm) {
     if (this.selectSection.nativeElement.value === '' || this.selectSection.nativeElement.value === '') {
+      this.toastr.error('Missing Fields');
       return;
     }
     // Do not get values from form as it can cause bugs.....
@@ -108,23 +109,31 @@ export class CreateAttendanceComponent implements OnInit {
 
     this.students = new Array<Student>();
 
+
+    this.toastr.info('Creating Attendance', '', {timeOut: 4000});
     // tslint:disable-next-line:max-line-length
     this.attendanceService.getStudentList(this.selectSection.nativeElement.value, this.selectCourse.nativeElement.value, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       stdList => {
-        console.log(stdList);
-        this.toastr.info('Creating Attendance', '', {timeOut: 4000});
+        this.toastr.success('Attendance Created');
+        // console.log(stdList);
         const currentSection = this.selectSection.nativeElement.value;
         // @ts-ignore
         for (const std: Student of stdList) {
           this.students.push(std);
-          console.log(std);
+          // console.log(std);
           // tslint:disable-next-line:max-line-length
           this.attendanceService.markAttendance(std.YEAR, std.C_CODE, std.D_ID, std.MAJ_ID, std.RN, this.selectCourse.nativeElement.value, this.currentSection, `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`, AttendanceStatus.absent, this.teacher.T_NO, this.teacher.SE_ID)
             .subscribe(
               data => {
+              },
+              error => {
+                console.log(error);
               }
             );
         }
+      },
+      error => {
+        this.toastr.error('Failed to create');
       }
     );
   }
@@ -140,10 +149,10 @@ export class CreateAttendanceComponent implements OnInit {
     this.attendanceService.markAttendance(param.std.YEAR, param.std.C_CODE, param.std.D_ID, param.std.MAJ_ID, param.std.RN, this.selectCourse.nativeElement.value, this.currentSection, `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`, attendance, this.teacher.T_NO, this.teacher.SE_ID).subscribe(
       data => {
         console.log(data);
-        this.toastr.success('Updated');
+        this.toastr.success('Updated', '', {timeOut: 500});
       },
       error => {
-        console.log('Some Error Occurred');
+        console.log('Some Error Occurred', '', {timeOut: 500});
       }
     );
   }
