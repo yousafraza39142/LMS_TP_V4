@@ -1,0 +1,52 @@
+<div class="card" [@SlideInFromLeft]>
+  <div class="card-header">Assessment Weightage Set</div>
+  <div class="card-body">
+    <form [formGroup]="weightageForm">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="course"><b>Course:</b></label>
+            <select class="form-control" id="course" formControlName="course">
+              <option>Course</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="section"><b>Section:</b></label>
+            <select class="form-control" id="section" formControlName="section">
+              <option>Section</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="quiz_weightage">Quizzes Weightage (in %)</label>
+            <input type="number" class="form-control" id="quiz_weightage" formControlName="quiz_weightage">
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="assignment_weightage">Assignment Weightage (in %)</label>
+            <input type="number" class="form-control" id="assignment_weightage" formControlName="assignment_weightage">
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="project_weightage">Project Weightage (in %)</label>
+            <input type="number" class="form-control" id="project_weightage" formControlName="project_weightage">
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="presentation_weightage">Presentation Weightage (in %)</label>
+            <input type="number" class="form-control" id="presentation_weightage" formControlName="presentation_weightage">
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <button type="button" (click)="onCreate()" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

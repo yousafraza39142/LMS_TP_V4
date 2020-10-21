@@ -4,10 +4,14 @@ import {MainComponent} from './main.component';
 import {TimeTableComponent} from './time-table/time-table.component';
 import {CourseUploadComponent} from './course-upload/course-upload.component';
 import {ViewStudentProfileComponent} from './view-student-profile/view-student-profile.component';
+import {AssessmentWeightageComponent} from './assessment-weightage/assessment-weightage.component';
 
 const routes: Routes = [
   {
     path: '', component: MainComponent, children: [
+      {
+        path: 'assessment-weightage', component: AssessmentWeightageComponent
+      },
       {path: 'attendance', loadChildren: () => import(`./attendance/attendance.module`).then(m => m.AttendanceModule)},
       {
         path: 'assignment',

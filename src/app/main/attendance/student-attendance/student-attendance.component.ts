@@ -115,11 +115,11 @@ export class StudentAttendanceComponent implements OnInit {
 
     this.loading = true;
     this.students = new Array<CheckAttendanceDate>();
-
-    console.log('Submitted');
-    console.log(this.dateInput.nativeElement.value);
-    console.log(this.selectCourse.nativeElement.value);
-    console.log(this.selectSection.nativeElement.value);
+    //
+    // console.log('Submitted');
+    // console.log(this.dateInput.nativeElement.value);
+    // console.log(this.selectCourse.nativeElement.value);
+    // console.log(this.selectSection.nativeElement.value);
     this.attendanceService.checkAttendance(this.selectCourse.nativeElement.value,
       this.selectSection.nativeElement.value, `${this.dateInput.nativeElement.value}`, this.teacher.T_NO, this.teacher.SE_ID, 11).subscribe(
       stds => {
@@ -130,7 +130,7 @@ export class StudentAttendanceComponent implements OnInit {
         for (let i = 0; i < studentsList.length; i++) {
           this.students.push(stds[i]);
         }
-        console.log(this.students);
+        // console.log(this.students);
       },
       error => {
         this.loading = false;
